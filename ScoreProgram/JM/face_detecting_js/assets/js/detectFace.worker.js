@@ -34,11 +34,15 @@ async function createFileFromUrl(path, url) {
 }
 
 async function init() {
-    await createFileFromUrl('haarcascade_frontalface_default.xml',
-                            '/static/data/haarcascade_frontalface_default.xml');
+    // await createFileFromUrl('haarcascade_frontalface_default.xml',
+    //                         '/static/data/haarcascade_frontalface_default.xml');
+    await createFileFromUrl('haarcascade_eye_tree_eyeglasses.xml',
+                            '/static/data/haarcascade_eye_tree_eyeglasses.xml');
 
     classifier = new cv.CascadeClassifier();
-    classifier.load('haarcascade_frontalface_default.xml');
+    // classifier.load('haarcascade_frontalface_default.xml');
+    classifier.load('haarcascade_eye_tree_eyeglasses.xml');
+
 
     // Let the UI that the module finished initialization
     self.postMessage({ type: 'init' });
