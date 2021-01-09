@@ -1,12 +1,11 @@
-# Panopticon 0107 수정사항
+# Panopticon 0110 수정사항
 
 React code
 
-## Add Button
+## Add Meeting
 
-버튼 추가 및 페이지 이동 구현 \
-기능 X, 단순히 주소 연결 
+Add tensorflow meeting  
 
-### 정무 미팅 구현 예정
+## Add Login/ Logout
 
-superMeeting / StuMeeting Page 구현 예정
+Add Login, Logout function 
