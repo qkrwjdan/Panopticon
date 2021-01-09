@@ -21,21 +21,3 @@ io.on('connection', socket => {
 })
 
 server.listen(port, () => console.log('server is running on port 8000, 사랑해요 동작그만'))
-
-/*리액트를 이용한 webrtc를 사용하기 전, 가장 기본적인 틀을 잡는 과정
-https://www.youtube.com/watch?v=JhyY8LdAQHU
-
-0109 폴더
-
-npm init -y
-
-npm install -g create-react-app 
-
-create-react-app client
-
-npm install express socket.io
-
-
-client 폴더
-
-npm install socket.io-client uuid react-router-dom */
