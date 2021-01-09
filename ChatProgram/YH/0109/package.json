@@ -1,0 +1,17 @@
+{
+  "name": "0109",
+  "version": "1.0.0",
+  "description": "리액트를 이용한 webrtc를 사용하기 전, 가장 기본적인 틀을 잡는 과정 https://www.youtube.com/watch?v=JhyY8LdAQHU",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "create-react-app": "^4.0.1",
+    "express": "^4.17.1",
+    "socket.io": "^3.0.5"
+  }
+}
