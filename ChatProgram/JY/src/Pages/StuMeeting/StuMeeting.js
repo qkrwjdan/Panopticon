@@ -1,5 +1,5 @@
 import React,{useRef} from "react";
-import './SupMeeting.css';
+import './StuMeeting.css';
 import { Link, Route, BrowserRouter as Router } from "react-router-dom"
 import { Button } from "@material-ui/core"
 
@@ -8,7 +8,7 @@ import * as facemesh from "@tensorflow-models/facemesh"
 import WebCam from "react-webcam"
 import {drawMesh} from "../.././utilities"
 
-function SupMeeting() {
+function StuMeeting() {
     //setup References
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
@@ -92,4 +92,4 @@ function SupMeeting() {
     );
 }
 
-export default SupMeeting;
+export default StuMeeting;
