@@ -5,12 +5,13 @@ const server = http.createServer(app)
 const socket = require('socket.io')
 const io = socket(server)
 
+const rooms = {}
 const port = 8000
 
 io.on('connection', socket => {
     socket.on('join room', roomID => {  //event: join room
-        if(rooms[roomID])   rooms[roomID].push(socket.id)
-        else rooms[roomID] = [socket.id]
+        if(rooms[roomID])   { rooms[roomID].push(socket.id) }
+        else                { rooms[roomID] = [socket.id] }
 
         const otherUser = rooms[roomID].find(id => id !== socket.id)        //find other users
         if(otherUser){

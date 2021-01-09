@@ -1,3 +1,15 @@
+구동방법
+
+1 터미널(cmd) 창을 2개 연다
+2 하나의 터미널 창에는 YH/0109 을 현재 위치로, 다른 터미널 창에는 YH/0109/client 을 틀어놓는다
+3   YH/0109 에는 node server.js
+    YH/0109/client 에는 npm start 
+4 localhost:3000 에 들어가 create room 버튼을 클릭하고, 방을 생성한다
+5 생성된 방의 url을 복사하여 새로운 브라우져에 붙여넣는다.
+6 두개의 peer 가 서로 communicate 함을 알 수 있다.
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
 git init        //무조건 내가 하려는 최상위 폴더를 init 해야한다!!
 git remote add origin https://github.com/qkrwjdan/valueup.git
 git pull
@@ -39,6 +51,7 @@ npm install -g create-react-app
 create-react-app client
 
 npm install express socket.io
+
 
 
 client 폴더
