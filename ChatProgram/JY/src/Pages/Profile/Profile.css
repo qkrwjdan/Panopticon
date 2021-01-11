@@ -1,6 +1,6 @@
-.Meeting {
-    background-color: #4079AD;
-    min-height: 10vh;
+.Pro{
+    background-color: #ffffff;
+    min-height: 30vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
     text-align: center;
 }
 
-.Meeting-center {
+.Pro-center {
     background-color: #e6e6e6;
     min-height: 60vh;
     min-width: 50vh;
@@ -21,9 +21,4 @@
     font-size: calc(7px + 1vmin);
     color: rgb(68, 68, 68);
     text-align: center;
-}
-
-.Meeting-bottom {
-    background-color: #4079AD;
-    min-height : 30vh;
 }
