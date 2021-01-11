@@ -1,5 +1,6 @@
 const express = require('express')
-const http = require('http')
+const http = require('http');
+const sslConfig = require('./config/ssl-config');
 const app = express()
 const server = http.createServer(app)
 const socket = require('socket.io')
@@ -7,6 +8,12 @@ const io = socket(server)
 
 const rooms = {}
 const port = 8000
+
+const options = {
+    key: sslConfig.privateKey,
+    cert: sslConfig.certificate,
+    passphrase: 'Tjdmdgka55!' // certificate을 생성하면서 입력하였던 passphrase 값
+};
 
 io.on('connection', socket => {
     socket.on('join room', roomID => {  //event: join room
