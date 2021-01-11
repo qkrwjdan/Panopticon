@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Login.css';
 import { Link, Redirect, Route, BrowserRouter as Router } from "react-router-dom"
-import { Button } from "@material-ui/core"
+import { Button, TextField } from "@material-ui/core"
 
 function Login({authenticated, login, location}) {
   const[email, setEmail] = useState("")
@@ -24,17 +24,19 @@ function Login({authenticated, login, location}) {
     <header className="Login">
         <h1>Login</h1>
         <head className="Login-center">
-          <input value={email} onChange={({target: {value }}) => setEmail(value)}
-            type="text" placeholder="email"/>
-          <input value={password} onChange={({target: { value} }) => setPassword(value)}
-            type="password" placeholder="password" />
-        <Link to="/Supervisor">
-          <Button onClick={handleClick} variant="contained">Supervisor LogIn</Button>
-        </Link>
-        <br/>
-        <Link to="/Student">
-          <Button variant="contained">Student LogIn</Button>
-        </Link>
+          <TextField value={email} onChange={({target: {value }}) => setEmail(value)}
+            type="text" label="email" variant="outlined"/>
+            <br/>
+          <TextField value={password} onChange={({target: { value} }) => setPassword(value)}
+            type="password" label="password" variant="outlined"/>
+            <br/>
+          <Link to="/Supervisor">
+            <Button onClick={handleClick} variant="contained">Supervisor LogIn</Button>
+          </Link>
+          <br/>
+          <Link to="/Student">
+            <Button variant="contained">Student LogIn</Button>
+          </Link>
         </head>
         <body className="Login-bottom">
         </body>

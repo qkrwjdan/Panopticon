@@ -1,5 +1,6 @@
 const users =[
-    { email: "sky990106@dgu.ac.kr", password: "123", name:"Jung Jiyoung"}
+    { email: "sky990106@dgu.ac.kr", password: "123", name:"Jung Jiyoung"},
+    { email: "test", password: "123" , name: "TEST USER"},
 ]
 
 export function signIn({ email, password}) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import './App.css';
-import { Link, Route, BrowserRouter as Router } from "react-router-dom"
+import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom"
 import Home from "./Pages/Home"
 import Login from "./Pages/Login/Login"
 import JoinUs from "./Pages/JoinUs/JoinUs"
@@ -45,21 +45,27 @@ function App() {
         </Link>
       </body>
       <main>
-        <AuthRoute
-          authenticated={authenticated}
-          path="/Profile"
-          render={props=><Profile user={user} {...props} />}
-        />
-        <Route exact path="/" component={Home} />
-        <Route path="/Login" render={props => (<Login authenticated={authenticated} login={login} {...props}/>
-        )} />
-        {/* <Route path="/Login" component={Login} /> */}
-        <Route path="/JoinUs" component={JoinUs} />
-        <Route path="/Student" component={Student} />
-        <Route path="/Supervisor" component={Supervisor} />
-        <Route path="/SupMeeting" component={SupMeeting} />
-        <Route path="/StuMeeting" component={StuMeeting} />
-        <Route path="/Profile" component={Profile} />
+      <Switch>
+          <AuthRoute
+            authenticated={authenticated}
+            path="/Profile"
+            render={props => <Profile user={user} {...props} />}
+          />
+          <AuthRoute
+            authenticated={authenticated}
+            path="/Supervisor"
+            render={props => <Supervisor user={user} {...props} />}
+          />
+          <Route exact path="/" component={Home} />
+          <Route path="/Login" render={props => (<Login authenticated={authenticated} login={login} {...props}/>)} />
+          {/* <Route path="/Login" component={Login} /> */}
+          <Route path="/JoinUs" component={JoinUs} />
+          <Route path="/Student" component={Student} />
+          {/* <Route path="/Supervisor" component={Supervisor} /> */}
+          <Route path="/SupMeeting" component={SupMeeting} />
+          <Route path="/StuMeeting" component={StuMeeting} />
+          <Route path="/Profile" component={Profile} />
+        </Switch>
       </main>
     </Router>
   );
