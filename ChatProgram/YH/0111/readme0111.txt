@@ -7,3 +7,6 @@ https://localhost:3001/
 
 reference
 https://marlboroyw.tistory.com/412?category=592601
+
+dependencies
+npm install express
