@@ -1,19 +1,23 @@
 const express = require('express')
-const http = require('http');
-const sslConfig = require('./config/ssl-config');
 const app = express()
+const http = require('http');
+const https = require('https');
+const path = require('path')
+const fs = require('fs')        //file system
 const server = http.createServer(app)
-const socket = require('socket.io')
-const io = socket(server)
-
 const rooms = {}
 const port = 8000
 
-const options = {
-    key: sslConfig.privateKey,
-    cert: sslConfig.certificate,
-    passphrase: 'Tjdmdgka55!' // certificate을 생성하면서 입력하였던 passphrase 값
-};
+const sslServer = https.createServer({
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
+    }, 
+    app
+)
+
+const socket = require('socket.io')
+const io = socket(server)
+//const io = socket(sslServer)
 
 io.on('connection', socket => {
     socket.on('join room', roomID => {  //event: join room
@@ -44,4 +48,5 @@ io.on('connection', socket => {
     })
 })
 
-server.listen(port, () => console.log('server is running on port 8000, 사랑해요 동작그만'))
+//server.listen(port, () => console.log('server is running on port 8000, 사랑해요 동작그만'))
+sslServer.listen(port, () => console.log('secure server on port 8000'))
