@@ -3,7 +3,7 @@
     node server.js
 
 
-connect to
+connect to 
 
 http://localhost:3000/
 
