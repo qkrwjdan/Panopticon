@@ -7,9 +7,11 @@
 3   
 
 YH/0109 경로
+
     npm start
 
 YH/0109/client 경로 
+
     npm start 
 
 4 localhost:3000 에 들어가 create room 버튼을 클릭하고, 방을 생성한다
