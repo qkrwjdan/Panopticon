@@ -1,0 +1,26 @@
+node_modules
+
+# docs site
+build
+docs_
+
+# use scss instead
+src/**/*.css
+src/**/*.css.map
+
+# Common IDE files
+nbproject
+.~lock.*
+package-lock.json
+*.lock
+.buildpath
+.idea
+.project
+.settings
+*.iml
+
+# OS X Finder internal system files
+.DS_Store
+.localized
+Icon
+.vscode

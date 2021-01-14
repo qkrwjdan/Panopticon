@@ -1,0 +1,71 @@
+<script>
+  init({
+    title: 'The Locale',
+    desc: 'Use <code>locale</code> to set the locale.',
+    links: ['multiple-select.min.css'],
+    scripts: [
+      'multiple-select.min.js',
+      'https://unpkg.com/multiple-select@1.5.2/dist/multiple-select-locale-all.min.js'
+    ]
+  })
+</script>
+
+<style>
+select {
+  width: 100%;
+}
+</style>
+
+<div>
+  <div class="form-group row">
+    <label class="col-sm-2">
+      Locale Select
+    </label>
+
+    <div class="col-sm-10">
+      <select id="locale">
+        <option value="en-US">English</option>
+        <option value="es-ES">Spanish</option>
+        <option value="zh-CN">简体中文</option>
+        <option value="zh-TW">繁體中文</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2">
+      Result Select
+    </label>
+
+    <div class="col-sm-10">
+      <select id="select" multiple="multiple">
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateLocale(locale) {
+    $('#select').multipleSelect('destroy').multipleSelect({
+      locale: locale
+    })
+  }
+
+  function mounted() {
+    $('#locale').multipleSelect().change(function () {
+      updateLocale($(this).val())
+    }).change()
+  }
+</script>
