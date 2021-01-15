@@ -20,17 +20,17 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 
-router.post('/', function(req,res){
+router.post('/', function (req, res) {
     var ViewerName = req.session.vaild.name;
     var ViewerJob = req.session.vaild.job;
     var ViewerEmail = req.session.vaild.email;
 
     req.session = null; //reset session variable
 
-    var userInfo = {name: ViewerName, job : ViewerJob, email: ViewerEmail};
+    var userInfo = { name: ViewerName, job: ViewerJob, email: ViewerEmail };
 
-    res.render('viewer', { userInfo : userInfo, error: false });
-    
+    res.render('viewer', { userInfo: userInfo, error: false });
+
 })
 
 module.exports = router;
