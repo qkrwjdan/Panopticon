@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Broadcaster</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <section class="select">
+      <label for="audioSource">Audio source: </label>
+      <select id="audioSource"></select>
+    </section>
+
+    <section class="select">
+      <label for="videoSource">Video source: </label>
+      <select id="videoSource"></select>
+    </section>
+
+    <video playsinline autoplay muted></video>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==" crossorigin="anonymous"></script>
+    <script src="/broadcast.js"></script>
+  </body>
+</html>
