@@ -16,7 +16,7 @@ const addStudent = async(req, res, next) => {
 const getAllStudents = async(req, res, next) => {
     try {
         const students = await firestore.collection('students')
-        const data = await students.get()
+        const data = await students.get() 
         const studentsArray = []
         if(data.empty){
             res.send(404).send('No student record found')

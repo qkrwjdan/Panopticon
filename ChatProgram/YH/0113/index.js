@@ -13,4 +13,8 @@ app.use(bodyParser.json())
 
 app.use('/api', studentRoutes.routes) 
 
+app.get('/', function(req, res) {
+    res.send('I love you DJGM')
+})
+
 app.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port))

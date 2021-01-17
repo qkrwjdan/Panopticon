@@ -13,7 +13,7 @@ var alert = require('alert');
 var firebaseConfig = {
 	apiKey: "AIzaSyADp7doPmsFiyZoKATp0i4gpTYoOhCZZ7M",
 	authDomain: "nodewithfirebase-2abe0.firebaseapp.com",
-	databaseURL: "https://nodewithfirebase-2abe0.firebaseio.com",
+	//databaseURL: "https://nodewithfirebase-2abe0.firebaseio.com",
 	projectId: "nodewithfirebase-2abe0",
 	storageBucket: "nodewithfirebase-2abe0.appspot.com",
 	messagingSenderId: "898571033628",
