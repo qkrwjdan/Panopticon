@@ -83,24 +83,6 @@
 
 
     <script>
-        $('.usrInput').on('keyup keypress', function(e) {
-            console.log("input");
-            var keyCode = e.keyCode || e.which;
-            var text = $(".usrInput").val();
-            if (keyCode === 13) {
-                if (text == "" || $.trim(text) == '') {
-                    e.preventDefault();
-                    return false;
-                } else {
-                    $(".usrInput").blur();
-                    setUserResponse(text);
-                    e.preventDefault();
-                    return false;
-                }
-            }
-        });
-
-
         function colorPids(vol) {
 
             let all_pids = $('.pid');
@@ -117,16 +99,6 @@
             document.getElementById('vol').innerHTML = 'vol=' + vol;
 
         }
-
-        function setUserResponse(val) {
-
-            var UserResponse = '<p>' + val + ' </p>'
-            $(UserResponse).appendTo('.chats').show('slow');
-            $(".usrInput").val('');
-        }
-
-
-
 
         var leftchannel = [];
         var rightchannel = [];

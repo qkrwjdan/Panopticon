@@ -11,8 +11,6 @@ app.set('view engine','ejs');
 app.engine('html',require('ejs').renderFile);
 
 app.use(express.static('public'));
-// app.use(express.static("../static"))
-// app.use(express.static("."))
 
 app.listen(port, () => {
     console.log(`server is listening at localhost:${process.env.PORT}`);

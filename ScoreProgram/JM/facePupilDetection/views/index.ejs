@@ -3,24 +3,11 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
 <!-- Load scatter-gl.js -->
 <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
+<script src="annyang.min.js"></script>
+<script src="jquery-1.12.4.min.js"></script>
+<script src="index.css"></script>
 <style>
-  .canvas-wrapper, #scatter-gl-container {
-    display: inline-block;
-    vertical-align: top;
-  }
 
-  #scatter-gl-container {
-    border: solid 1px black;
-    position: relative;
-  }
-
-  /* center the canvas within its wrapper */
-  #scatter-gl-container canvas {
-    transform: translate3d(-50%, -50%, 0);
-    left: 50%;
-    top: 50%;
-    position: absolute;
-  }
 </style>
 </head>
 <body>
@@ -38,9 +25,32 @@
 
         <h1 id="faceState" style="left:500px">중앙</h1>
         <h1 id="pupilState" style="left:500px">중앙</h1>
-        
       </div>
     </div>
+  </div>
+  <div class="pids-wrapper">
+    <div>볼륨바</div>
+    <div class="pid"></div>
+    <div class="pid"></div>
+    <div class="pid"></div>
+    <div class="pid"></div>
+    <div class="pid"></div>
+    <div class="pid"></div>
+    <div class="pid"></div>
+    <div class="pid"></div>
+  </div>
+  <div class="">
+    <div id='vol'>
+      결과가 없습니다.
+    </div>
+  </div>
+  <div class="keypad">
+      <input type="text" id="keypad" class="usrInput browser-default" placeholder="Type a message..." autocomplete="off">
+  </div>
+  <div class="">
+      <div id='result'>
+        결과가 없습니다.
+      </div>
   </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
@@ -50,10 +60,6 @@
 <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.4.0/dist/tf-backend-webgl.js"></script>
 <script src="https://unpkg.com/@tensorflow-models/face-landmarks-detection@0.0.1/dist/face-landmarks-detection.js"></script>
 <script type="module" src="facemeshUtils.js"></script>
-
-<script>
-    console.log(faceLandmarksDetection);
-</script>
 
 
 

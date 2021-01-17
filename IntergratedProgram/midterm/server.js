@@ -79,12 +79,19 @@ app.use(session({
 	cookie: {secure: true}
 }));
 
+app.use(express.static('public'));
+
 
 var index = require('./routes/index');
 var host = require('./routes/host');
 var view = require('./routes/view');
 const { userInfo } = require('os');
 
+app.get('/ScoreTest', (req, res) => {
+    res.render('ScoreTest',{
+        name: "Park",
+    })
+});
 
 app.use('/', index);
 app.use('/host', host);
@@ -95,7 +102,6 @@ app.get('/loginChk', function(req,res){
 	alert("새로고침 시 로그인을 다시 해주세요");
 	res.render('loginForm');
 })
-
 
 /*
  * Rooms related methods
