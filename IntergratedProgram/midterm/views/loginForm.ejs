@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login Page</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body,html{
+            margin: 0;
+            padding:0;
+            height:100%;
+        }
+        
+        .font_01{
+            font-family: 'Goldman', cursive;
+            font-size:45px;
+            font-weight:medium;
+            color:white;
+        }
+        .font_02{
+            font-family: 'Do Hyeon', sans-serif;
+            font-size:45px;
+            font-weight:medium;
+            color:white;
+        }
+        
+        .bgimg{
+            border:0;
+            padding:0;
+            background-image: url('https://wi.wallpapertip.com/wsimgs/83-838362_web-developer.jpg');
+            min-height:100%;
+            background-position: center;
+            background-size: cover;
+        }
+
+        #box1{
+            background-color: #E2E2E2;
+            padding-left:850px;
+        }
+
+        #box2{
+            font-family: 'Nanum Gothic Coding';
+            border-radius: 12px;
+            background: #BFC2C3;
+        }
+        #box3{
+            background-color: #ffffff;
+            background-color: rgba(255,255,255,0.5);
+            border-radius:10px;
+        }
+       
+    </style>
+
+</head>
+<body>
+    <div class="bgimg">
+        <br><br><br><br><br><br>
+        <center>
+            <div class="font_01">
+            WebRTC
+            </div>
+            <div class="font_02">
+            화상회의<br>
+            가짜프로그래머
+            </div>
+            <div class="form">
+                <form name="form1" action="loginChk" method="post">
+                    <br>
+                    <input type="id" name="id" placeholder="Email" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;"><br><br>
+                    <input type="password" name="passwd" placeholder="password" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;"><br><br>
+                    <a href="#" onclick="form1.submit()">Login</a><br><br>
+                </form>
+                    <font style="color:white">※ 아직 계정이 없으신가요? </font><br><br>
+                    <button onclick="moveCreate()">회원가입</button>
+            </div>
+        </center>     
+    </div>
+    <script type= "text/javascript">
+        function moveCreate(){
+        location.href = "/creatForm";
+        }
+    </script> 
+</body>
+</html>

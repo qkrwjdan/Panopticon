@@ -1,0 +1,27 @@
+.pids-wrapper {
+    width: 100%;
+}
+
+.pid {
+    width: calc(5% - 10px);
+    height: 10px;
+    display: inline-block;
+    margin: 5px;
+}
+
+.canvas-wrapper, #scatter-gl-container {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#scatter-gl-container {
+    border: solid 1px black;
+    position: relative;
+}
+
+#scatter-gl-container canvas {
+    transform: translate3d(-50%, -50%, 0);
+    left: 50%;
+    top: 50%;
+    position: absolute;
+}

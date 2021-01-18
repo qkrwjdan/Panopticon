@@ -1,0 +1,80 @@
+/* your custom css */
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+}
+
+@media only screen and (min-width: 1024px) {
+}
+
+@media only screen and (max-width: 1023px) {
+}
+
+@media only screen and (min-width: 1400px) {
+}
+
+@media only screen and (min-width: 1500px) {
+}
+
+.features ul {
+  margin-bottom: 0.1em;
+}
+
+#carbonads {
+  display: flex;
+  justify-content: flex-end;
+  position: static;
+  display: block;
+  max-width: 400px;
+  padding: 15px 15px 15px 160px;
+  margin: 0;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+  background-color: rgba(0, 0, 0, .05);
+}
+
+#carbonads a {
+  color: #333;
+  text-decoration: none;
+}
+
+.carbon-img {
+  float: left;
+  margin-left: -145px;
+}
+
+.carbon-poweredby {
+  display: block;
+  color: #777 !important;
+}
+
+#codefund #cf {
+  margin: 0!important;
+}
+.bd-content #codefund #cf {
+  margin-bottom: 20px!important;
+}
+
+.nav-footer {
+  text-align: center;
+}
+
+.footer-links {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1em;
+  display: inline-block;
+}
+
+.footer-links li {
+  display: inline-block;
+}
+
+.footer-links li a {
+  color: #aaa;
+}
+
+.footer-links li+li {
+  margin-left: 1rem;
+}
