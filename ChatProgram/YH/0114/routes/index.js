@@ -111,6 +111,10 @@ router.post('/createUser', function (req, res, next) {
                 name: req.body.name,
                 job: req.body.job
             }
+            console.log(currentUser.id)
+            console.log(currentUser.email)
+            console.log(currentUser.name)
+            console.log(currentUser.job)
 
             //DB유저 정보 저장
             db.collection('users').doc(currentUser.id).set({

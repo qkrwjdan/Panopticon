@@ -10,7 +10,7 @@ var session = require('express-session');
 var firebase = require('firebase');
 var alert = require('alert');
 
-var firebaseConfig = {
+/*var firebaseConfig = {
     apiKey: "AIzaSyAM-8-3iuCf1P8O8fvrO0gLZ-bffdMf2JE",
     authDomain: "webrtc-110d1.firebaseapp.com",
     databaseURL: "https://webrtc-110d1.firebaseio.com",
@@ -19,9 +19,9 @@ var firebaseConfig = {
     messagingSenderId: "621543592690",
     appId: "1:621543592690:web:76aca8f54baf63ecdcb66b",
     measurementId: "G-FFQ47LWF90"
-};
+};*/
 
-/*?var firebaseConfig = {
+/*var firebaseConfig = {
 	apiKey: "AIzaSyADp7doPmsFiyZoKATp0i4gpTYoOhCZZ7M",
 	authDomain: "nodewithfirebase-2abe0.firebaseapp.com",
 	projectId: "nodewithfirebase-2abe0",
@@ -30,6 +30,14 @@ var firebaseConfig = {
 	appId: "1:898571033628:web:31e8bb20c7541ed37bd3d9"
 };*/
 
+const firebaseConfig = {
+	apiKey: "AIzaSyADp7doPmsFiyZoKATp0i4gpTYoOhCZZ7M",
+	authDomain: "nodewithfirebase-2abe0.firebaseapp.com",
+	projectId: "nodewithfirebase-2abe0",
+	storageBucket: "nodewithfirebase-2abe0.appspot.com",
+	messagingSenderId: "898571033628",
+	appId: "1:898571033628:web:31e8bb20c7541ed37bd3d9"
+};
 
 firebase.initializeApp(firebaseConfig);
 
@@ -100,7 +108,7 @@ const { userInfo } = require('os');
 app.use('/', index);		//메인화면
 app.use('/host', host);
 app.use('/view', view);
-app.use(express.static(__dirname + "/onetomany"));	
+app.use(express.static(__dirname + "/onetomany"));
 
 app.get('/loginChk', function (req, res) {
 	alert("새로고침 시 로그인을 다시 해주세요");
