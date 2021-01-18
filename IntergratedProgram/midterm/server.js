@@ -79,19 +79,18 @@ app.use(session({
 	cookie: {secure: true}
 }));
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
+app.get('/ScoreTest', (req, res) => {
+    res.render('ScoreTest',{
+        name: "Park",
+    })
+});
 
 
 var index = require('./routes/index');
 var host = require('./routes/host');
 var view = require('./routes/view');
 const { userInfo } = require('os');
-
-app.get('/ScoreTest', (req, res) => {
-    res.render('ScoreTest',{
-        name: "Park",
-    })
-});
 
 app.use('/', index);
 app.use('/host', host);
