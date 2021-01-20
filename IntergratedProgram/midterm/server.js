@@ -6,6 +6,7 @@ var https= require('https');
 var kurento = require('kurento-client');
 var minimist = require('minimist');
 var session = require('express-session');
+const { v4: uuidV4 } = require('uuid')
 
 var firebase = require('firebase');
 var alert = require('alert');
@@ -76,6 +77,14 @@ app.use(session({
 	saveUninitialized: true,
 	cookie: {secure: true}
 }));
+
+//randomize url by using uuid
+app.get('/room', (req, res) => {
+	res.redirect(`/${uuidV4()}`)
+})
+app.get('/room/:room', (req, res) => {
+	res.render('room', { roomId: req.params.room})
+})
 
 // app.use(express.static('public'));
 app.get('/ScoreTest', (req, res) => {
