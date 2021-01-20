@@ -44,7 +44,7 @@
                 background-image: 
                 radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
                 width:100%;
-                height:120px;
+                height:130px;
                 align-items: center;
                 border-radius: 10px 10px 0px 0px;
             }
@@ -67,11 +67,12 @@
                 padding-left: 20%;
             }
             .login-btn-wrap .login-btn{
-                width:95px;
+                width:120px;
                 height:35px;
                 color:white;
                 border: 0;
                 border-radius: 4px;
+                font-weight: bold;
 
                 background:#9ED0FE;
                 background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
@@ -85,7 +86,7 @@
             .login-input-container .login-input-wrap{
                 width:300px;
                 height: 45px;
-                margin-top: 15px;
+                margin-top: 20px;
                 margin-bottom: 10px;
                 border-radius: 2px;
                 border-bottom: solid 2px #9ED0FE;
@@ -98,6 +99,9 @@
             }
             .login-input-container .login-input-wrap input:focus{
                 outline: none;
+            }
+            .selectpad{
+                padding-top:20px;
             }
         </style>
 
@@ -135,27 +139,38 @@
                 <div class="page-container slider" sytle="text-align: center;">
                     <div class="login-form-container shadow">
                         <div class="title">
-                            <h1><br>"Panopticon"<br>
-                            <%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h1>
+                            <h1><br>"Panopticon"</h1>
+                            <h2><%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h2>
                         </div>
                         <div id="host_slides" class="container">
                             <div class="login-input-container">
                                 <div class="login-input-wrap input-name">
+                                    <span style="color:#ffd724">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </span>
                                     <input type="text" id="conference-name" placeholder="수업 이름"><br>
                                 </div>
                                 <div class="login-input-wrap input-description">
+                                    <span style="color:#9ED0FE">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </span>
                                     <input type="text" id="description" placeholder="수업 안내"><br>
                                 </div>
                                 <div class="login-input-wrap input-time">
+                                    <span style="color:#9ED0FE">
+                                        <i class="far fa-clock"></i>
+                                    </span>
                                     <input type="text" id="meetingTime" placeholder="수업 시간"><br>
                                 </div>
-                                <select id="studentlist" multiple="multiple">
-                                    <% for(var i =0; i<studentInfo.name.length; i++){ %>
-                                      <option name="students" value="<%=studentInfo.email[i]%>"><%=studentInfo.name[i]%></option>
-                                    <% } %>          
-                                </select>
+                                <div class="selectpad">
+                                    <select id="studentlist" multiple="multiple">
+                                        <% for(var i =0; i<studentInfo.name.length; i++){ %>
+                                        <option name="students" value="<%=studentInfo.email[i]%>"><%=studentInfo.name[i]%></option>
+                                        <% } %>          
+                                    </select>
+                                </div>
                                 <div class="login-btn-wrap">
-                                    <p><button id="start-conferencing" class="login-btn">화상회의 생성</button></p>
+                                    <p><button id="start-conferencing" class="login-btn">Create Room</button></p>
                                 </div>
                             </div>
                         </div>
