@@ -1,7 +1,106 @@
 <!DOCTYPE html>
 <html id="home" lang="en">
-
     <head>
+        <style type="text/css">
+            body,html{
+                margin: 0;
+                padding:0;
+                height:100%;
+            }
+            
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                font-family: 'Alata', sans-serif;
+            }
+    
+            .page-container{
+                width: 100vw;
+                height: 100vh;
+                background: #eff0f2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+            }
+            .shadow{
+                -webkit-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+                -moz-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+                box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+            }
+            .login-form-container{
+                background:#ffffff ;
+                width:450px;
+                height: 550px;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 10px black;
+                border-radius: 10px;
+                align-items: center;
+            }
+
+            .title{
+                background-image: 
+                radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
+                width:100%;
+                height:120px;
+                align-items: center;
+                border-radius: 10px 10px 0px 0px;
+            }
+
+            .title h1,h2{
+                color:white;
+            }
+            
+            .container{
+                align-items: center;
+                width: 100%;
+                height: 400px;;
+            }
+
+            .login-btn-wrap{
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 20%;
+            }
+            .login-btn-wrap .login-btn{
+                width:95px;
+                height:35px;
+                color:white;
+                border: 0;
+                border-radius: 4px;
+
+                background:#9ED0FE;
+                background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
+            }
+
+            .login-input-container{
+                width:300px;
+                padding-left: 13%;
+                align-items: center;
+            }
+            .login-input-container .login-input-wrap{
+                width:300px;
+                height: 45px;
+                margin-top: 15px;
+                margin-bottom: 10px;
+                border-radius: 2px;
+                border-bottom: solid 2px #9ED0FE;
+            }
+            .login-input-container .login-input-wrap input{
+                background: none;
+                border: none;
+                line-height: 45px;
+                width:267px;
+            }
+            .login-input-container .login-input-wrap input:focus{
+                outline: none;
+            }
+        </style>
+
         <script>
             var userInfo= "<%=JSON.stringify(userInfo)%>";
             var studentInfo= "<%=JSON.stringify(studentInfo)%>";
@@ -28,36 +127,40 @@
         <link rel="stylesheet" href="easySelectStyle.css">
         <script type="text/javascript" src="easySelect.js"></script>
 
-
     </head>
 
     <body>
-
-        <article>
+        <article style="background-color:#eff0f2">
             <div class="slider visible" style="margin:0 auto">
-                <h1 style="color:white">WebRTC 화상회의 <br>
-                    <%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h1>
-                    <p></p>
-                <h2 style="color:white;">미팅 룸 생성</h2>
-                <div class="slides" sytle="text-align: center;">
-                    <div id= "host_slides" class="column">
-                        <div class="card">
-                            <img src="img1.jpg" alt="java" style="width:50%">
-                            <div class="container">
-                                <input type="text" id="conference-name" placeholder="수업 이름"><br>
-                                <input type="text" id="description" placeholder="수업 안내"><br>
-                                <input type="text" id="meetingTime" placeholder="수업 시간"><br>  
-                                  <select id="studentlist" multiple="multiple">
-                                  <% for(var i =0; i<studentInfo.name.length; i++){ %>
-                                    <option name="students" value="<%=studentInfo.email[i]%>"><%=studentInfo.name[i]%></option>
-                                  <% } %>          
-                                  </select>
-                                <p><button id="start-conferencing" class="button">화상회의 생성</button></p>
+                <div class="page-container slider" sytle="text-align: center;">
+                    <div class="login-form-container shadow">
+                        <div class="title">
+                            <h1><br>"Panopticon"<br>
+                            <%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h1>
+                        </div>
+                        <div id="host_slides" class="container">
+                            <div class="login-input-container">
+                                <div class="login-input-wrap input-name">
+                                    <input type="text" id="conference-name" placeholder="수업 이름"><br>
+                                </div>
+                                <div class="login-input-wrap input-description">
+                                    <input type="text" id="description" placeholder="수업 안내"><br>
+                                </div>
+                                <div class="login-input-wrap input-time">
+                                    <input type="text" id="meetingTime" placeholder="수업 시간"><br>
+                                </div>
+                                <select id="studentlist" multiple="multiple">
+                                    <% for(var i =0; i<studentInfo.name.length; i++){ %>
+                                      <option name="students" value="<%=studentInfo.email[i]%>"><%=studentInfo.name[i]%></option>
+                                    <% } %>          
+                                </select>
+                                <div class="login-btn-wrap">
+                                    <p><button id="start-conferencing" class="login-btn">화상회의 생성</button></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br><br>
             </div>
             <p id="job" style="display:none"><%=userInfo.job%></p>
             <p id="professorName" style="display:none"><%=userInfo.name%></p>
@@ -68,7 +171,7 @@
                 // placeholder text
                 placeholder: '학생 목록',
                 // color of selected options
-                selectColor: '#414c52',
+                selectColor: '#5d9dff',
                 // color of placeholder text
                 placeholderColor: '#838383',
                 // title of selected options
@@ -76,11 +179,9 @@
                 // shows values
                 showEachItem: true,
                 // width
-                width: '100%'
-
+                width: '300px'
                 })
             </script>
-
             <!-- 학생목록 출력
             <div class="visible">
                 <% for(var i =0; i<studentInfo.name.length; i++){ %>

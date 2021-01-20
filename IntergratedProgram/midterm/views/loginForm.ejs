@@ -11,70 +11,182 @@
             padding:0;
             height:100%;
         }
-        
-        .font_01{
-            font-family: 'Goldman', cursive;
-            font-size:45px;
-            font-weight:medium;
-            color:white;
-        }
-        .font_02{
-            font-family: 'Do Hyeon', sans-serif;
-            font-size:45px;
-            font-weight:medium;
-            color:white;
-        }
-        
-        .bgimg{
-            border:0;
-            padding:0;
-            background-image: url('https://wi.wallpapertip.com/wsimgs/83-838362_web-developer.jpg');
-            min-height:100%;
-            background-position: center;
-            background-size: cover;
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Alata', sans-serif;
         }
 
-        #box1{
-            background-color: #E2E2E2;
-            padding-left:850px;
-        }
+        .page-container{
+            width: 100vw;
+            height: 100vh;
+            background: #eff0f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-        #box2{
-            font-family: 'Nanum Gothic Coding';
-            border-radius: 12px;
-            background: #BFC2C3;
         }
-        #box3{
-            background-color: #ffffff;
-            background-color: rgba(255,255,255,0.5);
-            border-radius:10px;
+        .shadow{
+            -webkit-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+            -moz-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+            box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+        }/*
+        .shadow-light{
+            -webkit-box-shadow: 45px 45px 104px -33px rgba(38,38,38,0.92);
+            -moz-box-shadow: 45px 45px 104px -33px rgba(38,38,38,0.92);
+            box-shadow: 45px 45px 104px -33px rgba(38,38,38,0.92);
+
+        }*/
+        .login-form-container{
+        
+            background:#f5f5f5 ;
+            width:900px;
+            height: 550px;
+            display: flex;
+            flex-direction: row;
+            box-shadow: 10px black;
+            border-radius: 10px;
+
+        }
+        .login-form-right-side{
+            width: 50%; 
+            border-radius: 10px 0px 0px 10px;
+            padding:75px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-image: 
+            radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
+        }
+        .login-form-right-side h1,h2{
+            color: white;
+            width:100%;
+            text-align: right;
+            /* opacity: 0.9; */
+        }
+        .login-form-right-side p{
+            padding-top: 50px;
+            font-size:12px;
+            text-align: right;
+            opacity: 0.8;
+        }
+        .login-form-left-side{
+            width: 50%;
+            border-radius: 0px 10px 10px 0px;
+            display: flex;
+
+            flex-direction: column;
+            align-items: center;
+            padding:40px;
+            background: rgb(255,255,255);
+            background: linear-gradient(287deg, rgba(255,255,255,1) 0%, rgba(243,244,244,1) 0%, rgba(255,255,255,1) 100%);
+        }
+        .login-form-left-side .login-top-wrap{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width:100%;
+        }
+        .login-form-left-side .login-top-wrap span{
+            color: gray;
+            font-size: 11px;
+            padding-right:20px;
+
+        }
+        .login-form-left-side .login-top-wrap .create-account-btn {
+            background: white;
+            border:  0;
+            width:85px;
+            height: 35px;
+            font-size: 11px;
+            color: #9ED0FE;
+            border-radius: 3px;
+
+        }
+        .login-input-container{
+            padding-top:120px;
+            width:300px;
+        }
+        .login-input-container .login-input-wrap{
+            width:300px;
+            height: 45px;
+            margin-top: 20px;
+            border-radius: 2px;
+            border-bottom: solid 2px #9ED0FE;
+        
+        }
+        /* .login-input-container .login-input-wrap i{
+            color:#9ED0FE;
+            line-height: 45px;
+        } */
+
+        .login-input-container .login-input-wrap input{
+            background: none;
+            border: none;
+            line-height: 45px;
+            padding-left:10px;
+            width:267px;
+        }
+        .login-input-container .login-input-wrap input:focus{
+            outline: none;
+        }
+        .login-btn-wrap{
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;;
+        }
+        .login-btn-wrap .login-btn{
+            width:95px;
+            height:35px;
+            color:white;
+            border: 0;
+            border-radius: 4px;
+
+            background:#9ED0FE;
+            background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
         }
        
     </style>
-
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
-    <div class="bgimg">
-        <br><br><br><br><br><br>
-        <center>
-            <div class="font_01">
-            WebRTC
+    <div class="page-container">
+        <div class="login-form-container shadow">
+            <div class="login-form-right-side">
+                <h1>"Panopticon"</h1>
+                <br>
+                <h2>부정행위 검출 프로그램 <br>Team 동작그만</h2>
             </div>
-            <div class="font_02">
-            화상회의<br>
-            가짜프로그래머
+            <div class="login-form-left-side">
+                <div class="login-top-wrap">
+                    <span>※ 아직 계정이 없으신가요?</span>
+                    <button class="create-account-btn shadow-light" onclick="moveCreate()">회원가입</button>
+                </div>
+                <div class="login-input-container">
+                    <form name="form1" action="loginChk" method="post">
+                        <div class="login-input-wrap input-id">
+                            <span style="color:#9ED0FE">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <input type="id" name="id" placeholder="Email" >
+                        </div>
+                        <div class="login-input-wrap input-password">
+                            <span style="color:#ffd724">
+                                <i class="fas fa-key"></i>
+                            </span>
+                            <input type="password" name="passwd" placeholder="password">
+                        </div>
+                    </form>
+                </div>
+                <div class="login-btn-wrap">
+                    <a href="#" onclick="form1.submit()"><button class="login-btn">Login</button></a>
+                </div>
             </div>
-            <div class="form">
-                <form name="form1" action="loginChk" method="post">
-                    <br>
-                    <input type="id" name="id" placeholder="Email" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;"><br><br>
-                    <input type="password" name="passwd" placeholder="password" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;"><br><br>
-                    <a href="#" onclick="form1.submit()">Login</a><br><br>
-                </form>
-                    <font style="color:white">※ 아직 계정이 없으신가요? </font><br><br>
-                    <button onclick="moveCreate()">회원가입</button>
-            </div>
-        </center>     
+        </div>
     </div>
     <script type= "text/javascript">
         function moveCreate(){

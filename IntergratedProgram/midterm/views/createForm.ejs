@@ -15,70 +15,182 @@
             height:100%;
         }
         
-        .font_01{
-            font-family: 'Goldman', cursive;
-            font-size:45px;
-            font-weight:medium;
-            color:white;
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Alata', sans-serif;
         }
-        .font_02{
-            font-family: 'Do Hyeon', sans-serif;
-            font-size:45px;
-            font-weight:medium;
-            color:white;
+
+        .page-container{
+            width: 100vw;
+            height: 100vh;
+            background: #eff0f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
         }
+        .shadow{
+            -webkit-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+            -moz-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+            box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+        }
+        .login-form-container{
         
-        .bgimg{
-            border:0;
-            padding:0;
-            background-image: url('https://wi.wallpapertip.com/wsimgs/83-838362_web-developer.jpg');
-            min-height:100%;
-            background-position: center;
-            background-size: cover;
+            background:#f5f5f5 ;
+            width:900px;
+            height: 550px;
+            display: flex;
+            flex-direction: row;
+            box-shadow: 10px black;
+            border-radius: 10px;
+
+        }
+        .login-form-left-side{
+            width: 50%; 
+            border-radius: 0px 10px 10px 0px;
+            padding:75px;
+            display: flex;
+            /* flex-direction: column;
+            justify-content: center; */
+            align-items: center;
+            color: white;
+            background-image: 
+            radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
         }
 
-        #box1{
-            background-color: #E2E2E2;
-            padding-left:850px;
+        .login-form-right-side h1,h2{
+            color:#9ED0FE;
+            width:100%;
+            text-align: center;
+            /* opacity: 0.9; */
+
+        }
+        .login-form-right-side{
+            width: 50%;
+            border-radius: 10px 0px 0px 10px;
+            display: flex;
+
+            flex-direction: column;
+            align-items: center;
+            padding:40px;
+            background: rgb(255,255,255);
+            background: linear-gradient(287deg, rgba(255,255,255,1) 0%, rgba(243,244,244,1) 0%, rgba(255,255,255,1) 100%);
+        }
+        .login-form-right-side .login-top-wrap{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width:100%;
+        }
+        .login-form-right-side .login-top-wrap span{
+            color: gray;
+            font-size: 11px;
+            padding-right:20px;
+
+        }
+        .login-form-right-side .login-top-wrap .create-account-btn {
+            background: white;
+            border:  0;
+            width:85px;
+            height: 35px;
+            font-size: 11px;
+            color: #9ED0FE;
+            border-radius: 3px;
+
+        }
+        .select{
+            width:300px;
+            height:45px;
+            margin-top:20px;
+            border-radius: 2px;
+            border-color:#9ED0FE;
+        }
+        .login-input-container{
+            padding-top:50px;
+            width:300px;
+        }
+        .login-input-container .login-input-wrap{
+            width:300px;
+            height: 45px;
+            margin-top: 20px;
+            border-radius: 2px;
+            border-bottom: solid 2px #9ED0FE;
+        
         }
 
-        #box2{
-            font-family: 'Nanum Gothic Coding';
-            border-radius: 12px;
-            background: #BFC2C3;
+        .login-input-container .login-input-wrap input{
+            background: none;
+            border: none;
+            line-height: 45px;
+            padding-left:10px;
+            width:267px;
         }
-        #box3{
-            background-color: #ffffff;
-            background-color: rgba(255,255,255,0.5);
-            border-radius:10px;
+        .login-input-container .login-input-wrap input:focus{
+            outline: none;
         }
+        .login-btn-wrap{
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;;
+        }
+        .login-btn-wrap .login-btn{
+            width:95px;
+            height:35px;
+            color:white;
+            border: 0;
+            border-radius: 4px;
 
+            background:#9ED0FE;
+            background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
+        }
     </style>
-
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
-    <div class="bgimg">
-        <br><br><br><br><br><br>
-        <center>
-            <div class="font_01">
-            WebRTC<br>
-            Sign up<br>
-            </div><br><br>
-            <div class="form">
-                <form name="form2" action="createUser" method="post">
-                    <br>
-                    <input type="text" name="name" placeholder="Name" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;"><br><br>
-                    <input type="id" name="id" placeholder="Email" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;"><br><br>
-                    <input type="text" name="passwd" placeholder="Password" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;"><br><br>
-                    <!-- <input type="job" name="job" placeholder="job" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;"><br><br> -->
-                    <select name ="job" style="width:150px; height: 30px; background-color: rgba(255,255,255,0.5); border-radius: 5px;">
+    <div class="page-container">
+        <div class="login-form-container shadow">
+            <div class="login-form-right-side">
+                <div >
+                    <h1>Panopticon Sign Up</h1>
+                </div>
+                <div class="login-input-container">
+                    <select name ="job" class="select">
                         <option value="student">학생</option>
                         <option value="professor">교수</option>
-                    </select><br><br>
-                    <a href="#" style="color:white" onclick="form2.submit()">회원가입</a>
-                </form>
+                    </select>
+                    <form name="form2" action="createUser" method="post">
+                        <br>
+                        <div class="login-input-wrap input-name">
+                            <span style="color:#9ED0FE">
+                                <i class="far fa-smile"></i>
+                            </span>
+                            <input type="text" name="name" placeholder="Name" >
+                        </div>
+                        <div class="login-input-wrap input-id">
+                            <span style="color:#9ED0FE">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <input type="id" name="id" placeholder="Email" >
+                        </div>
+                        <div class="login-input-wrap input-password">
+                            <span style="color:#ffd724">
+                                <i class="fas fa-key"></i>
+                            </span>
+                            <input type="text" name="passwd" placeholder="Password" >
+                        </div>
+                        <div class="login-btn-wrap">
+                            <a href="#" onclick="form2.submit()"><button class="login-btn">Sign Up</button></a>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </center>     
+            <div class="login-form-left-side">
+
+            </div>
+        </div>
     </div>
 </body>
 </html>

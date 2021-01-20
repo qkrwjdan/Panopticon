@@ -10,10 +10,10 @@
     /*make dropdown width */
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
-    color: #414c52;
-    border: 1px solid #cbcbcb !important;
+    color: #9ED0FE;
+    border: 1px solid #9ED0FE !important;
     border-radius: 3px;
-    height: 33px;
+    height: 10px;
 }
 
 .styledSelect {
@@ -140,7 +140,7 @@
 
 .container input:checked~.checkmark {
     background-color: white;
-    border-color: #3490dc;
+    border-color: #9ED0FE;
 }
 
 
@@ -161,7 +161,7 @@
     top: 1px;
     width: 4.5px;
     height: 10px;
-    border: 2px solid #1720ff;
+    border: 2px solid #9ED0FE;
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
