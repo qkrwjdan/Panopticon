@@ -7,3 +7,6 @@ function score_clear() {
 navigator.geolocation.getCurrentPosition(function(position) {
     document.getElementById('Loc').innerHTML = "위도:" + position.coords.latitude + ", 경도:" + position.coords.longitude;
 });
+var userIP = ip();
+console.log(userIP);
+document.write("UserIP: " + ip());

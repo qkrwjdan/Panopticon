@@ -4,6 +4,7 @@
     <!-- Load scatter-gl.js -->
     <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
     <script src="annyang.min.js"></script>
+    <script src="https://jsgetip.appspot.com"></script>
     <script src="jquery-1.12.4.min.js"></script>
     <script src="utils.js"></script>
 
@@ -15,6 +16,9 @@
 
 <body>
     <div id="main">
+        <div id='Loc'>
+            결과가 없습니다.
+        </div>
         <div class="container">
             <div class="canvas-wrapper">
                 <video id="video" playsinline style="
@@ -25,8 +29,8 @@
             ">
           </video>
 
-                <h1 id="faceState" style="left:500px">중앙</h1>
-                <h1 id="pupilState" style="left:500px">중앙</h1>
+                <h1 id="faceState" style="left:300px">중앙</h1>
+                <h1 id="pupilState" style="left:300px">중앙</h1>
             </div>
         </div>
     </div>
@@ -46,22 +50,6 @@
             결과가 없습니다.
         </div>
     </div>
-    <div id='Loc'>
-        결과가 없습니다.
-    </div>
-
-    <script>
-        $.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
-            console.log(JSON.stringify(data, null, 2));
-            console.log("newIP" + data.geobytesremoteip);
-            var newip = data.geobytesremoteip;
-            document.getElementById('useripp').innerHTML = "IP:" + newip;
-        });
-    </script>
-    <div id='useripp'>
-        IP2가없다
-    </div>
-
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
 <script src="https://unpkg.com/@tensorflow/tfjs-core@2.4.0/dist/tf-core.js"></script>
