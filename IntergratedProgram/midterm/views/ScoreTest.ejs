@@ -1,64 +1,63 @@
 <head>
     <!-- Load three.js -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
-  <!-- Load scatter-gl.js -->
-  <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
-  <script src="annyang.min.js"></script>
-  <script src="jquery-1.12.4.min.js"></script>
-  <script src="index.css"></script>
-  <style>
-  
-  </style>
-  </head>
-  <body>
-      <h1>HI.</h1>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
+    <!-- Load scatter-gl.js -->
+    <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
+    <script src="annyang.min.js"></script>
+    <script src="jquery-1.12.4.min.js"></script>
+    <script src="index.css"></script>
+    <script src="utils.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <button onClick='score_clear()'>Score clear</button>
+    <div class="">
+        <div id='score'>
+            결과가 없습니다.
+        </div>
+    </div>
+    <div class="">
+        <div id='result'>
+            결과가 없습니다.
+        </div>
+    </div>
+    <div id='vol'>
+        결과가 없습니다.
+    </div>
+    <h1 id="faceState" style="left:500px">중앙</h1>
+    <h1 id="pupilState" style="left:500px">중앙</h1>
     <div id="main">
-      <div class="container">
-        <div class="canvas-wrapper">
-          <video id="video" playsinline style="
+        <div class="container">
+            <div class="canvas-wrapper">
+                <video id="video" playsinline style="
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
             width: auto;
             height: auto;
             ">
           </video>
-  
-          <h1 id="faceState" style="left:500px">중앙</h1>
-          <h1 id="pupilState" style="left:500px">중앙</h1>
+            </div>
         </div>
-      </div>
     </div>
     <div class="pids-wrapper">
-      <div>볼륨바</div>
-      <div class="pid"></div>
-      <div class="pid"></div>
-      <div class="pid"></div>
-      <div class="pid"></div>
-      <div class="pid"></div>
-      <div class="pid"></div>
-      <div class="pid"></div>
-      <div class="pid"></div>
+        <div>볼륨바</div>
+        <div class="pid"></div>
+        <div class="pid"></div>
+        <div class="pid"></div>
+        <div class="pid"></div>
+        <div class="pid"></div>
+        <div class="pid"></div>
+        <div class="pid"></div>
+        <div class="pid"></div>
     </div>
-    <div class="">
-      <div id='vol'>
-        결과가 없습니다.
-      </div>
-    </div>
-    <div class="">
-        <div id='result'>
-          결과가 없습니다.
-        </div>
-    </div>
-  </body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
-  <script src="https://unpkg.com/@tensorflow/tfjs-core@2.4.0/dist/tf-core.js"></script>
-  <script src="https://unpkg.com/@tensorflow/tfjs-converter@2.4.0/dist/tf-converter.js"></script>
-  
-  <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.4.0/dist/tf-backend-webgl.js"></script>
-  <script src="https://unpkg.com/@tensorflow-models/face-landmarks-detection@0.0.1/dist/face-landmarks-detection.js"></script>
-  <script type="module" src="facemeshUtils.js"></script>
-  
-  
-  
-  
-  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
+<script src="https://unpkg.com/@tensorflow/tfjs-core@2.4.0/dist/tf-core.js"></script>
+<script src="https://unpkg.com/@tensorflow/tfjs-converter@2.4.0/dist/tf-converter.js"></script>
+
+<script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.4.0/dist/tf-backend-webgl.js"></script>
+<script src="https://unpkg.com/@tensorflow-models/face-landmarks-detection@0.0.1/dist/face-landmarks-detection.js"></script>
+<script type="module" src="facemeshUtils.js"></script>
