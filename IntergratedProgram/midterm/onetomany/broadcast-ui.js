@@ -112,14 +112,14 @@ var config = {
       };
 
       var html = '<div class="column">' +
-                  '<div class="card">' +
-                      '<img src="img1.jpg" alt="java" style="width:50%">' +
+                  '<div style="width:100%">' +
                       '<div class="container">' +
-                          '<h2>'+room.professorName+'</h2>' +
-                          '<p class="title">'+room.roomName+'</p>' +
-                          '<p>'+room.description+'</p>' +
-                          '<p>미팅시간 : '+room.meetingTime+'</p>' +
-                          '<p><button id="join_btn" class="button">화상회의 참여</button></p>' +
+                          '<h1 style="color:black">미팅 참여 요청</h1>' + '<br></br>' +
+                          '<h2 style="color:black">'+room.professorName+' 교수님</h2>' +
+                          '<h2 style="color:black">'+room.roomName+'</h2>' +
+                          '<h2 style="color:black">'+room.description+'</h2>' +
+                          '<h2 style="color:black">미팅시간 : '+room.meetingTime+'</h2>' + '<br>' +
+                          '<h2><button id="join_btn" class="button">화상회의 참여</button></h2>' +
                       '</div>'+
                   '</div>' +
                   '</div>';
@@ -645,15 +645,12 @@ if (userInfo.job == "professor") {
   function whiteBoardResize() {
     canvas.width = document.getElementById("participants").offsetWidth;
     canvas.height = document.getElementById("participants").offsetHeight;
-
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     document.getElementById("jsRange").style.width = canvas.width * 0.5 + 'px';
     document.getElementById("canvasBtns").style.marginTop = canvas.height * 0.93 + 'px';
     document.getElementById("exitCanvas").style.marginLeft = canvas.width * 0.93 + 'px';
   }
-
   window.onresize = function() {
     whiteBoardResize();
   }

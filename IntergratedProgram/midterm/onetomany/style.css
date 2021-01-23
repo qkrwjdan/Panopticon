@@ -166,7 +166,7 @@ padding: .5em;
 
 /*---other button setting---*/
 .basicBtns{
-  background-color: #121212;
+  background-color: #9ED0FE;
   border: none;
   width: 40px;
   text-decoration: none;
@@ -174,7 +174,7 @@ padding: .5em;
   font-size: 15px;
   margin: 10px 4px;
   cursor: pointer;
-  color: white;
+  color: black;
 }
 
 #conc {
@@ -186,7 +186,7 @@ left:50%;
 margin-top: -40px;
 margin-left : -275px;
 overflow: hidden;
-background-color: #121212;
+background-color: #9ED0FE;
 z-index: 1100;
 position: relative;
 opacity: 0.9;
@@ -199,7 +199,7 @@ width: fit-content;
 margin-top : 10px;
 margin-left : 10px;
 overflow: hidden;
-background-color: #121212;
+background-color: #9ED0FE;
 z-index: 1100;
 position: relative;
 opacity: 0.9;
@@ -362,10 +362,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .column {
-  float: left;
-  width: 33.3%;
-  margin-bottom: 16px;
-  padding: 0 8px;
+  width: 100%;
 }
 
 /* Display the columns below each other instead of side by side on small screens */
@@ -373,12 +370,13 @@ input[type="number"]::-webkit-inner-spin-button {
   .column {
     width: 100%;
     display: block;
+    background-color: #fefefe;
   }
 }
 
 .slides {
   display: flex;
-  width: 800px;
+  width: 1000px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   
@@ -406,11 +404,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .slides > div {
   scroll-snap-align: start;
   flex-shrink: 0;
-  height : 400px;
-  width: 290px;
+  height : 450px;
+  width: 450px;
   margin-right: 50px;
   border-radius: 10px;
-  background: #eee;
+  background: #fefefe;
   transform-origin: center center;
   transform: scale(1);
   transition: transform 0.5s;
@@ -431,6 +429,7 @@ input[type="number"]::-webkit-inner-spin-button {
 /* Some left and right padding inside the container */
 .container {
   padding: 0 16px;
+  background-color: #fefefe;
 }
 
 /* Clear floats */
@@ -450,10 +449,13 @@ input[type="number"]::-webkit-inner-spin-button {
   display: inline-block;
   padding: 8px;
   color: white;
-  background-color: #000;
+  background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);;
   text-align: center;
   cursor: pointer;
-  width: 100%;
+  width: 30%;
+  border: 0;
+  border-radius: 4px;
+  font-weight: bold;
 }
 
 .button:hover {
@@ -466,7 +468,7 @@ input[type="number"]::-webkit-inner-spin-button {
   display: inline-block;
   padding: 8px;
   color: white;
-  background-color: #000;
+  background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);;
   text-align: center;
   cursor: pointer;
   width: 200px;
@@ -512,7 +514,7 @@ img{
     font-family: inherit;
     visibility: hidden;
     transition: opacity .5s, visibility .5s, transform .5s;
-    background: rgba(91, 162, 255, 0.925);
+    background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);;
     color: #fff;
     z-index: 10000;
 }
@@ -579,7 +581,7 @@ img{
   font-family: inherit;
   font-weight: bold;
   cursor : pointer;
-  background-color : rgb(119, 205, 255);
+  background-color :#5d9dff;
   color : white;
   border :0;
   outline :0;
@@ -599,7 +601,7 @@ img{
   margin: 10px;
   display : inline-block;
   /*margin-left: 40%;*/
-  background : rgb(91, 162, 255);
+  background : #9ED0FE;
   overflow: hidden;
   font-family: inherit;
   word-wrap: break-word;
@@ -644,7 +646,7 @@ img{
   outline-color: rgb(26, 36, 58);
   left:40%;
   top : -40px;
-  background-color: whitesmoke;
+  background-color: #9ED0FE;
   position: relative;
   cursor : pointer;
 }
@@ -663,11 +665,11 @@ img{
 }
 
 .request_sign#question{
-  color : rgb(255, 108, 108);
+  color : #5d9dff;
 }
 
 .request_sign#leave{
-  color : rgb(255, 108, 108);
+  color : #5d9dff;
 }
 
 #host_slides {
@@ -718,7 +720,7 @@ img{
 
 .chatOffBtn {
   background: aliceblue;
-  color: rgb(85, 117, 165);
+  color:#5d9dff;
   border: none;
   width: 40px;
   text-decoration: none;
@@ -730,17 +732,16 @@ img{
 }
 
 .chatOnBtn {
-  background: #181818;
-  color: white;
-  border: solid 1px grey;
-  border-radius: 2px;
+  background: #eff0f2;
+  color: #5d9dff;
   width: 40px;
   text-decoration: none;
+  border: none;
   display: inline-block;
   font-size: 20px;
   margin: 0px;
   cursor: pointer;
-  padding: 0px;
+  padding-right: 20px;
 }
 
 #hiddenChat {
