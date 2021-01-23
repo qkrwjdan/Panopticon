@@ -16,7 +16,7 @@
         }
         
         .pid {
-            width: calc(7% - 10px);
+            width: calc(10% - 10px);
             height: 10px;
             display: inline-block;
             margin: 5px;
@@ -48,12 +48,52 @@
         };
     </script>
 
+
+
+
+    <style media="screen">
+        div {
+            text-align: center;
+        }
+    </style>
+
 </head>
 
 <body>
-
+    <script>
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log("위도:" + position.coords.latitude + ", 경도:" + position.coords.longitude);
+            document.getElementById('Loc').innerHTML = "위도:" + position.coords.latitude + ", 경도:" + position.coords.longitude;
+        });
+    </script>
+    <div id='Loc'>
+        결과가 없습니다.
+    </div>
+    <script type="text/javascript" src="http://jsgetip.appspot.com"></script>
+    <script>
+        let IP = ip();
+        console.log('ip는' + IP);
+        document.getElementById('userip').innerHTML = "IP:" + IP
+    </script>
+    <div id='userip'>
+        IP가없다
+    </div>
+    <script>
+        $.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
+            console.log(JSON.stringify(data, null, 2));
+            console.log("newIP" + data.geobytesremoteip);
+            var newip = data.geobytesremoteip + data.geobytescapital
+            document.getElementById('useripp').innerHTML = "IP,City = " + newip;
+        });
+    </script>
+    <div id='useripp'>
+        IP2가없다
+    </div>
     <div class="pids-wrapper">
         <div>볼륨바</div>
+        <div class="pid"></div>
+        <div class="pid"></div>
+        <div class="pid"></div>
         <div class="pid"></div>
         <div class="pid"></div>
         <div class="pid"></div>
@@ -80,9 +120,99 @@
 
     <div class="chats">
     </div>
+    <h1>Ajax 기본 테스트</h1>
+
+    <div style="border: 3px solid gray; width: 180px;">
+
+        <h2>GET</h2>
+
+        <button id='getMethod'>GET</button>
+
+        <p id='get_output'>
+
+            get
+
+        </p>
+
+    </div>
+
+    <div style="border: 3px solid gray; width: 180px;">
+
+        <h2>POST</h2>
+
+        <button id='postMethod'>POST</button>
+
+        <p id='post_output'>
+
+            psot
+
+        </p>
+
+    </div>
+    <script>
+        $(document).ready(function() {
+
+            $('#getMethod').click(function() {
+                var get = 'asd';
+
+                //Ajax GET Method TEST
+                $.ajax({
+                    url: '/api/get',
+                    dataType: 'json',
+                    type: 'GET',
+                    data: {
+                        data: get
+                    },
+                    success: function(result) {
+                        if (result) {
+                            $('#get_output').html(result.result);
+                        }
+                    }
+                });
+            });
+            $('#postMethod').click(function() {
+                var post = 'POST METHOD CALL';
+
+
+                //Ajax POST Method TEST
+                $.ajax({
+                    url: '/api/post',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {
+                        data: post
+                    },
+                    success: function(result) {
+                        if (result) {
+                            $('#post_output').html(result.result);
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
 
 
     <script>
+        $('.usrInput').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            var text = $(".usrInput").val();
+            if (keyCode === 13) {
+                if (text == "" || $.trim(text) == '') {
+                    e.preventDefault();
+                    return false;
+                } else {
+                    $(".usrInput").blur();
+                    setUserResponse(text);
+                    send(text);
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+
         function colorPids(vol) {
 
             let all_pids = $('.pid');
@@ -94,11 +224,36 @@
             }
 
             for (var i = 0; i < elem_range.length; i++) {
+                // console.log(elem_range[i]);
                 elem_range[i].style.backgroundColor = "#69ce2b";
             }
             document.getElementById('vol').innerHTML = 'vol=' + vol;
 
+            //Ajax GET Method TEST
+            $.ajax({
+                url: '/api/get',
+                dataType: 'json',
+                type: 'GET',
+                data: {
+                    data: vol
+                },
+            });
+
+
         }
+
+        function setUserResponse(val) {
+
+            // var UserResponse = '<img class="userAvatar" src=' + "./static/img/userAvatar.jpg" + '><p class="userMsg">' + val + ' </p><div class="clearfix"></div>';
+            var UserResponse = '<p>' + val + ' </p>'
+            $(UserResponse).appendTo('.chats').show('slow');
+            $(".usrInput").val('');
+            // scrollToBottomOfResults();
+            // $('.suggestions').remove();
+        }
+
+
+
 
         var leftchannel = [];
         var rightchannel = [];
@@ -114,13 +269,13 @@
         var bufferSize = 2048;
         var numberOfInputChannels = 2;
         var numberOfOutputChannels = 2;
+        var sososo = null;
 
         //web page loaded.
         navigator.mediaDevices.getUserMedia({
                 audio: true
             })
             .then(function(e) {
-                console.log("user consent");
 
                 // creates the audio context
                 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -133,6 +288,7 @@
                 // creates an audio node from the microphone incoming stream
                 mediaStream = context.createMediaStreamSource(e);
 
+                // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createScriptProcessor
                 // bufferSize: the onaudioprocess event is called when the buffer is full
                 if (context.createScriptProcessor) {
                     recorder = context.createScriptProcessor(bufferSize, numberOfInputChannels, numberOfOutputChannels);
@@ -141,7 +297,6 @@
                 }
 
                 recorder.onaudioprocess = function(e) {
-                    console.log("web page load onaudioprocess");
 
                     var array = new Uint8Array(analyser.frequencyBinCount);
                     analyser.getByteFrequencyData(array);
@@ -154,13 +309,12 @@
 
                     var average = values / length;
 
-                    console.log(Math.floor(average));
                     colorPids(average);
 
                     filter = (filter * 0.8) + (average * 0.2);
 
                     if (filter > 30) {
-                        console.log("부정행위 경고");
+                        var event = new Event('record_start');
                     }
                 }
 
@@ -173,7 +327,6 @@
         clickHere.addEventListener("record_start", function() {
 
             recorder.onaudioprocess = function(e) {
-                console.log("record_start_onaudioprocess");
 
                 leftchannel.push(new Float32Array(e.inputBuffer.getChannelData(0)));
                 rightchannel.push(new Float32Array(e.inputBuffer.getChannelData(1)));
@@ -188,19 +341,20 @@
                     values += (array[i]);
                 }
 
-                var average = values / (length * 0.7);
+                var average = values / length;
 
-                console.log(Math.round(average));
                 colorPids(average);
 
                 filter = (filter * 0.8) + (average * 0.2);
-                console.log("filter : " + filter);
 
+                if (filter < 10) {
+                    var event = new Event('record_end');
+                    clickHere.dispatchEvent(event);
+                }
             }
         });
 
         clickHere.addEventListener("record_end", function() {
-            console.log("record end");
             recorder.disconnect(context.destination);
             analyser.disconnect(recorder);
             mediaStream.disconnect(analyser);
@@ -259,14 +413,11 @@
 
                 var average = values / length;
 
-                console.log(Math.round(average));
                 colorPids(average);
 
                 filter = (filter * 0.8) + (average * 0.2);
-                console.log("filter : " + filter);
 
                 if (filter > 30) {
-                    console.log("create record start event");
                     var event = new Event('record_start');
                     clickHere.dispatchEvent(event);
                 }
@@ -276,6 +427,11 @@
             analyser.connect(recorder);
             recorder.connect(context.destination);
         });
+
+
+
+
+
 
         function flattenArray(channelBuffer, recordingLength) {
             var result = new Float32Array(recordingLength);
@@ -308,6 +464,8 @@
             }
         }
     </script>
+
+
 </body>
 
 </html>
