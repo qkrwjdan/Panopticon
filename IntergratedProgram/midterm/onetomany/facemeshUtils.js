@@ -70,19 +70,19 @@ const detectFaceRotate = (C1, C2) => {
         // facing left
         console.log("left");
         totalScore = totalScore + 2.5;
-        faceState.innerHTML = "left";
+        faceState.innerHTML = "face left";
 
     } else if (XDiff > -10 && XDiff < 10) {
         // facing front
         console.log("front");
         totalScore = totalScore - 0.5;
-        faceState.innerHTML = "front";
+        faceState.innerHTML = "face front";
 
     } else if (XDiff > 10) {
         // facing right
         console.log("right");
         totalScore = totalScore + 2.5;
-        faceState.innerHTML = "right";
+        faceState.innerHTML = "face right";
     }
 
     if (YDiff > 0) {
@@ -127,15 +127,15 @@ const detectPupilMoving = (LEC, REC, LPC, RPC) => {
 
     if ((leftEyeXDiff + rightEyeXDiff) < -5) {
         console.log("eye right");
-        pupilState.innerHTML = "right";
+        pupilState.innerHTML = "Pupil right";
         totalScore = totalScore + 2.5;
     } else if ((leftEyeXDiff + rightEyeXDiff) > 5) {
         console.log("eye left");
-        pupilState.innerHTML = "left";
+        pupilState.innerHTML = "Pupil left";
         totalScore = totalScore + 2.5;
     } else {
         console.log("eye center");
-        pupilState.innerHTML = "center";
+        pupilState.innerHTML = "Pupil center";
         totalScore = totalScore - 0.5;
     }
 
@@ -278,7 +278,7 @@ async function main() {
 
 annyang.setLanguage('ko');
 annyang.start({
-    autoRestart: false,
+    autoRestart: true,
     continuous: true
 })
 var recognition = annyang.getSpeechRecognizer();

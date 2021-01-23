@@ -13,16 +13,22 @@
 </head>
 
 <body>
-    <h1>HI.</h1>
     <button onClick='score_clear()'>Score clear</button>
     <div class="">
         <div id='score'>
             결과가 없습니다.
         </div>
     </div>
-    <div id='result'>
+    <div class="">
+        <div id='result'>
+            결과가 없습니다.
+        </div>
+    </div>
+    <div id='vol'>
         결과가 없습니다.
     </div>
+    <h1 id="faceState" style="left:500px">중앙</h1>
+    <h1 id="pupilState" style="left:500px">중앙</h1>
     <div id="main">
         <div class="container">
             <div class="canvas-wrapper">
@@ -33,9 +39,6 @@
             height: auto;
             ">
           </video>
-
-                <h1 id="faceState" style="left:500px">중앙</h1>
-                <h1 id="pupilState" style="left:500px">중앙</h1>
             </div>
         </div>
     </div>
@@ -49,11 +52,6 @@
         <div class="pid"></div>
         <div class="pid"></div>
         <div class="pid"></div>
-    </div>
-    <div class="">
-        <div id='vol'>
-            결과가 없습니다.
-        </div>
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
