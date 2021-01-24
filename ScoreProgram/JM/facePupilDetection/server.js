@@ -21,6 +21,12 @@ app.get('/', (req, res) => {
         name: "Park",
     })
 });
+app.get('/hand', (req, res) => {
+    res.render('hand',{
+        name: "Park",
+    })
+});
+
 
 // app.get('/',function(req,res,next){
 //     res.render("index",{

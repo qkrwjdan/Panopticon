@@ -28,7 +28,7 @@ const VIDEO_SIZE = 500;
 const mobile = isMobile();
 const state = {
     backend: 'webgl',
-    maxFaces: 1,
+    maxFaces: 2,
     triangulateMesh: true,
     predictIrises: true
 };
