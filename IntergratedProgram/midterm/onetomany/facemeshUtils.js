@@ -47,7 +47,7 @@ function colorPids(vol) {
     for (var i = 0; i < elem_range.length; i++) {
         elem_range[i].style.backgroundColor = "#69ce2b";
     }
-    document.getElementById('vol').innerHTML = 'vol=' + vol;
+    document.getElementById('vol').innerHTML = 'vol : ' + parseInt(vol);
     if (vol > 25) {
         totalScore = totalScore + 0.1;
     }
@@ -57,7 +57,7 @@ function colorPids(vol) {
         totalScore = 100
     }
     console.log('부정행위점수', totalScore);
-    document.getElementById('score').innerHTML = '부정행위점수=' + totalScore;
+    document.getElementById('score').innerHTML = '부정행위점수 : ' + parseInt(totalScore);
 
 
 }
@@ -70,24 +70,25 @@ const detectFaceRotate = (C1, C2) => {
         // facing left
         console.log("left");
         totalScore = totalScore + 2.5;
-        faceState.innerHTML = "face left";
+        faceState.innerHTML = "왼쪽";
 
     } else if (XDiff > -10 && XDiff < 10) {
         // facing front
         console.log("front");
         totalScore = totalScore - 0.5;
-        faceState.innerHTML = "face front";
+        faceState.innerHTML = "정면";
 
     } else if (XDiff > 10) {
         // facing right
         console.log("right");
         totalScore = totalScore + 2.5;
-        faceState.innerHTML = "face right";
+        faceState.innerHTML = "오른쪽";
     }
 
     if (YDiff > 0) {
         console.log("Looking up");
         totalScore = totalScore + 2.5;
+        faceState.innerHTML = "위쪽"
     }
 
 }
@@ -127,20 +128,21 @@ const detectPupilMoving = (LEC, REC, LPC, RPC) => {
 
     if ((leftEyeXDiff + rightEyeXDiff) < -5) {
         console.log("eye right");
-        pupilState.innerHTML = "Pupil right";
+        pupilState.innerHTML = "오른쪽";
         totalScore = totalScore + 2.5;
     } else if ((leftEyeXDiff + rightEyeXDiff) > 5) {
         console.log("eye left");
-        pupilState.innerHTML = "Pupil left";
+        pupilState.innerHTML = "왼쪽";
         totalScore = totalScore + 2.5;
     } else {
         console.log("eye center");
-        pupilState.innerHTML = "Pupil center";
+        pupilState.innerHTML = "정면";
         totalScore = totalScore - 0.5;
     }
 
     if ((leftEyeYDiff + rightEyeYDiff) < -15) {
-        console.log("eye looking up");
+        pupilState.innerHTML = "위쪽";
+        console.log("위쪽");
         totalScore = totalScore + 2.5;
     }
 
@@ -297,7 +299,7 @@ recognition.onresult = function(event) {
             console.log("interim_transcript=" + interim_transcript);
         }
     }
-    document.getElementById('result').innerHTML = '텍스트=' + final_transcript;
+    document.getElementById('result').innerHTML = '텍스트 : ' + final_transcript;
 };
 
 const runFacemesh = async() => {

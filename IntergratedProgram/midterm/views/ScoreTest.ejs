@@ -16,38 +16,41 @@
 
 <body>
     <div id="main">
-        <div id='Loc'>
-            결과가 없습니다.
-        </div>
         <div class="container">
-            <div class="canvas-wrapper">
+            <div class="canvas-wrapper" style="float:left; margin-right : 100px;">
                 <video id="video" playsinline style="
-            -webkit-transform: scaleX(-1);
-            transform: scaleX(-1);
-            width: auto;
-            height: auto;
-            ">
-          </video>
+                    -webkit-transform: scaleX(-1);
+                    transform: scaleX(-1);
+                    width: auto;
+                    height: auto;
+                    ">
+                </video>
 
-                <h1 id="faceState" style="left:300px">중앙</h1>
-                <h1 id="pupilState" style="left:300px">중앙</h1>
             </div>
-        </div>
-    </div>
-
-    <div class="">
-        <div id='score'>
-            결과가 없습니다.
-        </div>
-    </div>
-    <div class="">
-        <div id='vol'>
-            결과가 없습니다.
-        </div>
-    </div>
-    <div class="">
-        <div id='result'>
-            결과가 없습니다.
+            <div style="float:left">
+                
+                <h1>
+                    위치 : 
+                    <span id="Loc">결과가 없습니다.</span>
+                </h1>
+                <h1>
+                    얼굴 움직임 : 
+                    <span id="faceState">중앙</span>
+                </h1>
+                <h1>
+                    눈동자 움직임 : 
+                    <span id="pupilState">중앙</span>
+                </h1>
+                <h1 id='score'>
+                    결과가 없습니다.
+                </h1>
+                <h1 id='vol'>
+                    결과가 없습니다.
+                </h1>
+                <h1 id='result'>
+                    결과가 없습니다.
+                </h1>
+            </div>
         </div>
     </div>
 </body>
