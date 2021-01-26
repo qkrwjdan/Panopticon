@@ -4,13 +4,9 @@ let faceState, pupilState;
 faceState = document.getElementById("faceState");
 pupilState = document.getElementById("pupilState");
 
-var leftchannel = [];
-var rightchannel = [];
 var recorder = null;
 var recordingLength = 0;
-var volume = null;
 var audioStream = null;
-var sampleRate = 44100;
 var context = null;
 var analyser = null;
 var filter = 0;
@@ -33,64 +29,88 @@ const state = {
     predictIrises: true
 };
 
+function detectVolumeScore(vol) {
 
-function colorPids(vol) {
-
-    let all_pids = $('.pid');
-    let amout_of_pids = Math.round(vol / 10);
-    let elem_range = all_pids.slice(0, amout_of_pids)
-
-    for (var i = 0; i < all_pids.length; i++) {
-        all_pids[i].style.backgroundColor = "#e6e7e8";
-    }
-
-    for (var i = 0; i < elem_range.length; i++) {
-        elem_range[i].style.backgroundColor = "#69ce2b";
-    }
     document.getElementById('vol').innerHTML = 'vol : ' + parseInt(vol);
+
     if (vol > 25) {
-        totalScore = totalScore + 0.1;
+        return 1
     }
-    if (totalScore < 0) {
-        totalScore = 0;
-    } else if (totalScore > 100) {
-        totalScore = 100
-    }
-    console.log('부정행위점수', totalScore);
-    document.getElementById('score').innerHTML = '부정행위점수 : ' + parseInt(totalScore);
-
-
+    return 0;
 }
 
 const detectFaceRotate = (C1, C2) => {
     const XDiff = C1[0] - C2[0];
     const YDiff = C1[1] - C2[1];
+    var returnScore = 0;
 
     if (XDiff < -10) {
         // facing left
         console.log("left");
-        totalScore = totalScore + 2.5;
+        // totalScore = totalScore + 2.5;
         faceState.innerHTML = "왼쪽";
+        returnScore = 2.5;
 
     } else if (XDiff > -10 && XDiff < 10) {
         // facing front
         console.log("front");
-        totalScore = totalScore - 0.5;
+        // totalScore = totalScore - 0.5;
         faceState.innerHTML = "정면";
+        returnScore = -0.5;
 
     } else if (XDiff > 10) {
         // facing right
         console.log("right");
-        totalScore = totalScore + 2.5;
+        // totalScore = totalScore + 2.5;
         faceState.innerHTML = "오른쪽";
+        returnScore = 2.5;
     }
 
     if (YDiff > 0) {
         console.log("Looking up");
-        totalScore = totalScore + 2.5;
+        // totalScore = totalScore + 2.5;
         faceState.innerHTML = "위쪽"
+        returnScore = 2.5;
+    }
+    return returnScore;
+}
+
+const detectPupilMoving = (LEC, REC, LPC, RPC) => {
+
+    var leftEyeXDiff = LPC[0] - LEC[0];
+    var leftEyeYDiff = LPC[1] - LEC[1];
+
+    var rightEyeXDiff = RPC[0] - REC[0];
+    var rightEyeYDiff = RPC[1] - REC[1];
+
+    var returnScore = 0;
+
+    if ((leftEyeXDiff + rightEyeXDiff) < -5) {
+        console.log("eye right");
+        pupilState.innerHTML = "오른쪽";
+        // totalScore = totalScore + 2.5;
+        returnScore = 2.5;
+
+    } else if ((leftEyeXDiff + rightEyeXDiff) > 5) {
+        console.log("eye left");
+        pupilState.innerHTML = "왼쪽";
+        // totalScore = totalScore + 2.5;
+        returnScore = 2.5;
+
+    } else {
+        console.log("eye center");
+        pupilState.innerHTML = "정면";
+        // totalScore = totalScore - 0.5;
+        returnScore = -0.5;
     }
 
+    if ((leftEyeYDiff + rightEyeYDiff) < -15) {
+        pupilState.innerHTML = "위쪽";
+        console.log("위쪽");
+        // totalScore = totalScore + 2.5;
+        returnScore = 2.5;
+    }
+    return returnScore;
 }
 
 function flattenArray(channelBuffer, recordingLength) {
@@ -118,49 +138,8 @@ function interleave(leftChannel, rightChannel) {
     return result;
 }
 
-const detectPupilMoving = (LEC, REC, LPC, RPC) => {
-
-    var leftEyeXDiff = LPC[0] - LEC[0];
-    var leftEyeYDiff = LPC[1] - LEC[1];
-
-    var rightEyeXDiff = RPC[0] - REC[0];
-    var rightEyeYDiff = RPC[1] - REC[1];
-
-    if ((leftEyeXDiff + rightEyeXDiff) < -5) {
-        console.log("eye right");
-        pupilState.innerHTML = "오른쪽";
-        totalScore = totalScore + 2.5;
-    } else if ((leftEyeXDiff + rightEyeXDiff) > 5) {
-        console.log("eye left");
-        pupilState.innerHTML = "왼쪽";
-        totalScore = totalScore + 2.5;
-    } else {
-        console.log("eye center");
-        pupilState.innerHTML = "정면";
-        totalScore = totalScore - 0.5;
-    }
-
-    if ((leftEyeYDiff + rightEyeYDiff) < -15) {
-        pupilState.innerHTML = "위쪽";
-        console.log("위쪽");
-        totalScore = totalScore + 2.5;
-    }
-
-}
-
-async function setupCamera() {
+function setCamera(stream){
     video = document.getElementById('video');
-
-    const stream = await navigator.mediaDevices.getUserMedia({
-        'audio': true,
-        'video': {
-            facingMode: 'user',
-            // Only setting the video to a specified size in order to accommodate a
-            // point cloud, so on mobile devices accept the default size.
-            width: mobile ? undefined : VIDEO_SIZE,
-            height: mobile ? undefined : VIDEO_SIZE
-        },
-    });
 
     //video setting
     video.srcObject = stream;
@@ -169,8 +148,9 @@ async function setupCamera() {
     videoHeight = video.videoHeight;
     video.width = videoWidth;
     video.height = videoHeight;
+}
 
-    //audio setting
+function setAudio(stream){
 
     // creates the audio context
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -190,32 +170,40 @@ async function setupCamera() {
         recorder = context.createJavaScriptNode(bufferSize, numberOfInputChannels, numberOfOutputChannels);
     }
 
-    recorder.onaudioprocess = function(e) {
-
-        var array = new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(array);
-        var values = 0;
-
-        var length = array.length;
-        for (var i = 0; i < length; i++) {
-            values += (array[i]);
-        }
-
-        var average = values / length;
-
-        // console.log(Math.floor(average));
-        colorPids(average);
-
-        filter = (filter * 0.8) + (average * 0.2);
-
-        if (filter > 30) {
-            console.log("부정행위 경고");
-        }
-    }
-
     audioStream.connect(analyser);
     analyser.connect(recorder);
     recorder.connect(context.destination);
+}
+
+function getVolume(){
+    var array = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(array);
+    var values = 0;
+
+    var length = array.length;
+    for (var i = 0; i < length; i++) {
+        values += (array[i]);
+    }
+    var volume = values / length;
+
+    return volume;
+}
+
+async function setupStream() {
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+        'audio': true,
+        'video': {
+            facingMode: 'user',
+            // Only setting the video to a specified size in order to accommodate a
+            // point cloud, so on mobile devices accept the default size.
+            width: mobile ? undefined : VIDEO_SIZE,
+            height: mobile ? undefined : VIDEO_SIZE
+        },
+    });
+
+    setCamera(stream);
+    setAudio(stream);
 }
 
 async function main() {
@@ -230,7 +218,6 @@ async function main() {
         predictIrises: state.predictIrises
     });
 
-    console.log("============");
     if (face.length == 1) {
 
         var D1 = face[0].scaledMesh[454];
@@ -240,8 +227,6 @@ async function main() {
 
         var C1 = [(D1[0] + D2[0]) / 2, (D1[1] + D2[1]) / 2];
         var C2 = [(D3[0] + D4[0]) / 2, (D3[1] + D4[1]) / 2];
-
-        detectFaceRotate(C1, C2);
 
         var P1 = face[0].scaledMesh[469];
         var P2 = face[0].scaledMesh[468];
@@ -263,7 +248,6 @@ async function main() {
         var LEC = [(LE2[0] + LE4[0]) / 2, (LE2[1] + LE4[1]) / 2]
         var REC = [(RE2[0] + RE4[0]) / 2, (RE2[1] + RE4[1]) / 2]
 
-        detectPupilMoving(LEC, REC, LPC, RPC);
     } else if (face.length >= 2) {
         console.log("***************");
         console.log("face > 2")
@@ -274,7 +258,12 @@ async function main() {
         console.log("***************");
     }
 
-    console.log("============")
+    totalScore = totalScore + detectPupilMoving(LEC, REC, LPC, RPC);
+    totalScore = totalScore + detectFaceRotate(C1, C2);
+    totalScore = totalScore + detectVolumeScore(getVolume());
+
+    document.getElementById('score').innerHTML = '부정행위점수 : ' + parseInt(totalScore);
+
 
 };
 
@@ -303,13 +292,10 @@ recognition.onresult = function(event) {
 };
 
 const runFacemesh = async() => {
-    await setupCamera();
+    await setupStream();
     setInterval(() => {
         main();
     }, 1000);
 }
-
-
-
 
 runFacemesh();
