@@ -217,15 +217,15 @@
                             </div>
 
                             <div class="navbar">
-                                <button id="record" class="basicBtns" onclick="record_request()"><i class="fas fa-record-vinyl"></i></button> <!--녹화 시작/정지-->
-                                <button id="timestamp" class="basicBtns" onclick="record_timestamp()" disabled><i class="fas fa-clock"></i></button> <!--다운로드-->
+                                <!-- <button id="record" class="basicBtns" onclick="record_request()"><i class="fas fa-record-vinyl"></i></button> 녹화 시작/정지
+                                <button id="timestamp" class="basicBtns" onclick="record_timestamp()" disabled><i class="fas fa-clock"></i></button> 다운로드 -->
                                 <button class="basicBtns" id="soundBtn" onclick="soundOnOff(this)"><i class="fas fa-volume-up" id="soundIcon"></i></button>
                                 <button class="basicBtns" id="micBtn" onclick="micOnOff(this)"><i class="fas fa-microphone fa-lg" id="micIcon"></i></button> <!--마이크온오프-->
                                 <button class="basicBtns" id="cameraBtn" onclick="cameraOnOff(this)"><i class="fas fa-video fa-lg" id="cameraIcon"></i></button> <!--카메라온오프-->
-                                <button class="basicBtns" onclick="showWhiteBoard()"><i class="fas fa-palette fa-lg"></i></button> <!--화이트보드-->
-                                <button id="screenshare" class="basicBtns"><i class="fas fa-desktop"></i></button>
+                                <!-- <button class="basicBtns" onclick="showWhiteBoard()"><i class="fas fa-palette fa-lg"></i></button> 화이트보드-->
+                                <!-- <button id="screenshare" class="basicBtns"><i class="fas fa-desktop"></i></button> -->
                                 <button class="basicBtns" onclick="alert_msg()" id="alert_msg"><i class="fas fa-sticky-note"></i></button><!--알림메세지 전송-->
-                                <button class="basicBtns" id="conc" onclick="startTestConcentrationAllStudents()"><i class="far fa-angry"></i></button>
+                                <!-- <button class="basicBtns" id="conc" onclick="startTestConcentrationAllStudents()"><i class="far fa-angry"></i></button> -->
                             </div>
                             <div class="dialog_area"></div>
                             <div class=videos id="participants"></div>
@@ -265,7 +265,7 @@
 
                     </div>
                 </div>
-            <div id="testConcentration">
+            <!-- <div id="testConcentration">
                 <p id="testCon_title">집중도 테스트</p>
                 <p id="timer"></p>
                 <p id="randomNumber"></p>
@@ -273,7 +273,7 @@
                 <button type="button" onclick="submit_concentration()">제출</button>
                 <p id="guideWord">위 숫자를 입력해주세요.</p>
             </div>
-            
+             -->
             <!--<button id="open_Concentration" onclick="testConcentration()">집중도테스트버튼</button>-->
 
             <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>

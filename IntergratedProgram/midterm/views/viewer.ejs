@@ -132,9 +132,8 @@
                 <div class="page-container slider" sytle="text-align: center">
                     <div class="login-form-container shadow">
                         <div class="title">
-                            <h1>"Panopticon"<br>
+                            <h1><br>"Panopticon"<br>
                                 <%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h1>
-                            <h2><br>미팅 룸 목록</h2>
                         </div>
                         <p id="job" style="display:none"><%=userInfo.job%></p>
                         <p id="studentName" style="display:none"><%=userInfo.name%></p>
@@ -142,14 +141,14 @@
                         <div class="slides" style="text-align:center">
                             <h1 id="no_class">진행중인 강의가 없습니다</h1>
                         </div>
-                        <!-- <div class="login-input-container">
+                        <div class="login-input-container">
                             <div class="login-input-wrap">
                                 <input type="address" name="adderss" placeholder="미팅방 주소 입력" >
                             </div>
                             <div class="login-btn-wrap">
                                 <button class="login-btn" onClick="moveMeeting">미팅방 입장</button>
                             </div>
-                        </div> -->
+                        </div>
                         <br><br>
                         <button id="redirect_replay_area" onclick="redirect_replay()">다시보기</button>
                     </div>
@@ -182,19 +181,19 @@
 
 
                             <div class="navbar">
-                                <button id="record" class="basicBtns"><i class="fas fa-record-vinyl" disable></i></button> <!--녹화 시작/정지-->
-                                <button id="download" class="basicBtns" disabled><i class="fas fa-download fa-lg"></i></button> <!--다운로드-->
+                                <!-- <button id="record" class="basicBtns"><i class="fas fa-record-vinyl" disable></i></button> 녹화 시작/정지
+                                <button id="download" class="basicBtns" disabled><i class="fas fa-download fa-lg"></i></button> 다운로드 -->
                                 <button class="basicBtns" id="micBtn" onclick="micOnOff(this)"><i class="fas fa-microphone fa-lg" id="micIcon"></i></button> <!--마이크온오프-->
                                 <button class="basicBtns" id="cameraBtn" onclick="cameraOnOff(this)"><i class="fas fa-video fa-lg" id="cameraIcon"></i></button> <!--카메라온오프-->
-                                <button class="basicBtns"><i class="fas fa-pen" onclick="showNote()"></i></button><!--메모-->
+                                <!-- <button class="basicBtns"><i class="fas fa-pen" onclick="showNote()"></i></button> 메모 -->
                                 <!--<button class="basicBtns" onclick="send_leave_request()"><i class="fas fa-sign-out-alt" id="leaveIcon"></i></button>-->
                             </div>
 
                             <div class="alert_area"></div>
                             
                             <div class=videos id="participants"></div>
-                            <button class="viewer_btn" id="question_btn" onclick="question_reqeust()">질문 요청</button>
-                            <button class="viewer_btn" id="leave_btn" onclick="send_leave_request()">자리비움 요청</button>
+                            <!-- <button class="viewer_btn" id="question_btn" onclick="question_reqeust()">질문 요청</button>
+                            <button class="viewer_btn" id="leave_btn" onclick="send_leave_request()">자리비움 요청</button> -->
                         </div>
                         <div id=localvideo>
                             <canvas id="leave"></canvas>
