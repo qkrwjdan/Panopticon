@@ -263,8 +263,6 @@ async function main() {
     totalScore = totalScore + detectVolumeScore(getVolume());
 
     document.getElementById('score').innerHTML = '부정행위점수 : ' + parseInt(totalScore);
-
-
 };
 
 annyang.setLanguage('ko');
