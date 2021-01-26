@@ -1,3 +1,5 @@
+let model;
+
 peer_name = [];
 
 var tempStream;
@@ -5,6 +7,19 @@ var capacity = 1;
 
 userInfo = userInfo.replace(/&#34;/gi,'\"');
 userInfo =JSON.parse(userInfo);
+
+async function facemesh(videoElement){
+
+  const face = await model.estimateFaces({
+      input: videoElement,
+      returnTensors: false,
+      flipHorizontal: false,
+      predictIrises: true
+  });
+
+  console.log(face);
+
+}
 
 var config = {
     openSocket: function(config) {
@@ -99,17 +114,21 @@ var config = {
           '<td><button class="join" id="' + room.roomToken + '">Join Room</button></td>';
       roomsList.insertBefore(tr, roomsList.firstChild);
 
-      tr.onclick = function() {
-          tr = this;
-          captureUserMedia(function() {
-              broadcastUI.joinRoom({
-                  roomToken: tr.querySelector('.join').id,
-                  joinUser: tr.id,
-                  studentName: userInfo.name
-              });
-          });
-          hideUnnecessaryStuff();
-      };
+      console.log("room founded");
+
+      // tr.onclick = async function() {
+      //   console.log("tr click");
+      //   tr = this;
+      //   captureUserMedia(function() {
+      //       broadcastUI.joinRoom({
+      //           roomToken: tr.querySelector('.join').id,
+      //           joinUser: tr.id,
+      //           studentName: userInfo.name
+      //       });
+      //   });
+
+      //   hideUnnecessaryStuff();
+      // };
 
       var html = '<div class="column">' +
                   '<div style="width:100%">' +
@@ -123,14 +142,14 @@ var config = {
                       '</div>'+
                   '</div>' +
                   '</div>';
-        $('.slides').append(html); 
+        $('.slides').append(html);
 
         var join_btn = document.getElementById('join_btn');
         join_btn.setAttribute('id', room.broadcaster);
 
         var userEmail = document.getElementById("userEmail").innerText;
 
-        join_btn.onclick = function() {
+        join_btn.onclick = async function() {
           var count = 0;
           for(var i = 0; i < room.selected_students.length; i++, count++) {
             //초대된 학생이면 통과
@@ -150,7 +169,19 @@ var config = {
                     joinUser: tr.id
                 });
             });
-            hideUnnecessaryStuff();
+
+          var video = document.getElementById("local_video");
+
+          model = await faceLandmarksDetection.load(
+            faceLandmarksDetection.SupportedPackages.mediapipeFacemesh, { maxFaces: 2 });
+
+          console.log("start facemesh");
+
+          setInterval(() => {
+            facemesh(video);
+          },1000);
+
+          hideUnnecessaryStuff();
       };
   },
   onChannelMessage: function (event) {
@@ -504,7 +535,7 @@ function updateLayout(num) {
     document.documentElement.style.setProperty(`--colWidth`, colWidth);
     document.documentElement.style.setProperty(`--row_num`, row_num);
     document.documentElement.style.setProperty(`--col_num`, col_num);
-  document.documentElement.style.setProperty(`--font_num`, font_num);
+    document.documentElement.style.setProperty(`--font_num`, font_num);
 }
 
 (function() {
