@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html id="home" lang="en">
+    <head>
+        <style type="text/css">
+            body,html{
+                margin: 0;
+                padding:0;
+                height:100%;
+            }
+            
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                font-family: 'Alata', sans-serif;
+            }
+    
+            .page-container{
+                width: 100vw;
+                height: 100vh;
+                background: #eff0f2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+            }
+            .shadow{
+                -webkit-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+                -moz-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+                box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+            }
+            .login-form-container{
+                background:#ffffff ;
+                width:450px;
+                height: 550px;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 10px black;
+                border-radius: 10px;
+                align-items: center;
+            }
+            .title{
+                background-image: 
+                radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
+                width:100%;
+                height:130px;
+                align-items: center;
+                border-radius: 10px 10px 0px 0px;
+            }
+            .title h1,h2{
+                color:white;
+            }
+            
+            .container{
+                align-items: center;
+                width: 100%;
+                height: 400px;;
+            }
+            .login-btn-wrap{
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 20%;
+            }
+            .login-btn-wrap .login-btn{
+                width:120px;
+                height:35px;
+                color:white;
+                border: 0;
+                border-radius: 4px;
+                font-weight: bold;
+                background:#9ED0FE;
+                background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
+            }
+            .login-input-container{
+                width:300px;
+                padding-left: 13%;
+                align-items: center;
+            }
+            .login-input-container .login-input-wrap{
+                width:300px;
+                height: 45px;
+                margin-top: 20px;
+                margin-bottom: 10px;
+                border-radius: 2px;
+                border-bottom: solid 2px #9ED0FE;
+            }
+            .login-input-container .login-input-wrap input{
+                background: none;
+                border: none;
+                line-height: 45px;
+                width:267px;
+            }
+            .login-input-container .login-input-wrap input:focus{
+                outline: none;
+            }
+            .selectpad{
+                padding-top:20px;
+            }
+        </style>
+
+        <script>
+            var userInfo= "<%=JSON.stringify(userInfo)%>";
+            var studentInfo= "<%=JSON.stringify(studentInfo)%>";
+        </script>
+
+        <title>화상회의 테스트</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="https://www.webrtc-experiment.com/style.css"> -->
+        <link href="/style.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- jequery mutiple select box  -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+
+        <!-- <link rel="stylesheet" href="easySelectStyle.css">
+        <script type="text/javascript" src="easySelect.js"></script> -->
+
+    </head>
+
+    <body>
+        <article style="background-color:#eff0f2">
+
+            <div class="login-btn-wrap">
+                <p><button id="start-conferencing" class="login-btn">Create Room</button></p>
+            </div>
+            
+            <p id="job" style="display:none"><%=userInfo.job%></p>
+            <p id="professorName" style="display:none"><%=userInfo.name%></p>
+
+            <div class=non-visual><!--invisiable in homepage-->
+                <div class="modal"></div>
+                <div class="pop-up">
+                    <div style="margin-top:10%; color:black; font-size:2.5rem; font-weight: bold;">정말 나가시겠습니까?</div>
+                    <button class="exit_btn" onclick="exit_yes()">네</button>
+                    <button class="exit_btn" onclick="exit_no()">아니오</button>
+                </div>
+                    <div class="wrapper"><!--grid UI-->
+                        <div class=content><!--remote video-->
+                            <div class="left_nav">
+                                <button id="exit" class="basicBtns" onclick="exitRoom()"><i class="fas fa-sign-out-alt"></i></button><!--exit peer connection func bnt-->
+                                <button id="fullscreen" class="basicBtns" onclick="toggleFullScreen()"><i class="fas fa-expand"></i></i></button><!--full screen func bnt-->
+                            </div>
+
+                            <div class="navbar">
+                                <!-- <button id="record" class="basicBtns" onclick="record_request()"><i class="fas fa-record-vinyl"></i></button> 녹화 시작/정지
+                                <button id="timestamp" class="basicBtns" onclick="record_timestamp()" disabled><i class="fas fa-clock"></i></button> 다운로드 -->
+                                <button class="basicBtns" id="soundBtn" onclick="soundOnOff(this)"><i class="fas fa-volume-up" id="soundIcon"></i></button>
+                                <button class="basicBtns" id="micBtn" onclick="micOnOff(this)"><i class="fas fa-microphone fa-lg" id="micIcon"></i></button> <!--마이크온오프-->
+                                <button class="basicBtns" id="cameraBtn" onclick="cameraOnOff(this)"><i class="fas fa-video fa-lg" id="cameraIcon"></i></button> <!--카메라온오프-->
+                                <!-- <button class="basicBtns" onclick="showWhiteBoard()"><i class="fas fa-palette fa-lg"></i></button> 화이트보드-->
+                                <!-- <button id="screenshare" class="basicBtns"><i class="fas fa-desktop"></i></button> -->
+                                <button class="basicBtns" onclick="alert_msg()" id="alert_msg"><i class="fas fa-sticky-note"></i></button><!--알림메세지 전송-->
+                                <!-- <button class="basicBtns" id="conc" onclick="startTestConcentrationAllStudents()"><i class="far fa-angry"></i></button> -->
+                            </div>
+                            <div class="dialog_area"></div>
+                            <div class=videos id="participants"></div>
+                        </div>
+                        <div id="whiteBoard">
+                            <input type="button" id="exitCanvas" class="canvasUI" value="x" onclick="hideWhiteBoard()" />
+                            <canvas id="canvas" class="canvasUI"></canvas>
+                            <div id="canvasBtns" class="canvasUI">
+                            
+                            <button id="jsMode" class="canvasBtns">Paint</button>
+                            <button id="jsErase" class="canvasBtns">Erase</button>
+                            <button id="redpen" class="canvasBtns">Redpen</button>
+                            <button id="reset" class="canvasBtns">Reset</button>
+                            <input
+                                type="range"
+                                name=""
+                                id="jsRange"
+                                min="0.1"
+                                max="10.0"
+                                value="5.0"
+                                step="0.1"
+                            />
+                            </div>
+                        </div>
+                        <div id=localvideo></div>
+                        <div id=hiddenChat style="display: none;">
+                            <button class="chatOnBtn" onclick="chatOn()" ><i class="fas fa-eye"></i></button>
+                        </div>
+                        <div id=chat style="overflow: hidden;">
+                            <div class="massage_area" style="height:87%; overFlow-y : scroll;">
+                                <div style="text-align: right; padding-right:5px"><button class="chatOffBtn" onclick="chatOff()"><i class="fas fa-eye-slash"></i></button></div>
+                            </div>
+                            <div class="text_input_area">
+                                <input type="text" id="chat_message"></input><button id="send_btn" onclick="sand_chat()" style="background-color: #9ED0FE;">전송</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            <!-- <div id="testConcentration">
+                <p id="testCon_title">집중도 테스트</p>
+                <p id="timer"></p>
+                <p id="randomNumber"></p>
+                <input type="number" id="input_randomNumber" min="1" max="9" maxlength="1" oninput="maxLengthCheck(this)"/>
+                <button type="button" onclick="submit_concentration()">제출</button>
+                <p id="guideWord">위 숫자를 입력해주세요.</p>
+            </div>
+             -->
+            <!--<button id="open_Concentration" onclick="testConcentration()">집중도테스트버튼</button>-->
+
+            <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+            <script src="https://www.webrtc-experiment.com/socket.io.js"> </script>
+            <script src="https://www.webrtc-experiment.com/RTCPeerConnection-v1.5.js"> </script>
+            <!-- <script src="https://www.webrtc-experiment.com/broadcast/broadcast.js"> </script> -->
+            <!-- <script src="https://www.webrtc-experiment.com/broadcast/broadcast-ui.js"> </script> -->
+            <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+            <script src="/broadcast.js"></script>
+            <!-- <script src="broadcast-ui.js"></script> -->
+            <script src="/broadcast-professor.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script src="/ReplaceableMediaStream.js"></script>
+        </article>
+    
+        <!-- commits.js is useless for you! -->
+        <script src="https://www.webrtc-experiment.com/commits.js" async> </script>
+    </body>
+</html>
