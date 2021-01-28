@@ -143,15 +143,15 @@
                         <p id="job" style="display:none"><%=userInfo.job%></p>
                         <p id="studentName" style="display:none"><%=userInfo.name%></p>
                         <p id="userEmail" style="display:none"><%=userInfo.email%></p>
-                        <!-- <div class="slides" style="text-align:center">
+                        <div class="slides" style="text-align:center">
                             <h1 id="no_class">진행중인 강의가 없습니다</h1>
-                        </div> -->
+                        </div>
                         <div class="login-input-container">
                             <div class="login-input-wrap">
-                                <input type="address" id="address" placeholder="미팅방 주소 입력" >
+                                <input type="address" name="adderss" placeholder="미팅방 주소 입력" >
                             </div>
                             <div class="login-btn-wrap">
-                                <button class="login-btn" onClick="moveMeeting()">미팅방 입장</button>
+                                <button class="login-btn" onClick="moveMeeting">미팅방 입장</button>
                             </div>
                         </div>
                         <br><br>
@@ -229,14 +229,14 @@
 
                     </div>
                 </div>
-            <!-- <div id="testConcentration">
+            <div id="testConcentration">
                 <p id="testCon_title">집중도 테스트</p>
                 <p id="timer"></p>
                 <p id="randomNumber"></p>
                 <input type="number" id="input_randomNumber" min="1" max="9" maxlength="1" oninput="maxLengthCheck(this)"/>
                 <button type="button" onclick="submit_concentration()">제출</button>
                 <p id="guideWord">위 숫자를 입력해주세요.</p>
-            </div> -->
+            </div>
             <div id="leaving_cancle">
                 <p id="leaving_name"><%=userInfo.name%></p>
                 <p id="leaving_time"></p>
@@ -244,6 +244,7 @@
             </div>
             <canvas id="canvas" width="300" height="300" style="display: none;"></canvas>
             <!--<button id="open_Concentration" onclick="testConcentration()">집중도테스트버튼</button>-->
+            
             <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
             <script src="https://www.webrtc-experiment.com/socket.io.js"> </script>
             <script src="https://www.webrtc-experiment.com/RTCPeerConnection-v1.5.js"> </script>
@@ -264,9 +265,7 @@
         <script src="https://www.webrtc-experiment.com/commits.js" async> </script>
         <script type= "text/javascript">
             function moveMeeting(){
-                var adr = document.getElementById('address').value;
-                console.log(adr);
-                location.href = "https://localhost:8443/" + adr;
+            location.href = "//creatForm";
             }
         </script> 
     </body>
