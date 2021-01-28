@@ -38,16 +38,16 @@ router.post('/', function(req,res){
     })
 })
 
-router.get('/:id',function(req,res){
-    const { id } = req.params;
+router.get('/:roomToken',function(req,res){
+    const { roomToken } = req.params;
     const { q } = req.query;
 
-    console.log("id : ",id);
+    console.log("id : ",roomToken);
     console.log("q : ",q);
 
     var name = "프로페서";
     // var job = "student";
-    var job = "student";
+    var job = "professor";
     req.session = null;
 
     if(job === "professor"){
@@ -62,7 +62,7 @@ router.get('/:id',function(req,res){
                 StudentEmail.push(doc.data().email);
             })
             var studentInfo = {name : StudentName, email : StudentEmail};
-            res.render('videochat-professor', { userInfo : userInfo, studentInfo : studentInfo , error: false });
+            res.render('videochat-professor', { userInfo : userInfo, studentInfo : studentInfo , error: false, makedRoomToken : roomToken });
         })
         .catch(function(error){
             console.log("Error : ", error);
@@ -80,7 +80,7 @@ router.get('/:id',function(req,res){
     
         var userInfo = {name: name, job : job, email: email};
     
-        res.render('videochat-student', { userInfo : userInfo, error: false });
+        res.render('videochat-student', { userInfo : userInfo, error: false, makedRoomToken : roomToken });
     }
 })
 

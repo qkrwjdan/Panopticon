@@ -147,17 +147,6 @@ var config = {
                     });
                 });
 
-            var video = document.getElementById("local_video");
-
-            model = await faceLandmarksDetection.load(
-                faceLandmarksDetection.SupportedPackages.mediapipeFacemesh, { maxFaces: 2 });
-
-            console.log("start facemesh");
-
-            setInterval(() => {
-                facemesh(video);
-            },1000);
-
             hideUnnecessaryStuff();
          };
     },

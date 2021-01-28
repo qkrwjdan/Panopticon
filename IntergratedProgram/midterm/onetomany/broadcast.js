@@ -232,9 +232,10 @@ var broadcast = function(config) {
 
     openDefaultSocket();
     return {
-        createRoom: function(_config) {
+        createRoom: function(_config,roomToken) {
             self.roomName = _config.roomName || 'Anonymous';
-            self.roomToken = uniqueToken();
+            // self.roomToken = uniqueToken();
+            self.roomToken = roomToken;
             self.professorName = document.getElementById("professorName").innerText;
             self.description = document.getElementById("description").value;
             self.meetingTime = document.getElementById("meetingTime").value;
