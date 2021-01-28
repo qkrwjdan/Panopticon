@@ -78,6 +78,14 @@ app.use(session({
 	cookie: {secure: true}
 }));
 
+//randomize url by using uuid
+app.get('/room', (req, res) => {
+	res.redirect(`/${uuidV4()}`)
+})
+app.get('/room/:room', (req, res) => {
+	res.render('room', { roomId: req.params.room})
+})
+
 // app.use(express.static('public'));
 app.get('/ScoreTest', (req, res) => {
     res.render('ScoreTest',{
@@ -89,13 +97,11 @@ app.get('/ScoreTest', (req, res) => {
 var index = require('./routes/index');
 var host = require('./routes/host');
 var view = require('./routes/view');
-var room = require('./routes/room');
 const { userInfo } = require('os');
 
 app.use('/', index);
 app.use('/host', host);
 app.use('/view', view);
-app.use('/room',room);
 app.use(express.static(__dirname+"/onetomany"));
 
 app.get('/loginChk', function(req,res){
