@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var path = require("path");
 var alert = require('alert');
-const { v4: uuidV4 } = require('uuid')
 
 var firebase = require('firebase');
 const { fstat } = require('fs');
@@ -16,57 +15,73 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 
-router.get('/', (req, res) => {
-
+router.post('/', function(req,res){
     var HostName = req.session.vaild.name;
     var HostJob = req.session.vaild.job;
-    req.session = null; //reset session variable
-
-    console.log(HostName);
-    console.log(HostJob);
-
-    if(HostName == null){
-        HostName = "프로페서";
-    }
-    
-    if(HostJob == null){
-        HostJob = "professor";
-    }
+    req.session = null;
 
     var userInfo = {name: HostName, job : HostJob};
-
-    // var StudentName = new Array();
-    // var StudentEmail = new Array();
+    var StudentName = new Array();
+    var StudentEmail = new Array();
     
-    // let Viewer = userDB.where("job", "==", "student").get()
-    // .then(function(snap){
-    //     snap.forEach(function(doc){
-    //         StudentName.push(doc.data().name);
-    //         StudentEmail.push(doc.data().email);
-    //     })
-    //     var studentInfo = {name : StudentName, email : StudentEmail};
-    //     res.render('host', { userInfo : userInfo, studentInfo : studentInfo , error: false });
-    // })
-    // .catch(function(error){
-    //     console.log("Error : ", error);
-    // })
-    if(HostJob === "professor"){
-        res.render('room-professor',{userInfo : userInfo})
-    }
-    else{
-        res.render('room-student',{userInfo : userInfo})
-    }
-    // res.redirect(`/room/${uuidV4()}`);
+    let Viewer = userDB.where("job", "==", "student").get()
+    .then(function(snap){
+        snap.forEach(function(doc){
+            StudentName.push(doc.data().name);
+            StudentEmail.push(doc.data().email);
+        })
+        var studentInfo = {name : StudentName, email : StudentEmail};
+        res.render('videochat', { userInfo : userInfo, studentInfo : studentInfo , error: false });
+    })
+    .catch(function(error){
+        console.log("Error : ", error);
+    })
 })
 
-//randomize url by using uuid
-router.get('/:room', (req, res) => {
-    const { room } = req.params;
+router.get('/:roomToken',function(req,res){
+    const { roomToken } = req.params;
     const { q } = req.query;
-    console.log(room);
 
-    res.render('room', { roomId: req.params})
+    console.log("id : ",roomToken);
+    console.log("q : ",q);
 
-});
+    var name = "프로페서";
+    // var job = "student";
+    var job = "student";
+    req.session = null;
+
+    if(job === "professor"){
+        var userInfo = {name: name, job : job};
+        var StudentName = new Array();
+        var StudentEmail = new Array();
+
+        let Viewer = userDB.where("job", "==", "student").get()
+        .then(function(snap){
+            snap.forEach(function(doc){
+                StudentName.push(doc.data().name);
+                StudentEmail.push(doc.data().email);
+            })
+            var studentInfo = {name : StudentName, email : StudentEmail};
+            res.render('videochat-professor', { userInfo : userInfo, studentInfo : studentInfo , error: false, makedRoomToken : roomToken });
+        })
+        .catch(function(error){
+            console.log("Error : ", error);
+        })
+    }
+    else{
+
+        // var ViewerName = req.session.vaild.name;
+        // var ViewerJob = req.session.vaild.job;
+        // var ViewerEmail = req.session.vaild.email;
+
+        var email = "hi@naver.com";
+    
+        req.session = null; //reset session variable
+    
+        var userInfo = {name: name, job : job, email: email};
+    
+        res.render('videochat-student', { userInfo : userInfo, error: false, makedRoomToken : roomToken });
+    }
+})
 
 module.exports = router;

@@ -20,13 +20,6 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 
-function uniqueToken() {
-    var s4 = function() {
-        return Math.floor(Math.random() * 0x10000).toString(16);
-    };
-    return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
-}
-
 router.post('/', function(req,res){
     var HostName = req.session.vaild.name;
     var HostJob = req.session.vaild.job;
@@ -46,7 +39,7 @@ router.post('/', function(req,res){
             StudentEmail.push(doc.data().email);
         })
         var studentInfo = {name : StudentName, email : StudentEmail};
-        res.render('host', { userInfo : userInfo, studentInfo : studentInfo , error: false, makedRoomToken : uniqueToken() });
+        res.render('host', { userInfo : userInfo, studentInfo : studentInfo , error: false });
     })
     .catch(function(error){
         console.log("Error : ", error);
