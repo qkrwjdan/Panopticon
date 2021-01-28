@@ -89,14 +89,12 @@ app.get('/ScoreTest', (req, res) => {
 var index = require('./routes/index');
 var host = require('./routes/host');
 var view = require('./routes/view');
-var videochat = require('./routes/videochat');
 var room = require('./routes/room');
 const { userInfo } = require('os');
 
 app.use('/', index);
 app.use('/host', host);
 app.use('/view', view);
-app.use('/videochat',videochat);
 app.use('/room',room);
 app.use(express.static(__dirname+"/onetomany"));
 

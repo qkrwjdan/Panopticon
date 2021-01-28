@@ -25,9 +25,6 @@ router.post('/', function(req,res){
     var HostJob = req.session.vaild.job;
     req.session = null; //reset session variable
 
-    console.log(HostName);
-    console.log(HostJob);
-
     var userInfo = {name: HostName, job : HostJob};
     var StudentName = new Array();
     var StudentEmail = new Array();
@@ -44,6 +41,8 @@ router.post('/', function(req,res){
     .catch(function(error){
         console.log("Error : ", error);
     })
+
+    
 })
 
 module.exports = router;
