@@ -270,20 +270,20 @@ function captureUserMedia(callback) {
     });
 }
 
-function hideUnnecessaryStuff() {
-    //console.log(selected_student);
-    var visibleElements = document.getElementsByClassName('visible');
-    var length = visibleElements.length;
-    for (var i = 0; i < length; i++) {
-        visibleElements[i].style.display = 'none';
-    }
-    // var header = document.getElementsByTagName('h1');
-    // header[0].style.display = 'none';
+// function hideUnnecessaryStuff() {
+//     //console.log(selected_student);
+//     var visibleElements = document.getElementsByClassName('visible');
+//     var length = visibleElements.length;
+//     for (var i = 0; i < length; i++) {
+//         visibleElements[i].style.display = 'none';
+//     }
+//     // var header = document.getElementsByTagName('h1');
+//     // header[0].style.display = 'none';
 
-    var non_visual = document.getElementsByClassName('non-visual');
-    non_visual[0].style.display = 'block'; //hide peer connection page factor
-    //document.getElementById("open_Concentration").style.display = 'block';
-}
+//     var non_visual = document.getElementsByClassName('non-visual');
+//     non_visual[0].style.display = 'block'; //hide peer connection page factor
+//     //document.getElementById("open_Concentration").style.display = 'block';
+// }
 
 function uniqueToken() {
     var s4 = function() {
@@ -318,7 +318,7 @@ function clickCreateRoom() {
     });
     console.log("roomToken : ",roomToken);
     updateLayout(capacity);
-    hideUnnecessaryStuff();
+    // hideUnnecessaryStuff();
   
     //진행중
     // for(var i = 0; i < capacity; i++) {
@@ -342,5 +342,4 @@ function clickCreateRoom() {
     }
 }
 
-var startConferencing = document.getElementById('start-conferencing');
-if (startConferencing) startConferencing.onclick = clickCreateRoom;
+clickCreateRoom();

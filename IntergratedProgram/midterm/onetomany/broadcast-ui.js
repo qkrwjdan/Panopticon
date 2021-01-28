@@ -444,7 +444,9 @@ var video_content = document.getElementById("video_content") || document.body;
 var startConferencing = document.getElementById('start-conferencing');
 var roomsList = document.getElementById('rooms-list');
 
-if (startConferencing) startConferencing.onclick = createButtonClickHandler;
+if (startConferencing) startConferencing.onclick = function(){
+  location.href = "/videochat/";
+};
 
 function hideUnnecessaryStuff() {
     //console.log(selected_student);
