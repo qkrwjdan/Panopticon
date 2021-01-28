@@ -1,87 +1,33 @@
 var express = require('express');
 var router = express.Router();
-var path = require("path");
-var alert = require('alert');
+const { v4: uuidV4 } = require('uuid')
 
-var firebase = require('firebase');
+// var firebase = require('firebase');
 const { fstat } = require('fs');
-const { QuerySnapshot } = require('@google-cloud/firestore');
+// const { QuerySnapshot } = require('@google-cloud/firestore');
 
-require("firebase/auth");
-require("firebase/database");
-require("firebase/firestore");
+// require("firebase/auth");
+// require("firebase/database");
+// require("firebase/firestore");
 
-const db = firebase.firestore();
+// const db = firebase.firestore();
 
-const userDB = db.collection('users');
+// const userDB = db.collection('users');
 
-router.post('/', function(req,res){
-    var HostName = req.session.vaild.name;
-    var HostJob = req.session.vaild.job;
-    req.session = null;
-
-    var userInfo = {name: HostName, job : HostJob};
-    var StudentName = new Array();
-    var StudentEmail = new Array();
-    
-    let Viewer = userDB.where("job", "==", "student").get()
-    .then(function(snap){
-        snap.forEach(function(doc){
-            StudentName.push(doc.data().name);
-            StudentEmail.push(doc.data().email);
-        })
-        var studentInfo = {name : StudentName, email : StudentEmail};
-        res.render('videochat', { userInfo : userInfo, studentInfo : studentInfo , error: false });
-    })
-    .catch(function(error){
-        console.log("Error : ", error);
-    })
+//randomize url by using uuid
+router.get('/', (req, res) => {
+	res.redirect(`room/${uuidV4()}`);
 })
 
-router.get('/:roomToken',function(req,res){
-    const { roomToken } = req.params;
+router.get('/:room', (req, res) => {
+    const { id } = req.params;
     const { q } = req.query;
 
-    console.log("id : ",roomToken);
+    console.log("id : ",id);
     console.log("q : ",q);
 
-    var name = "프로페서";
-    // var job = "student";
-    var job = "student";
-    req.session = null;
-
-    if(job === "professor"){
-        var userInfo = {name: name, job : job};
-        var StudentName = new Array();
-        var StudentEmail = new Array();
-
-        let Viewer = userDB.where("job", "==", "student").get()
-        .then(function(snap){
-            snap.forEach(function(doc){
-                StudentName.push(doc.data().name);
-                StudentEmail.push(doc.data().email);
-            })
-            var studentInfo = {name : StudentName, email : StudentEmail};
-            res.render('videochat-professor', { userInfo : userInfo, studentInfo : studentInfo , error: false, makedRoomToken : roomToken });
-        })
-        .catch(function(error){
-            console.log("Error : ", error);
-        })
-    }
-    else{
-
-        // var ViewerName = req.session.vaild.name;
-        // var ViewerJob = req.session.vaild.job;
-        // var ViewerEmail = req.session.vaild.email;
-
-        var email = "hi@naver.com";
-    
-        req.session = null; //reset session variable
-    
-        var userInfo = {name: name, job : job, email: email};
-    
-        res.render('videochat-student', { userInfo : userInfo, error: false, makedRoomToken : roomToken });
-    }
+	res.render('room', { roomId: req.params})
 })
 
 module.exports = router;
+

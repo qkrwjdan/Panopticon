@@ -285,13 +285,6 @@ function hideUnnecessaryStuff() {
     //document.getElementById("open_Concentration").style.display = 'block';
 }
 
-function uniqueToken() {
-    var s4 = function() {
-        return Math.floor(Math.random() * 0x10000).toString(16);
-    };
-    return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
-}
-
 function clickCreateRoom() {
     // var selected_students = [];
     // var selected_student_name = [];
@@ -305,18 +298,15 @@ function clickCreateRoom() {
     //   alert("초대할 학생을 1명 이상 선택해 주세요.");
     //   return;
     // }
-    var roomToken = document.getElementById("renderedRoomToken").innerText;
-    console.log("roomToken : ",roomToken);
-    
+  
     capacity = 5;
   
     capacity = Number(capacity);
     captureUserMedia(function() {
         broadcastUI.createRoom({
             roomName: (document.getElementById('conference-name') || { }).value || 'Anonymous'
-        },roomToken);
+        });
     });
-    console.log("roomToken : ",roomToken);
     updateLayout(capacity);
     hideUnnecessaryStuff();
   
