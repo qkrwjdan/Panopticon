@@ -68,9 +68,9 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
+# dotenv environment variables file     - dotenv 파일이 공동작업을 위해서 git에 올라가야하기 때문에 주석처리
+#.env
+#.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
