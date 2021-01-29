@@ -1,8 +1,9 @@
-var path = require('path');
-var url = require('url');
 var express= require('express');
-var app= express();
+var app = express();
 var https= require('https');
+var fs = require('fs')
+var url = require('url');
+var path = require('path');
 var kurento = require('kurento-client');
 var minimist = require('minimist');
 var session = require('express-session');
@@ -35,7 +36,6 @@ const db = firebase.firestore();
 
 
 var ws = require('ws');
-var fs = require('fs');
 
 var argv = minimist(process.argv.slice(2), {
     default: {
@@ -59,6 +59,7 @@ var room = [];
 
 var asUrl = url.parse(argv.as_uri);
 var port = asUrl.port;
+
 var server = https.createServer(options, app).listen(port, function() {
     console.log('Open ' + url.format(asUrl) + ' with a WebRTC capable browser');
 });
@@ -108,6 +109,28 @@ app.get('/loginChk', function(req,res){
 	alert("새로고침 시 로그인을 다시 해주세요");
 	res.render('loginForm');
 })
+
+function onRequest(request, response){
+    response.writeHead(200,{"Content-Type":"text/html"}); // 웹페이지 출력 
+    fs.createReadStream("./public/graph.html").pipe(response); // 같은 디렉토리에 있는 index.html를 response 함 
+}
+
+function send404Message(response){
+    response.writeHead(404,{"Content-Type":"text/plain"})
+    response.write("404 Error")
+    response.end()
+}
+
+app.get('/graph', function(request,response){
+    if(request.method == 'GET' && request.url == '/graph'){ 
+        onRequest(request,response)
+    } else { 
+        // file이 존재 하지않을때, 
+        send404Message(response); 
+    }
+})
+
+
 
 /*
  * Rooms related methods
