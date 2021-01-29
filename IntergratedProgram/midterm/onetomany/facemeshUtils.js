@@ -113,32 +113,8 @@ const detectPupilMoving = (LEC, REC, LPC, RPC) => {
     return returnScore;
 }
 
-function flattenArray(channelBuffer, recordingLength) {
-    var result = new Float32Array(recordingLength);
-    var offset = 0;
-    for (var i = 0; i < channelBuffer.length; i++) {
-        var buffer = channelBuffer[i];
-        result.set(buffer, offset);
-        offset += buffer.length;
-    }
-    return result;
-}
 
-function interleave(leftChannel, rightChannel) {
-    var length = leftChannel.length + rightChannel.length;
-    var result = new Float32Array(length);
-
-    var inputIndex = 0;
-
-    for (var index = 0; index < length;) {
-        result[index++] = leftChannel[inputIndex];
-        result[index++] = rightChannel[inputIndex];
-        inputIndex++;
-    }
-    return result;
-}
-
-function setCamera(stream){
+function setCamera(stream) {
     video = document.getElementById('video');
 
     //video setting
@@ -150,7 +126,7 @@ function setCamera(stream){
     video.height = videoHeight;
 }
 
-function setAudio(stream){
+function setAudio(stream) {
 
     // creates the audio context
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -175,7 +151,7 @@ function setAudio(stream){
     recorder.connect(context.destination);
 }
 
-function getVolume(){
+function getVolume() {
     var array = new Uint8Array(analyser.frequencyBinCount);
     analyser.getByteFrequencyData(array);
     var values = 0;
