@@ -169,17 +169,22 @@ async function setupStream() {
 
     const stream = await navigator.mediaDevices.getUserMedia({
         'audio': true,
-
     });
 
     setAudio(stream);
 }
 
-async function checkscore() {
-    var video = document.getElementById("local_video");
+function checkTotalScore(){
+    if(totalScore > 100){
+        totalScore = 100;
+    }
+    if(totalScore < 0){
+        totalScore = 0;
+    }
+}
 
-    model = await faceLandmarksDetection.load(
-        faceLandmarksDetection.SupportedPackages.mediapipeFacemesh, { maxFaces: 2 });
+async function checkscore(video) {
+
     const face = await model.estimateFaces({
         input: video,
         returnTensors: false,
@@ -219,28 +224,31 @@ async function checkscore() {
 
     } else if (face.length >= 2) {
         console.log("***************");
-        console.log("face > 2")
+        console.log("face > 2");
         console.log("***************");
     } else if (face.length == 0) {
         console.log("***************");
-        console.log("no face!!!!")
+        console.log("no face!!!!");
         console.log("***************");
     }
 
     totalScore = totalScore + detectPupilMoving(LEC, REC, LPC, RPC);
     totalScore = totalScore + detectFaceRotate(C1, C2);
 
-    totalScore = totalScore + detectVolumeScore(getVolume());
-    console.log(getVolume());
+    volume = getVolume();
+
+    totalScore = totalScore + detectVolumeScore(volume);
+    checkTotalScore()
+    console.log(volume);
     console.log(totalScore);
 
     //document.getElementById('score').innerHTML = '부정행위점수 : ' + parseInt(totalScore);
 };
 
-const runcheckscore = async() => {
+const runcheckscore = async(video) => {
     await setupStream();
     setInterval(() => {
-        checkscore();
+        checkscore(video);
     }, 1000);
 }
 
@@ -424,10 +432,10 @@ var config = {
 
             var video = document.getElementById("local_video");
 
-            setInterval(() => {
-                facemesh(video);
-            }, 1000);
-            runcheckscore();
+            model = await faceLandmarksDetection.load(
+                faceLandmarksDetection.SupportedPackages.mediapipeFacemesh, { maxFaces: 2 });
+
+            runcheckscore(video);
             speechtotext();
 
             hideUnnecessaryStuff();
