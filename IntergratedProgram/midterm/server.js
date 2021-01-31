@@ -110,7 +110,7 @@ function send404Message(response) {
 
 function onGraphRequest(request, response) {
 	response.writeHead(200, { "Content-Type": "text/html" }); // 웹페이지 출력 
-	fs.createReadStream("./graph.html").pipe(response); // 같은 디렉토리에 있는 graph.html를 response 함 
+	fs.createReadStream("./graph.ejs").pipe(response); // 같은 디렉토리에 있는 graph.html를 response 함 
 }
 
 app.use('/graph', graphRoutes.routes) 
