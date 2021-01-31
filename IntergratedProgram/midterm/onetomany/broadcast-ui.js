@@ -183,7 +183,7 @@ function checkTotalScore(){
     }
 }
 
-async function checkscore(video) {
+async function checkscore(video,roomName) {
 
     const face = await model.estimateFaces({
         input: video,
@@ -192,7 +192,7 @@ async function checkscore(video) {
         predictIrises: state.predictIrises
     });
 
-    if (face.length == 1) {
+    if (face. length== 1) {
 
         var D1 = face[0].scaledMesh[454];
         var D2 = face[0].scaledMesh[234];
@@ -242,13 +242,27 @@ async function checkscore(video) {
     console.log(volume);
     console.log(totalScore);
 
+    $.ajax({
+        type: 'POST',
+        url : "/view/receiveData",
+        contentType : "application/json; charset=utf-8",
+        data : JSON.stringify({
+            email : userInfo.email,
+            name : userInfo.name,
+            score : totalScore,
+            lecture : roomName
+        }),
+        dataType : "json",
+    })
+    console.log("ajax finish");
+
     //document.getElementById('score').innerHTML = '부정행위점수 : ' + parseInt(totalScore);
 };
 
-const runcheckscore = async(video) => {
+const runcheckscore = async(video,roomName) => {
     await setupStream();
     setInterval(() => {
-        checkscore(video);
+        checkscore(video,roomName);
     }, 1000);
 }
 
@@ -434,9 +448,29 @@ var config = {
 
             model = await faceLandmarksDetection.load(
                 faceLandmarksDetection.SupportedPackages.mediapipeFacemesh, { maxFaces: 2 });
-
-            runcheckscore(video);
+            
+            var roomName = room.roomName;
+            runcheckscore(video,roomName);
             speechtotext();
+            // $.ajax({
+            //     type: 'POST',
+            //     url : "/receiveData",
+            //     contentType : "application/json; charset=utf-8",
+            //     data : JSON.stringify({
+            //         email : userEmail,
+            //         name : userInfo.name,
+            //         score : totalScore,
+            //         lecture : room.roomName
+            //     }),
+            //     dataType : "json",
+            //     success : function (data){
+            //         console.log(sucees);
+            //         console.log(data);
+            //     },
+            //     error : function(e){
+            //         console.log(e);
+            //     }
+            // })
 
             hideUnnecessaryStuff();
         };

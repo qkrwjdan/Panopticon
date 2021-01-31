@@ -20,6 +20,13 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 
+router.post('/receiveData',function(req,res){
+    console.log("view");
+    console.log(req.body);
+
+    res.end();
+})
+
 router.post('/', function(req,res){
     var ViewerName = req.session.vaild.name;
     var ViewerJob = req.session.vaild.job;

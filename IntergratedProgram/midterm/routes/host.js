@@ -20,6 +20,14 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 
+router.post('/receiveData',function(req,res){
+    console.log("host");
+    console.log(req.body);
+
+    res.end();
+})
+
+
 router.post('/', function(req,res){
     var HostName = req.session.vaild.name;
     var HostJob = req.session.vaild.job;
@@ -41,8 +49,6 @@ router.post('/', function(req,res){
     .catch(function(error){
         console.log("Error : ", error);
     })
-
-    
 })
 
 module.exports = router;
