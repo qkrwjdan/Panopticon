@@ -20,6 +20,8 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 
+router.get('')
+
 router.post('/receiveData',function(req,res){
     console.log("host");
     console.log(req.body);

@@ -20,9 +20,49 @@ require("firebase/firestore");
 
 const db = firebase.firestore();
 
+function sendScore(roomName,userEmail,time,score){
+    db.collection('lecture').doc(roomName)
+        .collection('studentEmail').doc(userEmail)
+        .collection('time').doc(time)
+        .set({
+            score : score
+        })
+        .then(()=>{
+            console.log("추가성공");
+        })
+        .catch((error)=>{
+            console.log("에러발생");
+            console.log(error)
+        })
+}
+
 /* GET home page. */
 router.get('/', function(req,res,next){
   res.render('loginForm');
+})
+
+router.get('/testPost',function(req,res,next){
+    res.render('test');
+})
+
+router.post('/testPost',function(req,res,next){
+
+    console.log(req.body);
+
+    let today = new Date();
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
+    let time = String(hours) + ":" + String(minutes)+ ":" + String(seconds);
+    console.log("hi");
+    console.log("req.body.lecture : ",req.body.lecture)
+    console.log("req.body.email : ",req.body.email)
+    console.log("req.body.score : ",req.body.score)
+    console.log(time)
+
+    sendScore(req.body.lecture,req.body.email,time,req.body.score);
+
+    res.end();
 })
 
 router.get('/creatForm', function(req,res,next){

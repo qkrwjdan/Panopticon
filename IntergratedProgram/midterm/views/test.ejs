@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>Test</title>
+</head>
+<body>
+    <button id="but">hi</button>
+    <script>
+        var btn = document.getElementById("but");
+
+        var roomName = "testLectureName";
+        var totalScore = "100";
+        var userInfo = {
+            email : "boong-u@naver.com",
+            name : "boong-u",
+        }
+        btn.onclick = () =>{
+            $.ajax({
+                type: 'POST',
+                url : "/testPost",
+                contentType : "application/json; charset=utf-8",
+                data : JSON.stringify({
+                    email : userInfo.email,
+                    name : userInfo.name,
+                    score : totalScore,
+                    lecture : roomName,
+                }),
+            })
+        }
+
+    </script>
+</body>
+</html>
