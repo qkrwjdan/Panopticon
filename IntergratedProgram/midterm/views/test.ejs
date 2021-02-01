@@ -12,23 +12,30 @@
     <script>
         var btn = document.getElementById("but");
 
-        var roomName = "testLectureName";
+        var roomName = "안녕하세요";
         var totalScore = "100";
         var userInfo = {
             email : "boong-u@naver.com",
             name : "boong-u",
         }
+        var userName = "boong-u";
         btn.onclick = () =>{
             $.ajax({
                 type: 'POST',
                 url : "/testPost",
                 contentType : "application/json; charset=utf-8",
                 data : JSON.stringify({
-                    email : userInfo.email,
-                    name : userInfo.name,
-                    score : totalScore,
-                    lecture : roomName,
+                    name : userName,
+                    lecture : roomName
                 }),
+                dataType : "json",
+                success : function (data){
+                    console.log("success");
+                    console.log(data);
+                },
+                error : function(e){
+                    console.log(e);
+                }
             })
         }
 

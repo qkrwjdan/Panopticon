@@ -36,6 +36,20 @@ function sendScore(roomName,userEmail,time,score){
         })
 }
 
+async function receiveScore(roomName,userName){
+    var dict = {}
+    var docs = await db.collection('lecture').doc(roomName)
+        .collection('studentName').doc(userName)
+        .collection('time').get().then((snapshot)=>{
+            snapshot.docs.forEach(doc=>{
+                console.log(doc.id);
+                dict[doc.id] = doc.data().score;
+            })
+        });
+
+    return dict;
+}
+
 /* GET home page. */
 router.get('/', function(req,res,next){
   res.render('loginForm');
@@ -49,20 +63,29 @@ router.post('/testPost',function(req,res,next){
 
     console.log(req.body);
 
+    // var returnDict;
+
     let today = new Date();
     let hours = today.getHours();
     let minutes = today.getMinutes();
     let seconds = today.getSeconds();
     let time = String(hours) + ":" + String(minutes)+ ":" + String(seconds);
+    
     console.log("hi");
-    console.log("req.body.lecture : ",req.body.lecture)
-    console.log("req.body.email : ",req.body.email)
-    console.log("req.body.score : ",req.body.score)
-    console.log(time)
+    console.log("req.body.lecture : ",req.body.lecture);
+    console.log("req.body.email : ",req.body.email);
+    console.log("req.body.score : ",req.body.score);
+    console.log(time);
 
-    sendScore(req.body.lecture,req.body.email,time,req.body.score);
-
-    res.end();
+    // sendScore(req.body.lecture,req.body.email,time,req.body.score);
+    // var dict = receiveScore(req.body.lecture,req.body.email,time);
+    receiveScore(req.body.lecture,req.body.name).then((dict)=>{
+        console.log(dict);
+        // returnDict = dict;
+        console.log("return");
+        res.json(dict);
+    });
+    
 })
 
 router.get('/creatForm', function(req,res,next){

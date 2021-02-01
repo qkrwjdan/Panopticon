@@ -20,9 +20,9 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users')
 
-function sendScore(roomName, userEmail, time, score) {
+function sendScore(roomName, userName, time, score) {
     db.collection('lecture').doc(roomName)
-        .collection('studentEmail').doc(userEmail)
+        .collection('studentName').doc(userName)
         .collection('time').doc(time)
         .set({
             score: score
@@ -43,15 +43,17 @@ router.post('/receiveData', function(req, res) {
     let minutes = today.getMinutes();
     let seconds = today.getSeconds();
     let time = String(hours) + ":" + String(minutes) + ":" + String(seconds);
-    console.log("req.body.lecture : ", req.body.lecture)
-    console.log("req.body.email : ", req.body.email)
-    console.log("req.body.score : ", req.body.score)
-    console.log(time)
+    console.log("req.body.lecture : ", req.body.lecture);
+    console.log("req.body.email : ", req.body.email);
+    console.log("req.body.name : ",req.body.name);
+    console.log("req.body.score : ", req.body.score);
+    console.log(time);
 
-    //sendScore(req.body.lecture, req.body.email, time, req.body.score);
+    sendScore(req.body.lecture, req.body.name, time, req.body.score);
 
     res.end();
 })
+
 router.post('/specialface', function(req, res) {
 
     console.log("req.body.facenum : ", req.body.facenum)

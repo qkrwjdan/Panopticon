@@ -4,6 +4,7 @@ peer_name = [];
 
 var tempStream;
 var capacity = 1;
+var globalRoomName;
 
 userInfo = userInfo.replace(/&#34;/gi, '\"');
 userInfo = JSON.parse(userInfo);
@@ -339,6 +340,32 @@ function speechtotext() {
     };
 }
 
+function getScore(userName,roomName){
+    $.ajax({
+        type: 'POST',
+        url : "host/receiveData",
+        contentType : "application/json; charset=utf-8",
+        data : JSON.stringify({
+            name : userName,
+            lecture : roomName
+        }),
+        dataType : "json",
+        success : function (data){
+            console.log("success");
+            console.log(data);
+        },
+        error : function(e){
+            console.log(e);
+        }
+    })
+}
+
+function startGetScore(userName,roomName){
+    setInterval(() =>{
+        getScore(userName,roomName);
+    },5000)
+}
+
 
 var config = {
     openSocket: function(config) {
@@ -369,6 +396,7 @@ var config = {
     },
     onRemoteStream: function(media) { //진행중
 
+        console.log("remoteStream")
         var video = media.video;
         // video.setAttribute('controls', true);
 
@@ -394,6 +422,11 @@ var config = {
         $(".video_content:last").addClass(String(index));
 
         if (userInfo.job == "professor") {
+            console.log("media.response : ",media.response);
+            console.log("media.response.stuname : ",media.response.studentName);
+
+            startGetScore(media.response.studentName,globalRoomName);
+
             var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
             $(".video_content:last").append(user_name);
             $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
@@ -712,6 +745,8 @@ function createButtonClickHandler() {
     }
 
     capacity = selected_students.length;
+
+    globalRoomName = document.getElementById('conference-name').value;
 
     capacity = Number(capacity);
     captureUserMedia(function() {

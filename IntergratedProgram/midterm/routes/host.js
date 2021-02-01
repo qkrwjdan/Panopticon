@@ -20,13 +20,35 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 
-router.get('')
+async function receiveScore(roomName,userName){
+    var dict = {}
+    var docs = await db.collection('lecture').doc(roomName)
+        .collection('studentName').doc(userName)
+        .collection('time').get().then((snapshot)=>{
+            snapshot.docs.forEach(doc=>{
+                console.log(doc.id);
+                dict[doc.id] = doc.data().score;
+            })
+        });
+
+    return dict;
+}
 
 router.post('/receiveData',function(req,res){
-    console.log("host");
     console.log(req.body);
 
-    res.end();
+    let today = new Date();
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
+    let time = String(hours) + ":" + String(minutes)+ ":" + String(seconds);
+
+    receiveScore(req.body.lecture,req.body.name).then((dict)=>{
+        console.log(dict);
+        // returnDict = dict;
+        console.log("return");
+        res.json(dict);
+    });
 })
 
 
