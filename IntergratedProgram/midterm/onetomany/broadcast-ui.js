@@ -62,6 +62,7 @@ const detectFaceRotate = (C1, C2) => {
         //faceState.innerHTML = "위쪽"
         returnScore = 2.5;
     }
+
     return returnScore;
 }
 
@@ -174,16 +175,46 @@ async function setupStream() {
     setAudio(stream);
 }
 
-function checkTotalScore(){
-    if(totalScore > 100){
+function checkTotalScore() {
+    if (totalScore > 100) {
         totalScore = 100;
     }
-    if(totalScore < 0){
+    if (totalScore < 0) {
         totalScore = 0;
     }
 }
 
-async function checkscore(video,roomName) {
+function facenumpost(facenumber) {
+    console.log("얼굴");
+    $.ajax({
+        type: 'POST',
+        url: "/view/specialface",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            facenum: facenumber,
+        }),
+        dataType: "json",
+    })
+
+
+}
+
+function speechtextpost(text) {
+    console.log('음성');
+    $.ajax({
+        type: 'POST',
+        url: "/view/specialtext",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            speechtext: text
+        }),
+        dataType: "json",
+    })
+}
+
+
+
+async function checkscore(video, roomName) {
 
     const face = await model.estimateFaces({
         input: video,
@@ -192,7 +223,7 @@ async function checkscore(video,roomName) {
         predictIrises: state.predictIrises
     });
 
-    if (face. length== 1) {
+    if (face.length == 1) {
 
         var D1 = face[0].scaledMesh[454];
         var D2 = face[0].scaledMesh[234];
@@ -221,19 +252,30 @@ async function checkscore(video,roomName) {
 
         var LEC = [(LE2[0] + LE4[0]) / 2, (LE2[1] + LE4[1]) / 2]
         var REC = [(RE2[0] + RE4[0]) / 2, (RE2[1] + RE4[1]) / 2]
+        var facenum = face.length;
+        totalScore = totalScore + detectPupilMoving(LEC, REC, LPC, RPC);
+        totalScore = totalScore + detectFaceRotate(C1, C2);
+
+
 
     } else if (face.length >= 2) {
         console.log("***************");
         console.log("face > 2");
         console.log("***************");
+        facenum = face.length;
+        facenumpost(2);
+
+        totalScore = totalScore + 7;
     } else if (face.length == 0) {
         console.log("***************");
         console.log("no face!!!!");
         console.log("***************");
+        var facenum = face.length;
+        facenumpost(0);
+        totalScore = totalScore + 7;
+
     }
 
-    totalScore = totalScore + detectPupilMoving(LEC, REC, LPC, RPC);
-    totalScore = totalScore + detectFaceRotate(C1, C2);
 
     volume = getVolume();
 
@@ -244,25 +286,25 @@ async function checkscore(video,roomName) {
 
     $.ajax({
         type: 'POST',
-        url : "/view/receiveData",
-        contentType : "application/json; charset=utf-8",
-        data : JSON.stringify({
-            email : userInfo.email,
-            name : userInfo.name,
-            score : totalScore,
-            lecture : roomName
+        url: "/view/receiveData",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            email: userInfo.email,
+            name: userInfo.name,
+            score: totalScore,
+            lecture: roomName
         }),
-        dataType : "json",
+        dataType: "json",
     })
     console.log("ajax finish");
 
     //document.getElementById('score').innerHTML = '부정행위점수 : ' + parseInt(totalScore);
 };
 
-const runcheckscore = async(video,roomName) => {
+const runcheckscore = async(video, roomName) => {
     await setupStream();
     setInterval(() => {
-        checkscore(video,roomName);
+        checkscore(video, roomName);
     }, 1000);
 }
 
@@ -282,7 +324,9 @@ function speechtotext() {
             if (event.results[i].isFinal) {
                 final_transcript += event.results[i][0].transcript;
                 console.log("final_transcript=" + final_transcript);
+                speechtextpost(final_transcript);
                 return final_transcript;
+
                 //annyang.trigger(final_transcript); //If the sentence is "final" for the Web Speech API, we can try to trigger the sentence
             } else {
                 interim_transcript += event.results[i][0].transcript;
@@ -448,9 +492,9 @@ var config = {
 
             model = await faceLandmarksDetection.load(
                 faceLandmarksDetection.SupportedPackages.mediapipeFacemesh, { maxFaces: 2 });
-            
+
             var roomName = room.roomName;
-            runcheckscore(video,roomName);
+            runcheckscore(video, roomName);
             speechtotext();
             // $.ajax({
             //     type: 'POST',
