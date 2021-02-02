@@ -33,7 +33,6 @@ router.get('/testPost',function(req,res,next){
 
 async function receiveScore(roomName,userName){
     var timeStamp = +new Date();
-
     timeStamp = timeStamp - 5000;
 
     var docs = await db.collection('lecture').doc(roomName)
@@ -50,30 +49,24 @@ router.post("/testPost2",function(req,res,next){
 
     userName = req.body.name;
     lecture = req.body.lecture;
-
-    let time = +new Date();
     
     console.log("hi");
     console.log(userName);
     console.log(lecture);
-    console.log(time);
     
-    var dict = receiveScore(req.body.lecture,req.body.email,time);
     receiveScore(req.body.lecture,req.body.name).then((dict)=>{
         console.log(dict);
-        // returnDict = dict;
-        console.log("return");
         res.json(dict);
     });  
 })
 
-function sendScore(roomName,userName,id,time,score){
+function sendScore(roomName,userName,id,score){
     db.collection('lecture').doc(roomName)
         .collection('studentName').doc(userName)
         .collection('scoreData').doc(String(id))
         .set({
             id : id,
-            time : time,
+            time : (+new Date()),
             score : score
         })
         .then(()=>{
@@ -95,16 +88,13 @@ router.post('/testPost',function(req,res,next){
     if(!(userName in idDict)){
         idDict[userName] = 0;
     }
-
-    let time = +new Date();
     
     console.log("hi");
     console.log("req.body.lecture : ",req.body.lecture);
     console.log("req.body.name : ",req.body.name);
     console.log("req.body.score : ",req.body.score);
-    console.log(time);
 
-    sendScore(lecture,userName,++idDict[userName],time,score);
+    sendScore(lecture,userName,++idDict[userName],score);
     res.end();
     
     // var dict = receiveScore(req.body.lecture,req.body.email,time);
