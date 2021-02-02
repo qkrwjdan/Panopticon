@@ -772,7 +772,7 @@ function createButtonClickHandler() {
         document.getElementsByName("students").value
 
         $(".notVisit:last").addClass(String(selected_student_name[i]));
-        notVisit[index].innerHTML = "<br>" + selected_student_name[i] + "<br><br>미출석";
+        // notVisit[index].innerHTML = "<br>" + selected_student_name[i] + "<br><br>미출석";
     }
 
 }

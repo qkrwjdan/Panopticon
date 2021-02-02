@@ -98,6 +98,11 @@
             .selectpad{
                 padding-top:20px;
             }
+            .as{
+                background-color: #9ED0FE;
+                width: 245px;
+                height:450%;
+            }
         </style>
 
         <script>
@@ -205,11 +210,14 @@
             <div class=non-visual><!--invisiable in homepage-->
                 <div class="modal"></div>
                 <div class="pop-up">
-                    <div style="margin-top:10%; color:black; font-size:2.5rem; font-weight: bold;">정말 나가시겠습니까?</div>
+                    <div style="margin-top:10%; color:black; font-size:2.5rem; font-weight: bold;">미팅을 종료하시겠습니까?</div>
                     <button class="exit_btn" onclick="exit_yes()">네</button>
                     <button class="exit_btn" onclick="exit_no()">아니오</button>
                 </div>
                     <div class="wrapper"><!--grid UI-->
+                        <div id="ale">
+                            <div class="as">Hello</div>
+                        </div>
                         <div class=content><!--remote video-->
                             <div class="left_nav">
                                 <button id="exit" class="basicBtns" onclick="exitRoom()"><i class="fas fa-sign-out-alt"></i></button><!--exit peer connection func bnt-->
