@@ -20,17 +20,21 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users')
 
-function sendScore(roomName, userName, time, score) {
+var idDict = {};
+
+function sendScore(roomName,userName,id,score){
     db.collection('lecture').doc(roomName)
         .collection('studentName').doc(userName)
-        .collection('time').doc(time)
+        .collection('scoreData').doc(String(id))
         .set({
-            score: score
+            id : id,
+            time : (+new Date()),
+            score : score
         })
-        .then(() => {
+        .then(()=>{
             console.log("추가성공");
         })
-        .catch((error) => {
+        .catch((error)=>{
             console.log("에러발생");
             console.log(error)
         })
@@ -38,19 +42,21 @@ function sendScore(roomName, userName, time, score) {
 
 router.post('/receiveData', function(req, res) {
 
-    let today = new Date();
-    let hours = today.getHours();
-    let minutes = today.getMinutes();
-    let seconds = today.getSeconds();
-    let time = String(hours) + ":" + String(minutes) + ":" + String(seconds);
-    console.log("req.body.lecture : ", req.body.lecture);
-    console.log("req.body.email : ", req.body.email);
+    console.log(req.body);
+    userName = req.body.name;
+    lecture = req.body.lecture;
+    score = req.body.score;
+
+    if(!(userName in idDict)){
+        idDict[userName] = 0;
+    }
+    
+    console.log("hi");
+    console.log("req.body.lecture : ",req.body.lecture);
     console.log("req.body.name : ",req.body.name);
-    console.log("req.body.score : ", req.body.score);
-    console.log(time);
+    console.log("req.body.score : ",req.body.score);
 
-    sendScore(req.body.lecture, req.body.name, time, req.body.score);
-
+    sendScore(lecture,userName,++idDict[userName],score);
     res.end();
 })
 

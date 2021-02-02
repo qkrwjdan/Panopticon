@@ -31,30 +31,46 @@ router.get('/testPost',function(req,res,next){
     res.render('test');
 })
 
-async function receiveScore(roomName,userName){
+async function receiveScore(roomName,userNames){
     var timeStamp = +new Date();
     timeStamp = timeStamp - 5000;
+    var returnDict = {};
 
-    var docs = await db.collection('lecture').doc(roomName)
-        .collection('studentName').doc(userName)
+    var temp = 0;
+
+    for(const item of userNames){
+
+        var docs = await db.collection('lecture').doc(roomName)
+        .collection('studentName').doc(item)
         .collection('scoreData').where('time','>',timeStamp).get().then((snapshot)=>{
+            temp = 0;
+
             snapshot.docs.forEach(doc=>{
                 console.log(doc.data());
+                if(!(item in returnDict)){
+                    returnDict[item] = []
+                }
+                temp = temp + parseInt(doc.data().score);
             })
-            return docs
+
+            returnDict[item] = temp / snapshot.docs.length;;
         });
+    }
+
+    console.log("return Dict : ",returnDict);
+    return returnDict;
 }
 
 router.post("/testPost2",function(req,res,next){
 
-    userName = req.body.name;
+    userNames = req.body.name;
     lecture = req.body.lecture;
     
     console.log("hi");
-    console.log(userName);
+    console.log(userNames);
     console.log(lecture);
     
-    receiveScore(req.body.lecture,req.body.name).then((dict)=>{
+    receiveScore(lecture,userNames).then((dict)=>{
         console.log(dict);
         res.json(dict);
     });  

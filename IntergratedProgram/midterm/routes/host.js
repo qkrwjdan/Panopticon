@@ -20,35 +20,49 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 
-async function receiveScore(roomName,userName){
-    var dict = {}
-    var docs = await db.collection('lecture').doc(roomName)
-        .collection('studentName').doc(userName)
-        .collection('time').get().then((snapshot)=>{
-            snapshot.docs.forEach(doc=>{
-                console.log(doc.id);
-                dict[doc.id] = doc.data().score;
-            })
-        });
+async function receiveScore(roomName,userNames){
+    var timeStamp = +new Date();
+    timeStamp = timeStamp - 5000;
+    var returnDict = {};
 
-    return dict;
+    var temp = 0;
+
+    for(const item of userNames){
+
+        var docs = await db.collection('lecture').doc(roomName)
+        .collection('studentName').doc(item)
+        .collection('scoreData').where('time','>',timeStamp).get().then((snapshot)=>{
+            temp = 0;
+
+            snapshot.docs.forEach(doc=>{
+                console.log(doc.data());
+                if(!(item in returnDict)){
+                    returnDict[item] = []
+                }
+                temp = temp + parseInt(doc.data().score);
+            })
+
+            returnDict[item] = temp / snapshot.docs.length;;
+        });
+    }
+
+    console.log("return Dict : ",returnDict);
+    return returnDict;
 }
 
 router.post('/receiveData',function(req,res){
-    console.log(req.body);
-
-    let today = new Date();
-    let hours = today.getHours();
-    let minutes = today.getMinutes();
-    let seconds = today.getSeconds();
-    let time = String(hours) + ":" + String(minutes)+ ":" + String(seconds);
-
-    receiveScore(req.body.lecture,req.body.name).then((dict)=>{
+    userNames = req.body.name;
+    lecture = req.body.lecture;
+    
+    console.log("hi");
+    console.log(userNames);
+    console.log(lecture);
+    
+    receiveScore(lecture,userNames).then((dict)=>{
         console.log(dict);
-        // returnDict = dict;
-        console.log("return");
         res.json(dict);
     });
+    
 })
 
 

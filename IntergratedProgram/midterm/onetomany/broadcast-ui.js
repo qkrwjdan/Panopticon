@@ -1,4 +1,6 @@
 let model;
+var student_list = [];
+var cheating_score;
 
 peer_name = [];
 
@@ -285,12 +287,12 @@ async function checkscore(video, roomName) {
     console.log(volume);
     console.log(totalScore);
 
+    // 학생이 보내는거
     $.ajax({
         type: 'POST',
         url: "/view/receiveData",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            email: userInfo.email,
             name: userInfo.name,
             score: totalScore,
             lecture: roomName
@@ -340,19 +342,21 @@ function speechtotext() {
     };
 }
 
-function getScore(userName,roomName){
+function getScore(userNames,roomName){
+    //감독자가 보내는거
     $.ajax({
         type: 'POST',
         url : "host/receiveData",
         contentType : "application/json; charset=utf-8",
         data : JSON.stringify({
-            name : userName,
+            name : userNames,
             lecture : roomName
         }),
         dataType : "json",
         success : function (data){
             console.log("success");
-            console.log(data);
+            console.log("data : ",data);
+            cheating_score = data;
         },
         error : function(e){
             console.log(e);
@@ -360,9 +364,9 @@ function getScore(userName,roomName){
     })
 }
 
-function startGetScore(userName,roomName){
+function startGetScore(userNames,roomName){
     setInterval(() =>{
-        getScore(userName,roomName);
+        getScore(userNames,roomName);
     },5000)
 }
 
@@ -424,8 +428,10 @@ var config = {
         if (userInfo.job == "professor") {
             console.log("media.response : ",media.response);
             console.log("media.response.stuname : ",media.response.studentName);
+            student_list.push(media.response.studentName);
 
-            startGetScore(media.response.studentName,globalRoomName);
+            startGetScore(student_list,globalRoomName);
+
 
             var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
             $(".video_content:last").append(user_name);

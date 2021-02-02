@@ -9,9 +9,12 @@
 </head>
 <body>
     <button id="but">hi</button>
+    <button id="button2">username</button>
     <button id="getbutton">bye!</button>
+
     <script>
         var btn = document.getElementById("but");
+        var btn3 = document.getElementById("button2");
         var btn2 = document.getElementById("getbutton");
 
 
@@ -43,19 +46,41 @@
             })
         }
 
+        btn3.onclick = () =>{
+            $.ajax({
+                type: 'POST',
+                url : "/testPost",
+                contentType : "application/json; charset=utf-8",
+                data : JSON.stringify({
+                    name : "userName",
+                    lecture : roomName,
+                    score : totalScore,
+                }),
+                dataType : "json",
+                success : function (data){
+                    console.log("success");
+                    console.log(data);
+                },
+                error : function(e){
+                    console.log(e);
+                }
+            })
+        }
+
         btn2.onclick = () =>{
             $.ajax({
                 type: 'POST',
                 url : "/testPost2",
                 contentType : "application/json; charset=utf-8",
                 data : JSON.stringify({
-                    name : userName,
+                    name : [userName,"userName"],
                     lecture : roomName
                 }),
                 dataType : "json",
                 success : function (data){
                     console.log("success");
                     console.log(data);
+
                 },
                 error : function(e){
                     console.log(e);
