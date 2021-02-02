@@ -10,6 +10,7 @@ var url = require('url');
 var firebase = require('firebase');
 const { fstat } = require('fs');
 const { QuerySnapshot } = require('@google-cloud/firestore');
+const { time } = require('console');
 //const { firestore } = require('firebase-admin');
 
 
@@ -19,12 +20,60 @@ require("firebase/database");
 require("firebase/firestore");
 
 const db = firebase.firestore();
+var idDict = {}
 
-function sendScore(roomName,userEmail,time,score){
+/* GET home page. */
+router.get('/', function(req,res,next){
+  res.render('loginForm');
+})
+
+router.get('/testPost',function(req,res,next){
+    res.render('test');
+})
+
+async function receiveScore(roomName,userName){
+    var timeStamp = +new Date();
+
+    timeStamp = timeStamp - 5000;
+
+    var docs = await db.collection('lecture').doc(roomName)
+        .collection('studentName').doc(userName)
+        .collection('scoreData').where('time','>',timeStamp).get().then((snapshot)=>{
+            snapshot.docs.forEach(doc=>{
+                console.log(doc.data());
+            })
+            return docs
+        });
+}
+
+router.post("/testPost2",function(req,res,next){
+
+    userName = req.body.name;
+    lecture = req.body.lecture;
+
+    let time = +new Date();
+    
+    console.log("hi");
+    console.log(userName);
+    console.log(lecture);
+    console.log(time);
+    
+    var dict = receiveScore(req.body.lecture,req.body.email,time);
+    receiveScore(req.body.lecture,req.body.name).then((dict)=>{
+        console.log(dict);
+        // returnDict = dict;
+        console.log("return");
+        res.json(dict);
+    });  
+})
+
+function sendScore(roomName,userName,id,time,score){
     db.collection('lecture').doc(roomName)
-        .collection('studentEmail').doc(userEmail)
-        .collection('time').doc(time)
+        .collection('studentName').doc(userName)
+        .collection('scoreData').doc(String(id))
         .set({
+            id : id,
+            time : time,
             score : score
         })
         .then(()=>{
@@ -36,55 +85,35 @@ function sendScore(roomName,userEmail,time,score){
         })
 }
 
-async function receiveScore(roomName,userName){
-    var dict = {}
-    var docs = await db.collection('lecture').doc(roomName)
-        .collection('studentName').doc(userName)
-        .collection('time').get().then((snapshot)=>{
-            snapshot.docs.forEach(doc=>{
-                console.log(doc.id);
-                dict[doc.id] = doc.data().score;
-            })
-        });
-
-    return dict;
-}
-
-/* GET home page. */
-router.get('/', function(req,res,next){
-  res.render('loginForm');
-})
-
-router.get('/testPost',function(req,res,next){
-    res.render('test');
-})
-
 router.post('/testPost',function(req,res,next){
 
     console.log(req.body);
+    userName = req.body.name;
+    lecture = req.body.lecture;
+    score = req.body.score;
 
-    // var returnDict;
+    if(!(userName in idDict)){
+        idDict[userName] = 0;
+    }
 
-    let today = new Date();
-    let hours = today.getHours();
-    let minutes = today.getMinutes();
-    let seconds = today.getSeconds();
-    let time = String(hours) + ":" + String(minutes)+ ":" + String(seconds);
+    let time = +new Date();
     
     console.log("hi");
     console.log("req.body.lecture : ",req.body.lecture);
-    console.log("req.body.email : ",req.body.email);
+    console.log("req.body.name : ",req.body.name);
     console.log("req.body.score : ",req.body.score);
     console.log(time);
 
-    // sendScore(req.body.lecture,req.body.email,time,req.body.score);
+    sendScore(lecture,userName,++idDict[userName],time,score);
+    res.end();
+    
     // var dict = receiveScore(req.body.lecture,req.body.email,time);
-    receiveScore(req.body.lecture,req.body.name).then((dict)=>{
-        console.log(dict);
-        // returnDict = dict;
-        console.log("return");
-        res.json(dict);
-    });
+    // receiveScore(req.body.lecture,req.body.name).then((dict)=>{
+    //     console.log(dict);
+    //     // returnDict = dict;
+    //     console.log("return");
+    //     res.json(dict);
+    // });
     
 })
 
