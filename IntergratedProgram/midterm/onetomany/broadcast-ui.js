@@ -2,6 +2,8 @@ let model;
 var student_list = [];
 var cheating_score;
 
+var testFlag = false;
+
 peer_name = [];
 
 var tempStream;
@@ -219,6 +221,8 @@ function speechtextpost(text) {
 
 async function checkscore(video, roomName) {
 
+    if(!testFlag) return;
+
     const face = await model.estimateFaces({
         input: video,
         returnTensors: false,
@@ -321,6 +325,9 @@ function speechtotext() {
     var final_transcript = '';
     recognition.interimResults = true;
     recognition.onresult = function(event) {
+
+        if(!testFlag) return;
+
         var interim_transcript = '';
         final_transcript = '';
         for (var i = event.resultIndex; i < event.results.length; ++i) {
@@ -343,6 +350,9 @@ function speechtotext() {
 }
 
 function getScore(userNames,roomName){
+
+    if(!testFlag) return;
+
     //감독자가 보내는거
     $.ajax({
         type: 'POST',
@@ -562,6 +572,28 @@ var config = {
         data = JSON.parse(event.data);
         if (data.type) {
             switch (data.type) {
+                case "startTest":
+                    $(".alert_area").append("<div id='toast'></div>")
+                    toast("시험을 시작합니다.");
+
+                    if(userInfo.job=="student"){
+                        testFlag = true;
+                    }
+
+                    console.log("alert arrive");
+                    break;
+
+                case "stopTest":
+                    $(".alert_area").append("<div id='toast'></div>")
+                    toast("시험을 정지합니다.");
+
+                    if(userInfo.job=="student"){
+                        testFlag = false;
+                    }
+
+                    console.log("alert arrive");
+                    break;
+
                 case "notify":
                     $(".alert_area").append("<div id='toast'></div>")
                     toast(data.message);
@@ -915,6 +947,35 @@ function updateLayout(num) {
         if (location.hash.length > 2) uniqueToken.parentNode.parentNode.parentNode.innerHTML = '<h2 style="text-align:right;font-size:12px"><a href="' + location.href + '" target="_blank">Share this link</a></h2>';
         else uniqueToken.innerHTML = uniqueToken.parentNode.parentNode.href = '#' + (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace(/\./g, '-');
 })();
+
+function sendStartTestMessage(element) {
+    var ele = document.getElementById("playIcon");
+
+    if(ele.classList[1] == "fa-play"){
+        let obj = {
+            "type": "startTest",
+        }
+        obj = JSON.stringify(obj);
+        for (id = 0; id < peerConnections.length; id++) {
+            peerConnections[id].channel.send(obj);
+        }
+        testFlag = true;
+        ele.classList.replace('fa-play', 'fa-pause');
+    }
+
+    else if(ele.classList[1] == "fa-pause"){
+
+        let obj = {
+            "type": "stopTest",
+        }
+        obj = JSON.stringify(obj);
+        for (id = 0; id < peerConnections.length; id++) {
+            peerConnections[id].channel.send(obj);
+        }
+        testFlag = false;
+        ele.classList.replace('fa-pause', 'fa-play');
+    }
+}
 
 function micOnOff(element) {
     if (config.attachStream.getAudioTracks()[0].enabled) {
