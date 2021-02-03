@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파놉티콘</title>
+    <link rel="stylesheet" href="./style/main.css">
+</head>
+<body>
+    <article style="background-color:#eff0f2">
+        <div class="slider visible" style="margin:0 auto">
+            <div class="page-container slider" sytle="text-align: center;">
+                <div class="login-form-container shadow">
+                    <div class="title">
+                        <h1><br>"Panopticon"</h1>
+                        <h2><%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h2>
+                    </div>
+                    <div id="host_slides" class="container">
+                        <div class="login-input-container">
+                            <% if(userInfo.job == "professor"){%>
+                            <div class="login-input-wrap">
+                                <a href="/host">강의실 생성하기</a>
+                            </div>
+                            <div class="login-input-wrap">
+                                <a href="/main/review">다시보기</a>
+                            </div>
+                            <% }else{ %>
+                            <div class="login-input-wrap">
+                                <a href="/view">강의실 입장하기</a>
+                            </div>
+                            <% }%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>     
+
+    <script>
+        var toHost = document.getElementById("toHost");
+        var toReview = document.getElementById("toReview");
+        var toView = document.getElementById("toView");
+
+        var userInfo= "<%=JSON.stringify(userInfo)%>";
+
+        userInfo = userInfo.replace(/&#34;/gi, '\"');
+        userInfo = JSON.parse(userInfo);
+        
+
+        var data = {"userInfo" : userInfo};
+
+        console.log(userInfo);
+
+    </script>
+</body>
+</html>

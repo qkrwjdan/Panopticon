@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파놉티콘</title>
+    <link rel="stylesheet" href="/style/review.css">
+</head>
+<body>
+    <article style="background-color:#eff0f2">
+        <div class="slider visible" style="margin:0 auto">
+            <div class="page-container slider" sytle="text-align: center;">
+                <div class="login-form-container shadow">
+                    <div class="title">
+                        <h1><br>"Panopticon"</h1>
+                        <h2><%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h2>
+                    </div>
+                    <div id="host_slides" class="container">
+                        <div class="login-input-container">
+                            <% if(userInfo.job == "professor"){%>
+                                <h1>리뷰 다시보기 페이지.</h1>
+                            <div class="login-input-wrap">
+                               <a href="/main/review/1">id = 1, 21/02/04 데이터마이닝 시험 점수 다시보기</a>
+                            </div>
+                            <div class="login-input-wrap">
+                                <a href="/main/review/2">id = 2, 21/02/04 파놥티콘 시험 점수 다시보기</a>
+                             </div>
+                             <div class="login-input-wrap">
+                                <a href="/main/review/3">id = 3, 21/02/04 행복에 관하여 시험 점수 다시보기</a>
+                             </div>
+                             <div class="login-input-wrap">
+                                <a href="/main/review/4">id = 4, 21/02/04 으어어어어어 시험 점수 다시보기</a>
+                             </div>
+                            <% }%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>     
+
+    <script>
+        var toHost = document.getElementById("toHost");
+        var toReview = document.getElementById("toReview");
+        var toView = document.getElementById("toView");
+
+        var userInfo= "<%=JSON.stringify(userInfo)%>";
+
+        userInfo = userInfo.replace(/&#34;/gi, '\"');
+        userInfo = JSON.parse(userInfo);
+        
+
+        var data = {"userInfo" : userInfo};
+
+        console.log(userInfo);
+
+    </script>
+</body>
+</html>

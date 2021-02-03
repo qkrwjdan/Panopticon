@@ -90,11 +90,13 @@ app.get('/ScoreTest', (req, res) => {
 var index = require('./routes/index');
 var host = require('./routes/host');
 var view = require('./routes/view');
+var main = require('./routes/main');
 const { userInfo } = require('os');
 
 app.use('/', index);
 app.use('/host', host);
 app.use('/view', view);
+app.use('/main',main);
 app.use(express.static(__dirname + "/onetomany"));
 
 app.get('/loginChk', function (req, res) {

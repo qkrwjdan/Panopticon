@@ -2048,7 +2048,8 @@ function exit_yes() {
     }
     $(".pop-up").css("display", "none");
     $(".modal").css("display", "none");
-    reloadUnnecessaryStuff();
+    // reloadUnnecessaryStuff();
+    location.href = "/main";
 }
 
 function exit_no() {

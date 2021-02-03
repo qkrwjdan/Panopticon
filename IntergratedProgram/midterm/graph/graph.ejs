@@ -35,7 +35,7 @@
     <script> var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
             // 챠트 종류를 선택 
-            type: 'bar',
+            type: 'line',
             // 챠트를 그릴 데이타 
             data: {
                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -58,11 +58,47 @@
                         'rgba(255, 159, 64, 1)'
                     ],
                     borderWidth: 1,
-                    data: [0, 10, 5, 2, 20, 30, 45]
+                    data: [0, 10, 5, 2, 20, 30]
                 }]
             },
             // 옵션 
-            options: {}
+            options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Line Chart'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Month'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value'
+						},
+						ticks: {
+							min: 0,
+							max: 100,
+							// forces step size to be 5 units
+							stepSize: 5
+						}
+					}]
+                }
+            }
         });
     </script>
 
