@@ -98,11 +98,6 @@
             .selectpad{
                 padding-top:20px;
             }
-            .as{
-                background-color: #9ED0FE;
-                width: 245px;
-                height:450%;
-            }
         </style>
 
         <script>
@@ -197,6 +192,12 @@
                 width: '300px'
                 })
             </script>
+            <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+            <script language="javascript">
+                $( document ).ready(function() {
+                $(".parti_area").append("jQuery append 화가 나네");
+            });
+            </script> 
             <!-- 학생목록 출력
             <div class="visible">
                 <% for(var i =0; i<studentInfo.name.length; i++){ %>
@@ -214,64 +215,71 @@
                     <button class="exit_btn" onclick="exit_yes()">네</button>
                     <button class="exit_btn" onclick="exit_no()">아니오</button>
                 </div>
-                    <div class="wrapper"><!--grid UI-->
-                        <div id="ale">
-                            <div class="as">Hello</div>
-                        </div>
-                        <div class=content><!--remote video-->
-                            <div class="left_nav">
-                                <button id="exit" class="basicBtns" onclick="exitRoom()"><i class="fas fa-sign-out-alt"></i></button><!--exit peer connection func bnt-->
-                                <button id="fullscreen" class="basicBtns" onclick="toggleFullScreen()"><i class="fas fa-expand"></i></i></button><!--full screen func bnt-->
-                            </div>
-
-                            <div class="navbar">
-                                <!-- <button id="record" class="basicBtns" onclick="record_request()"><i class="fas fa-record-vinyl"></i></button> 녹화 시작/정지
-                                <button id="timestamp" class="basicBtns" onclick="record_timestamp()" disabled><i class="fas fa-clock"></i></button> 다운로드 -->
-                                <button class="basicBtns" id="soundBtn" onclick="soundOnOff(this)"><i class="fas fa-volume-up" id="soundIcon"></i></button>
-                                <button class="basicBtns" id="micBtn" onclick="micOnOff(this)"><i class="fas fa-microphone fa-lg" id="micIcon"></i></button> <!--마이크온오프-->
-                                <button class="basicBtns" id="cameraBtn" onclick="cameraOnOff(this)"><i class="fas fa-video fa-lg" id="cameraIcon"></i></button> <!--카메라온오프-->
-                                <button class="basicBtns" id="startTestBtn" onclick="sendStartTestMessage(this)"><i class="fas fa-play" id="playIcon"></i></button>
-                                <!-- <button class="basicBtns" onclick="showWhiteBoard()"><i class="fas fa-palette fa-lg"></i></button> 화이트보드-->
-                                <!-- <button id="screenshare" class="basicBtns"><i class="fas fa-desktop"></i></button> -->
-                                <button class="basicBtns" onclick="alert_msg()" id="alert_msg"><i class="fas fa-sticky-note"></i></button><!--알림메세지 전송-->
-                                <!-- <button class="basicBtns" id="conc" onclick="startTestConcentrationAllStudents()"><i class="far fa-angry"></i></button> -->
-                            </div>
-                            <div class="dialog_area"></div>
-                            <div class=videos id="participants"></div>
-                        </div>
-                        <div id="whiteBoard">
-                            <input type="button" id="exitCanvas" class="canvasUI" value="x" onclick="hideWhiteBoard()" />
-                            <canvas id="canvas" class="canvasUI"></canvas>
-                            <div id="canvasBtns" class="canvasUI">
-                            
-                            <button id="jsMode" class="canvasBtns">Paint</button>
-                            <button id="jsErase" class="canvasBtns">Erase</button>
-                            <button id="redpen" class="canvasBtns">Redpen</button>
-                            <button id="reset" class="canvasBtns">Reset</button>
-                            <input
-                                type="range"
-                                name=""
-                                id="jsRange"
-                                min="0.1"
-                                max="10.0"
-                                value="5.0"
-                                step="0.1"
-                            />
+                <div class="wrapper"><!--grid UI-->
+                    <div id="par">
+                        <h2 style="padding: 5%; color: #9ED0FE;">참가자 목록</h2>
+                        <div class="parti_area" style="height:90%; overFlow-y : scroll;">
+                            <div style="text-align: right;">
                             </div>
                         </div>
-                        <div id=localvideo></div>
-                        <div id=hiddenChat style="display: none;">
-                            <button class="chatOnBtn" onclick="chatOn()" ><i class="fas fa-eye"></i></button>
+                    </div>
+                    <div id="ale" class="as">
+                        <h2 style="padding: 5%;">파놉티콘 알람창</h2>
+                        <div class="ale_area" style="height:90%; overFlow-y : scroll;">
+                            <div style="text-align: right;"></div>
                         </div>
-                        <div id=chat style="overflow: hidden;">
-                            <div class="massage_area" style="height:87%; overFlow-y : scroll;">
-                                <div style="text-align: right; padding-right:5px"><button class="chatOffBtn" onclick="chatOff()"><i class="fas fa-eye-slash"></i></button></div>
-                            </div>
-                            <div class="text_input_area">
-                                <input type="text" id="chat_message"></input><button id="send_btn" onclick="sand_chat()" style="background-color: #9ED0FE;">전송</button>
-                            </div>
+                    </div>
+                    <div class=content><!--remote video-->
+                        <div class="left_nav">
+                            <button id="exit" class="basicBtns" onclick="exitRoom()"><i class="fas fa-sign-out-alt"></i></button><!--exit peer connection func bnt-->
+                            <button id="fullscreen" class="basicBtns" onclick="toggleFullScreen()"><i class="fas fa-expand"></i></i></button><!--full screen func bnt-->
                         </div>
-
+                        <div class="navbar">
+                            <!-- <button id="record" class="basicBtns" onclick="record_request()"><i class="fas fa-record-vinyl"></i></button> 녹화 시작/정지
+                            <button id="timestamp" class="basicBtns" onclick="record_timestamp()" disabled><i class="fas fa-clock"></i></button> 다운로드 -->
+                            <button class="basicBtns" id="soundBtn" onclick="soundOnOff(this)"><i class="fas fa-volume-up" id="soundIcon"></i></button>
+                            <button class="basicBtns" id="micBtn" onclick="micOnOff(this)"><i class="fas fa-microphone fa-lg" id="micIcon"></i></button> <!--마이크온오프-->
+                            <button class="basicBtns" id="cameraBtn" onclick="cameraOnOff(this)"><i class="fas fa-video fa-lg" id="cameraIcon"></i></button> <!--카메라온오프-->
+                            <button class="basicBtns" id="startTestBtn" onclick="sendStartTestMessage(this)"><i class="fas fa-play" id="playIcon"></i></button>
+                            <!-- <button class="basicBtns" onclick="showWhiteBoard()"><i class="fas fa-palette fa-lg"></i></button> 화이트보드-->
+                            <!-- <button id="screenshare" class="basicBtns"><i class="fas fa-desktop"></i></button> -->
+                            <button class="basicBtns" onclick="alert_msg()" id="alert_msg"><i class="fas fa-sticky-note"></i></button><!--알림메세지 전송-->
+                            <!-- <button class="basicBtns" id="conc" onclick="startTestConcentrationAllStudents()"><i class="far fa-angry"></i></button> -->
+                        </div>
+                        <div class="dialog_area"></div>
+                        <div class=videos id="participants"></div>
+                    </div>
+                    <div id="whiteBoard">
+                        <input type="button" id="exitCanvas" class="canvasUI" value="x" onclick="hideWhiteBoard()" />
+                        <canvas id="canvas" class="canvasUI"></canvas>
+                        <div id="canvasBtns" class="canvasUI">
+                        
+                        <button id="jsMode" class="canvasBtns">Paint</button>
+                        <button id="jsErase" class="canvasBtns">Erase</button>
+                        <button id="redpen" class="canvasBtns">Redpen</button>
+                        <button id="reset" class="canvasBtns">Reset</button>
+                        <input
+                            type="range"
+                            name=""
+                            id="jsRange"
+                            min="0.1"
+                            max="10.0"
+                            value="5.0"
+                            step="0.1"
+                        />
+                        </div>
+                    </div>
+                    <div id=localvideo></div>
+                    <!-- <div id=hiddenChat style="display: none;">
+                        <button class="chatOnBtn" onclick="chatOn()" ><i class="fas fa-eye"></i></button>
+                    </div> -->
+                    <div id=chat style="overflow: hidden;">
+                        <div class="massage_area" style="height:87%; overFlow-y : scroll;">
+                            <div style="text-align: right;"></div>
+                        </div>
+                        <div class="text_input_area">
+                            <input type="text" id="chat_message"></input><button id="send_btn" onclick="sand_chat()" style="background-color: #9ED0FE;">전송</button>
+                        </div>
                     </div>
                 </div>
             <!-- <div id="testConcentration">
