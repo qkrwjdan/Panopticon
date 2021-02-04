@@ -277,6 +277,8 @@ async function checkscore(video, roomName) {
         console.log("***************");
         console.log("no face!!!!");
         console.log("***************");
+        // var faceale = "<div id=chat_notice>"+ userInfo.name +"얼굴 검출 실패 <div>"
+        // $(".ale_area2").append(faceale);
         var facenum = face.length;
         facenumpost(0);
         totalScore = totalScore + 7;
@@ -299,13 +301,11 @@ async function checkscore(video, roomName) {
         data: JSON.stringify({
             name: userInfo.name,
             score: totalScore,
-            lecture: roomName
+            lecture: roomName,
         }),
-        dataType: "json",
+        dataType: "json"
     })
     console.log("ajax finish");
-
-    //document.getElementById('score').innerHTML = '부정행위점수 : ' + parseInt(totalScore);
 };
 
 const runcheckscore = async(video, roomName) => {
@@ -367,11 +367,19 @@ function getScore(userNames,roomName){
             console.log("success");
             console.log("data : ",data);
             cheating_score = data;
+            var data_num = "<div id=chat_notice>"+ userNames +"부정행위 점수는?"+ cheating_score[userNames] + "</div>"
+            var che_num ="<div>" + userNames + ":" + cheating_score[userNames] + "</div>"
+            $(".ale_area").append(data_num);
+            $(".cheeting").html(che_num);
+            // document.getElementById('cheeting').innerHTML = '<h1>점수 : ' + cheating_score[userNames]+ '</h1>';
         },
         error : function(e){
             console.log(e);
         }
     })
+    // $( document ).ready(function() {
+    //     $(".parti_area").append(data);
+    // })
 }
 
 function startGetScore(userNames,roomName){
@@ -434,6 +442,8 @@ var config = {
         // video_content[index].setAttribute("id", id);
         video_content[index].insertBefore(video, video_content[index].firstChild);
         $(".video_content:last").addClass(String(index));
+        $(".video_content:last").append("<div class ='cheeting'>점수</div>")
+        cheeting = document.getElementsByClassName("cheeting");
 
         if (userInfo.job == "professor") {
             console.log("media.response : ",media.response);
@@ -446,7 +456,6 @@ var config = {
             var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
             $(".video_content:last").append(user_name);
             $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
-
             var btn_warn = "<button class='video_btn " + index + "' onclick='warning_event(this.classList)' style='opacity:0'>경고</button>";
             var btn_kick = "<button class='video_btn " + index + "' onclick='kick_event(this.classList)' style='opacity:0'>강퇴</button>";
             var btn_ban_chat = "<button class='video_btn " + index + "' onclick='ban_chat_event(this.classList)' style='opacity:0'>채팅금지</button>";
@@ -2048,9 +2057,9 @@ function exit_yes() {
     }
     $(".pop-up").css("display", "none");
     $(".modal").css("display", "none");
-    // reloadUnnecessaryStuff();
-    location.href = "/main";
-}
+     // reloadUnnecessaryStuff();
+     location.href = "/main";
+    }
 
 function exit_no() {
     $(".pop-up").css("display", "none");

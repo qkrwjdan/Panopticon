@@ -193,11 +193,11 @@
                 })
             </script>
             <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-            <script language="javascript">
+            <!-- <script language="javascript">
                 $( document ).ready(function() {
                 $(".parti_area").append("jQuery append 화가 나네");
             });
-            </script> 
+            </script>  -->
             <!-- 학생목록 출력
             <div class="visible">
                 <% for(var i =0; i<studentInfo.name.length; i++){ %>
@@ -219,14 +219,14 @@
                     <div id="par">
                         <h2 style="padding: 5%; color: #9ED0FE;">참가자 목록</h2>
                         <div class="parti_area" style="height:90%; overFlow-y : scroll;">
-                            <div style="text-align: right;">
+                            <div style="text-align: left;">
                             </div>
                         </div>
                     </div>
                     <div id="ale" class="as">
                         <h2 style="padding: 5%;">파놉티콘 알람창</h2>
                         <div class="ale_area" style="height:90%; overFlow-y : scroll;">
-                            <div style="text-align: right;"></div>
+                            <div style="text-align: left;"></div>
                         </div>
                     </div>
                     <div class=content><!--remote video-->
@@ -247,7 +247,8 @@
                             <!-- <button class="basicBtns" id="conc" onclick="startTestConcentrationAllStudents()"><i class="far fa-angry"></i></button> -->
                         </div>
                         <div class="dialog_area"></div>
-                        <div class=videos id="participants"></div>
+                        <div class=videos id="participants">
+                        </div>
                     </div>
                     <div id="whiteBoard">
                         <input type="button" id="exitCanvas" class="canvasUI" value="x" onclick="hideWhiteBoard()" />

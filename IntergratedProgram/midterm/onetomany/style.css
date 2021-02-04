@@ -149,6 +149,14 @@ padding: .5em;
   justify-content: center;
   justify-items: center;
   margin-top : 10%;
+  flex-direction: column-reverse;
+}
+.cheeting{ /*Display Cheeting number*/
+  position: relative;
+  background-color: #9ED0FE;
+  display: inline-block;
+  font-size: var(--font_num);
+  z-index: 50;
 }
 
 .video_btn{ /*peer-video button setting*/
