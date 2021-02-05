@@ -427,6 +427,15 @@ function getScore(userNames, roomName) {
         dataType: "json",
         success: function(data) {
             console.log("actiondata: ", data);
+            if(data[0]["type"] == 'text'){
+                var data_action = "<div id=chat_notice>" + userNames + "의 음성 : " + data[0]["value"] + "</div>";
+                $(".ale_area").append(data_action);
+            }
+
+            if(data[0]["type"] == 'face'){
+                var face = "<div id=chat_notice>" + userNames + "의 얼굴이 " + data[0]["value"] + "개 검출</div>";
+                $(".ale_area").append(face);
+            }
         },
         error: function(e) {
             console.log(e);
