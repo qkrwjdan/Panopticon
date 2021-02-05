@@ -543,7 +543,10 @@ var config = {
 
         if (document.getElementById("job").innerText == "professor") return;
 
-        document.getElementById("no_class").style.display = "none";
+        if(document.getElementById("no_class")){            
+            document.getElementById("no_class").style.display = "none";
+        }
+
         var alreadyExist = document.getElementById(room.broadcaster);
         if (alreadyExist) return;
 
