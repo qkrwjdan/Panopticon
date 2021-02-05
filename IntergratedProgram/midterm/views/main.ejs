@@ -25,6 +25,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>파놉티콘</title>
     <link rel="stylesheet" href="./style/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
     <article style="background-color:#eff0f2">
@@ -39,10 +41,10 @@
                         <div>
                             <% if(userInfo.job == "professor"){%>
                             <div class="login-btn-wrap">
-                                <a href="/host"><button class="login-btn">강의실 생성하기</button></a>
+                                <span><button id="toHost" class="login-btn">강의실 생성하기</button></span>
                             </div>
                             <div class="login-btn-wrap">
-                                <a href="/main/review"><button class="login-btn">다시 보기</button></a>
+                                <span><button id="toView" class="login-btn">다시보기</button></span>
                             </div>
                             <% }else{ %>
                             <div class="login-btn-wrap">
@@ -66,8 +68,35 @@
         userInfo = userInfo.replace(/&#34;/gi, '\"');
         userInfo = JSON.parse(userInfo);
         
-
         var data = {"userInfo" : userInfo};
+        
+        if(toHost){
+            toHost.onclick = () =>{
+                console.log("click Host");
+
+                var form = document.createElement('form');
+
+                form.setAttribute('method', 'post');
+                form.setAttribute('action', "/host");
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+        }
+
+        if(toView){
+            toHost.onclick = () =>{
+                console.log("click Host");
+
+                var form = document.createElement('form');
+
+                form.setAttribute('method', 'post');
+                form.setAttribute('action', "/host");
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+        }
 
         console.log(userInfo);
 

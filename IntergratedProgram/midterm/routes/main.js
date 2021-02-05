@@ -21,7 +21,6 @@ require("firebase/firestore");
 
 const db = firebase.firestore();
 
-
 router.get('/', function(req,res,next){
   res.render('main');
 })
@@ -29,16 +28,20 @@ router.get('/', function(req,res,next){
 router.post('/', function(req,res,next){
     var HostName = req.session.vaild.name;
     var HostJob = req.session.vaild.job;
+    req.session = null;
+
 
     var userInfo = {name: HostName, job : HostJob};
     res.render('main',{userInfo : userInfo});
 })
 
 router.get('/review',function(req,res,next){
+    //데이터베이스에 저장된 강의데이터 불러오기 2/4
     res.render('review');
 })
 
 router.get('/review/:id',function(req,res,next){
+    //데이터베이스에 저장된 강의데이터 불러오기 2/4
     res.render('review-detail');
 })
  
