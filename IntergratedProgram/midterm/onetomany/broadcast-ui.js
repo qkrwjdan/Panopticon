@@ -193,10 +193,12 @@ function facenumpost(facenumber) {
     console.log("얼굴");
     $.ajax({
         type: 'POST',
-        url: "/view/specialface",
+        url: "/host/specialface",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
             facenum: facenumber,
+            name: userInfo.name,
+            lecture: roomName,
         }),
         dataType: "json",
     })
@@ -208,20 +210,23 @@ function speechtextpost(text) {
     console.log('음성');
     $.ajax({
         type: 'POST',
-        url: "/view/specialtext",
+        url: "/host/specialface",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            speechtext: text
+            facenum: facenumber,
+            name: userInfo.name,
+            lecture: roomName,
         }),
         dataType: "json",
     })
+
 }
 
 
 
 async function checkscore(video, roomName) {
 
-    if(!testFlag) return;
+    if (!testFlag) return;
 
     const face = await model.estimateFaces({
         input: video,
@@ -270,8 +275,18 @@ async function checkscore(video, roomName) {
         console.log("face > 2");
         console.log("***************");
         facenum = face.length;
-        facenumpost(2);
-
+        console.log("얼굴*2");
+        $.ajax({
+            type: 'POST',
+            url: "/host/specialface",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                facenum: 2,
+                name: userInfo.name,
+                lecture: roomName,
+            }),
+            dataType: "json",
+        })
         totalScore = totalScore + 7;
     } else if (face.length == 0) {
         console.log("***************");
@@ -280,7 +295,19 @@ async function checkscore(video, roomName) {
         // var faceale = "<div id=chat_notice>"+ userInfo.name +"얼굴 검출 실패 <div>"
         // $(".ale_area2").append(faceale);
         var facenum = face.length;
-        facenumpost(0);
+        console.log("얼굴X");
+        $.ajax({
+            type: 'POST',
+            url: "/host/specialface",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                facenum: 0,
+                name: userInfo.name,
+                lecture: roomName,
+                type: "face"
+            }),
+            dataType: "json",
+        })
         totalScore = totalScore + 7;
 
     }
@@ -315,7 +342,7 @@ const runcheckscore = async(video, roomName) => {
     }, 1000);
 }
 
-function speechtotext() {
+function speechtotext(roomName) {
     annyang.setLanguage('ko');
     annyang.start({
         autoRestart: true,
@@ -326,7 +353,7 @@ function speechtotext() {
     recognition.interimResults = true;
     recognition.onresult = function(event) {
 
-        if(!testFlag) return;
+        if (!testFlag) return;
 
         var interim_transcript = '';
         final_transcript = '';
@@ -334,7 +361,19 @@ function speechtotext() {
             if (event.results[i].isFinal) {
                 final_transcript += event.results[i][0].transcript;
                 console.log("final_transcript=" + final_transcript);
-                speechtextpost(final_transcript);
+                console.log('음성', userInfo.name, globalRoomName);
+                $.ajax({
+                    type: 'POST',
+                    url: "/host/specialtext",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        speechtext: final_transcript,
+                        name: userInfo.name,
+                        lecture: roomName,
+                        type: "text"
+                    }),
+                    dataType: "json",
+                })
                 return final_transcript;
 
                 //annyang.trigger(final_transcript); //If the sentence is "final" for the Web Speech API, we can try to trigger the sentence
@@ -349,43 +388,60 @@ function speechtotext() {
     };
 }
 
-function getScore(userNames,roomName){
+function getScore(userNames, roomName) {
 
-    if(!testFlag) return;
+    if (!testFlag) return;
 
     //감독자가 보내는거
     $.ajax({
         type: 'POST',
-        url : "host/receiveData",
-        contentType : "application/json; charset=utf-8",
-        data : JSON.stringify({
-            name : userNames,
-            lecture : roomName
+        url: "host/receiveData",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            name: userNames,
+            lecture: roomName
         }),
-        dataType : "json",
-        success : function (data){
+        dataType: "json",
+        success: function(data) {
             console.log("success");
-            console.log("data : ",data);
+            console.log("data : ", data);
             cheating_score = data;
-            var data_num = "<div id=chat_notice>"+ userNames +"부정행위 점수는?"+ cheating_score[userNames] + "</div>"
-            var che_num ="<div>" + userNames + ":" + cheating_score[userNames] + "</div>"
+            var data_num = "<div id=chat_notice>" + userNames + "부정행위 점수는? " + cheating_score[userNames] + "</div>"
+            var che_num = "<div>" + userNames + ":" + cheating_score[userNames] + "</div>"
             $(".ale_area").append(data_num);
             $(".cheeting").html(che_num);
             // document.getElementById('cheeting').innerHTML = '<h1>점수 : ' + cheating_score[userNames]+ '</h1>';
         },
-        error : function(e){
+        error: function(e) {
             console.log(e);
         }
     })
+    $.ajax({
+        type: 'POST',
+        url: "host/receiveAction",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            name: userNames,
+            lecture: roomName
+        }),
+        dataType: "json",
+        success: function(data) {
+            console.log("actiondata: ", data);
+        },
+        error: function(e) {
+            console.log(e);
+        }
+    })
+
     // $( document ).ready(function() {
     //     $(".parti_area").append(data);
     // })
 }
 
-function startGetScore(userNames,roomName){
-    setInterval(() =>{
-        getScore(userNames,roomName);
-    },5000)
+function startGetScore(userNames, roomName) {
+    setInterval(() => {
+        getScore(userNames, roomName);
+    }, 5000)
 }
 
 
@@ -446,11 +502,11 @@ var config = {
         cheeting = document.getElementsByClassName("cheeting");
 
         if (userInfo.job == "professor") {
-            console.log("media.response : ",media.response);
-            console.log("media.response.stuname : ",media.response.studentName);
+            console.log("media.response : ", media.response);
+            console.log("media.response.stuname : ", media.response.studentName);
             student_list.push(media.response.studentName);
 
-            startGetScore(student_list,globalRoomName);
+            startGetScore(student_list, globalRoomName);
 
 
             var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
@@ -553,7 +609,7 @@ var config = {
 
             var roomName = room.roomName;
             runcheckscore(video, roomName);
-            speechtotext();
+            speechtotext(roomName);
             // $.ajax({
             //     type: 'POST',
             //     url : "/receiveData",
@@ -585,7 +641,7 @@ var config = {
                     $(".alert_area").append("<div id='toast'></div>")
                     toast("시험을 시작합니다.");
 
-                    if(userInfo.job=="student"){
+                    if (userInfo.job == "student") {
                         testFlag = true;
                     }
 
@@ -596,7 +652,7 @@ var config = {
                     $(".alert_area").append("<div id='toast'></div>")
                     toast("시험을 정지합니다.");
 
-                    if(userInfo.job=="student"){
+                    if (userInfo.job == "student") {
                         testFlag = false;
                     }
 
@@ -960,7 +1016,7 @@ function updateLayout(num) {
 function sendStartTestMessage(element) {
     var ele = document.getElementById("playIcon");
 
-    if(ele.classList[1] == "fa-play"){
+    if (ele.classList[1] == "fa-play") {
         let obj = {
             "type": "startTest",
         }
@@ -970,9 +1026,7 @@ function sendStartTestMessage(element) {
         }
         testFlag = true;
         ele.classList.replace('fa-play', 'fa-pause');
-    }
-
-    else if(ele.classList[1] == "fa-pause"){
+    } else if (ele.classList[1] == "fa-pause") {
 
         let obj = {
             "type": "stopTest",
@@ -2057,9 +2111,9 @@ function exit_yes() {
     }
     $(".pop-up").css("display", "none");
     $(".modal").css("display", "none");
-     // reloadUnnecessaryStuff();
-     location.href = "/main";
-    }
+    // reloadUnnecessaryStuff();
+    location.href = "/main";
+}
 
 function exit_no() {
     $(".pop-up").css("display", "none");
