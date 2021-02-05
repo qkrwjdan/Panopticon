@@ -1,5 +1,26 @@
 <html lang="en">
 <head>
+    <style type="text/css">
+        .login-btn-wrap .login-btn{
+            width:120px;
+            height:35px;
+            color:white;
+            margin-top: 30px;
+            border: 0;
+            border-radius: 4px;
+            font-weight: bold;
+            background:#9ED0FE;
+            background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
+        }
+        .login-input-container .login-input-wrap{
+            width:300px;
+            height: 45px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-radius: 2px;
+            border-bottom: solid 2px #9ED0FE;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>파놉티콘</title>
@@ -15,17 +36,17 @@
                         <h2><%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h2>
                     </div>
                     <div id="host_slides" class="container">
-                        <div class="login-input-container">
+                        <div>
                             <% if(userInfo.job == "professor"){%>
-                            <div class="login-input-wrap">
-                                <a href="/host">강의실 생성하기</a>
+                            <div class="login-btn-wrap">
+                                <a href="/host"><button class="login-btn">강의실 생성하기</button></a>
                             </div>
-                            <div class="login-input-wrap">
-                                <a href="/main/review">다시보기</a>
+                            <div class="login-btn-wrap">
+                                <a href="/main/review"><button class="login-btn">다시 보기</button></a>
                             </div>
                             <% }else{ %>
-                            <div class="login-input-wrap">
-                                <a href="/view">강의실 입장하기</a>
+                            <div class="login-btn-wrap">
+                                <a href="/view"><button class="login-btn">강의실 입장하기</button></a>
                             </div>
                             <% }%>
                         </div>
