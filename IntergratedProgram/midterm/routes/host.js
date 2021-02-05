@@ -135,32 +135,11 @@ router.post('/receiveData', function(req, res) {
     });
 
 })
-router.get('/', function(req, res) {
-    var HostName = req.session.vaild.name;
-    var HostJob = req.session.vaild.job;
-    req.session = null; //reset session variable
-
-    var userInfo = { name: HostName, job: HostJob };
-    var StudentName = new Array();
-    var StudentEmail = new Array();
-
-    let Viewer = userDB.where("job", "==", "student").get()
-        .then(function(snap) {
-            snap.forEach(function(doc) {
-                StudentName.push(doc.data().name);
-                StudentEmail.push(doc.data().email);
-            })
-            var studentInfo = { name: StudentName, email: StudentEmail };
-            res.render('host', { userInfo: userInfo, studentInfo: studentInfo, error: false });
-        })
-        .catch(function(error) {
-            console.log("Error : ", error);
-        })
-})
 
 router.post('/', function(req, res) {
-    var HostName = req.session.vaild.name;
-    var HostJob = req.session.vaild.job;
+    console.log(req.body);
+    var HostName = req.body.name;
+    var HostJob = req.body.job;
     req.session = null; //reset session variable
 
     var userInfo = { name: HostName, job: HostJob };

@@ -62,22 +62,10 @@ router.post('/receiveData', function(req, res) {
 
 
 router.post('/', function(req, res) {
-    var ViewerName = req.session.vaild.name;
-    var ViewerJob = req.session.vaild.job;
-    var ViewerEmail = req.session.vaild.email;
-
-    req.session = null; //reset session variable
-
-    var userInfo = { name: ViewerName, job: ViewerJob, email: ViewerEmail };
-
-    res.render('viewer', { userInfo: userInfo, error: false });
-
-})
-
-router.get('/', function(req, res) {
-    var ViewerName = req.session.vaild.name;
-    var ViewerJob = req.session.vaild.job;
-    var ViewerEmail = req.session.vaild.email;
+    console.log(req.body);
+    var ViewerName = req.body.name;
+    var ViewerJob = req.body.job;
+    var ViewerEmail = req.body.email;
 
     req.session = null; //reset session variable
 

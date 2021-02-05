@@ -28,10 +28,11 @@ router.get('/', function(req,res,next){
 router.post('/', function(req,res,next){
     var HostName = req.session.vaild.name;
     var HostJob = req.session.vaild.job;
+    var Email = req.session.vaild.email;
     req.session = null;
 
 
-    var userInfo = {name: HostName, job : HostJob};
+    var userInfo = {name: HostName, job : HostJob, email : Email};
     res.render('main',{userInfo : userInfo});
 })
 

@@ -44,11 +44,11 @@
                                 <span><button id="toHost" class="login-btn">강의실 생성하기</button></span>
                             </div>
                             <div class="login-btn-wrap">
-                                <span><button id="toView" class="login-btn">다시보기</button></span>
+                                <a href="/main/review"><button class="login-btn">다시보기</button></a>
                             </div>
                             <% }else{ %>
                             <div class="login-btn-wrap">
-                                <a href="/view"><button class="login-btn">강의실 입장하기</button></a>
+                                <span><button id="toView" class="login-btn">강의실 입장하기</button></span>
                             </div>
                             <% }%>
                         </div>
@@ -72,9 +72,20 @@
         
         if(toHost){
             toHost.onclick = () =>{
-                console.log("click Host");
 
                 var form = document.createElement('form');
+
+                objs1 = document.createElement('input');
+                objs1.setAttribute('type', 'hidden');
+                objs1.setAttribute('name', 'name');
+                objs1.setAttribute('value', userInfo.name);       
+                form.appendChild(objs1);
+
+                objs2 = document.createElement('input');
+                objs2.setAttribute('type', 'hidden');
+                objs2.setAttribute('name', 'job');
+                objs2.setAttribute('value', userInfo.job);
+                form.appendChild(objs2);
 
                 form.setAttribute('method', 'post');
                 form.setAttribute('action', "/host");
@@ -85,13 +96,29 @@
         }
 
         if(toView){
-            toHost.onclick = () =>{
-                console.log("click Host");
-
+            toView.onclick = () =>{
                 var form = document.createElement('form');
 
+                objs1 = document.createElement('input');
+                objs1.setAttribute('type', 'hidden');
+                objs1.setAttribute('name', 'name');
+                objs1.setAttribute('value', userInfo.name);       
+                form.appendChild(objs1);
+
+                objs2 = document.createElement('input');
+                objs2.setAttribute('type', 'hidden');
+                objs2.setAttribute('name', 'job');
+                objs2.setAttribute('value', userInfo.job);
+                form.appendChild(objs2);
+
+                objs3 = document.createElement('input');
+                objs3.setAttribute('type', 'hidden');
+                objs3.setAttribute('name', 'email');
+                objs3.setAttribute('value', userInfo.email);
+                form.appendChild(objs3);
+
                 form.setAttribute('method', 'post');
-                form.setAttribute('action', "/host");
+                form.setAttribute('action', "/view");
                 document.body.appendChild(form);
 
                 form.submit();
