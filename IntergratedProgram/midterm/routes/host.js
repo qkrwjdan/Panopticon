@@ -95,13 +95,16 @@ async function receiveScore(roomName, userNames) {
 
 async function receiveAction() {
     var j = 0;
+    var specialactionlist = [];
     var timeStamp2 = +new Date();
     timeStamp2 = timeStamp2 - 5000;
     for (j = 0; j <= i; j++) {
         if (specialaction[j].timeStamp >= timeStamp2) {
-            return specialaction[j];
+            specialactionlist.push(specialaction[j]);
         }
+
     }
+    return specialactionlist;
 
 
 }
