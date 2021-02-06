@@ -407,9 +407,15 @@ function getScore(userNames, roomName) {
             console.log("data : ", data);
             cheating_score = data;
             var data_num = "<div id=chat_notice>" + userNames + "부정행위 점수는? " + cheating_score[userNames] + "</div>"
-            var che_num = "<div>" + userNames + ":" + cheating_score[userNames] + "</div>"
+            // var che_num = "<div>" + userNames + ":" + cheating_score[userNames] + "</div>"
             $(".ale_area").append(data_num);
-            $(".cheeting").html(che_num);
+            for(var name in data){
+                console.log("name : ",name);
+                let parentDiv = document.getElementsByClassName(name);
+                console.log("parentDiv : ",parentDiv[0]);
+                parentDiv[0].childNodes[1].innerText = name + ":" + data[name]
+            }
+            // $(".cheeting").html(che_num);
             // document.getElementById('cheeting').innerHTML = '<h1>점수 : ' + cheating_score[userNames]+ '</h1>';
         },
         error: function(e) {
@@ -507,11 +513,12 @@ var config = {
         // video_content[index].setAttribute("id", id);
         video_content[index].insertBefore(video, video_content[index].firstChild);
         $(".video_content:last").addClass(String(index));
-        $(".video_content:last").addClass(String(media.response.studentName));
-        $(".video_content:last").append("<div class ='cheeting'>점수</div>")
-        cheeting = document.getElementsByClassName("cheeting");
 
         if (userInfo.job == "professor") {
+            $(".video_content:last").addClass(String(media.response.studentName));
+            $(".video_content:last").append("<div class ='cheeting'>점수</div>")
+            cheeting = document.getElementsByClassName("cheeting");
+
             console.log("media.response : ", media.response);
             console.log("media.response.stuname : ", media.response.studentName);
             student_list.push(media.response.studentName);
