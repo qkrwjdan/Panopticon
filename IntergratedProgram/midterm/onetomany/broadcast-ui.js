@@ -494,7 +494,8 @@ var config = {
             $(".videos").append("<div class='video_content'></div>");
         }
         video_content = document.getElementsByClassName("video_content");
-        video_content.settAttribute("id",media.response.studentName);
+        console.log(video_content);
+
         var index = video_content.length - 1;
         var id = "peer_video" + index.toString();
         video.setAttribute("class", "peer_video");
@@ -506,6 +507,7 @@ var config = {
         // video_content[index].setAttribute("id", id);
         video_content[index].insertBefore(video, video_content[index].firstChild);
         $(".video_content:last").addClass(String(index));
+        $(".video_content:last").addClass(String(media.response.studentName));
         $(".video_content:last").append("<div class ='cheeting'>점수</div>")
         cheeting = document.getElementsByClassName("cheeting");
 
