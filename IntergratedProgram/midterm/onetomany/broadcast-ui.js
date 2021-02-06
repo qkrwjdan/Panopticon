@@ -494,8 +494,7 @@ var config = {
             $(".videos").append("<div class='video_content'></div>");
         }
         video_content = document.getElementsByClassName("video_content");
-
-
+        video_content.settAttribute("id",media.response.studentName);
         var index = video_content.length - 1;
         var id = "peer_video" + index.toString();
         video.setAttribute("class", "peer_video");
@@ -883,6 +882,17 @@ function createButtonClickHandler() {
         $(".notVisit:last").addClass(String(selected_student_name[i]));
         // notVisit[index].innerHTML = "<br>" + selected_student_name[i] + "<br><br>미출석";
     }
+
+    $.ajax({
+        type: 'POST',
+        url: "/host/createRoom",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            roomName : globalRoomName,
+            professor : userInfo.name,
+        }),
+        dataType: "json",
+    })
 
 }
 

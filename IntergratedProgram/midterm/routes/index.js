@@ -97,29 +97,22 @@ function sendScore(roomName,userName,id,score){
 router.post('/testPost',function(req,res,next){
 
     console.log(req.body);
-    userName = req.body.name;
+    professor = req.body.professor;
     lecture = req.body.lecture;
-    score = req.body.score;
 
-    if(!(userName in idDict)){
-        idDict[userName] = 0;
-    }
-    
-    console.log("hi");
-    console.log("req.body.lecture : ",req.body.lecture);
-    console.log("req.body.name : ",req.body.name);
-    console.log("req.body.score : ",req.body.score);
-
-    sendScore(lecture,userName,++idDict[userName],score);
+    db.collection('lecture').doc(lecture).set({
+        id : lecture,
+        time : (+new Date()),
+        professor
+    })
+    .then(()=>{
+        console.log("추가성공");
+    })
+    .catch((error)=>{
+        console.log("에러발생");
+        console.log(error)
+    })
     res.end();
-    
-    // var dict = receiveScore(req.body.lecture,req.body.email,time);
-    // receiveScore(req.body.lecture,req.body.name).then((dict)=>{
-    //     console.log(dict);
-    //     // returnDict = dict;
-    //     console.log("return");
-    //     res.json(dict);
-    // });
     
 })
 

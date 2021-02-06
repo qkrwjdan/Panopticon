@@ -44,7 +44,7 @@
                                 <span><button id="toHost" class="login-btn">강의실 생성하기</button></span>
                             </div>
                             <div class="login-btn-wrap">
-                                <a href="/main/review"><button class="login-btn">다시보기</button></a>
+                                <span><button id="toReview" class="login-btn">다시보기</button></span>
                             </div>
                             <% }else{ %>
                             <div class="login-btn-wrap">
@@ -89,6 +89,31 @@
 
                 form.setAttribute('method', 'post');
                 form.setAttribute('action', "/host");
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+        }
+
+        if(toReview){
+            toReview.onclick = () =>{
+
+                var form = document.createElement('form');
+
+                objs1 = document.createElement('input');
+                objs1.setAttribute('type', 'hidden');
+                objs1.setAttribute('name', 'name');
+                objs1.setAttribute('value', userInfo.name);       
+                form.appendChild(objs1);
+
+                objs2 = document.createElement('input');
+                objs2.setAttribute('type', 'hidden');
+                objs2.setAttribute('name', 'job');
+                objs2.setAttribute('value', userInfo.job);
+                form.appendChild(objs2);
+
+                form.setAttribute('method', 'post');
+                form.setAttribute('action', "/main/review");
                 document.body.appendChild(form);
 
                 form.submit();

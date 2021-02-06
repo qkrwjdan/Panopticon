@@ -36,8 +36,16 @@ router.post('/', function(req,res,next){
     res.render('main',{userInfo : userInfo});
 })
 
-router.get('/review',function(req,res,next){
+router.post('/review',function(req,res,next){
     //데이터베이스에 저장된 강의데이터 불러오기 2/4
+    
+    var name = req.body.name;
+    var job = req.body.job;
+    console.log(req.body);
+    console.log(req.session);
+
+
+
     res.render('review');
 })
 

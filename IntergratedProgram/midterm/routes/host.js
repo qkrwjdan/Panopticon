@@ -61,6 +61,28 @@ router.post('/specialtext', function(req, res) {
 })
 main();
 
+router.post('/createRoom',function(req, res) {
+    let roomName = req.body.roomName;
+    let professor = req.body.professor;
+
+    db.collection('lecture').doc(roomName).set({
+        id : roomName,
+        time : (+new Date()),
+        professor : professor,
+    })
+    .then(()=>{
+        console.log("추가성공");
+    })
+    .catch((error)=>{
+        console.log("에러발생");
+        console.log(error)
+    })
+
+    res.end();
+
+    res.end();
+})
+
 
 
 async function receiveScore(roomName, userNames) {
