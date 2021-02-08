@@ -48,90 +48,90 @@ padding: .5em;
 .non-visual{ display: none; }
 
 /* gird dispaly setting*/
- .wrapper { 
-    display: grid;
-    height: 100vh;
-    grid-template-columns: 250px 1fr 1fr 400px;
-    grid-template-rows: 290px 1fr 1fr;
-    grid-gap: 3px;
-    grid-auto-rows: minmax(10px, auto);
-  }
-    #par{
-      grid-column: 1;
-      grid-row: 1 / 2;
-      text-align: center;
-      background-color: #fefefe;
-    }
-    #ale{ /*알림창*/
-      grid-column: 1;
-      grid-row: 2 / 4;
-      position: relative;
-      text-align: center;
-      background-color:#9ED0FE;
-      max-width: 250px;
-    }
-    .as{
-      width: 100%;
-      height: 100%;
-      /* border: 4px dashed #bcbcbc; */
-    }
-    .content{ /*peer video and navbar*/
-      grid-column: 2 / 4;
-      grid-row: 1 / 4 ;
-      position: relative;
-      z-index: 0;
-    }
-    #localvideo{ /*local_video*/
-      grid-column: 4;
-      grid-row: 1;
-      align-self:stretch;
-      justify-self: stretch;
-    }
-    #chat{ /*chatting area*/
-      grid-column: 4;
-      grid-row: 2 / 4 ;
-      background: aliceblue;
-      text-align: center;
-      justify-items: center;
-      font-size: 20pt;
-    }
+.wrapper { 
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 250px 1fr 1fr 400px;
+  grid-template-rows: 290px 1fr 1fr;
+  grid-gap: 3px;
+  grid-auto-rows: minmax(10px, auto);
+}
+#par{
+  grid-column: 1;
+  grid-row: 1 / 2;
+  text-align: center;
+  background-color: #fefefe;
+}
+#ale{ /*알림창*/
+  grid-column: 1;
+  grid-row: 2 / 4;
+  position: relative;
+  text-align: center;
+  background-color:#9ED0FE;
+  max-width: 250px;
+}
+.as{
+  width: 100%;
+  height: 100%;
+  /* border: 4px dashed #bcbcbc; */
+}
+.content{ /*peer video and navbar*/
+  grid-column: 2 / 4;
+  grid-row: 1 / 4 ;
+  position: relative;
+  z-index: 0;
+}
+#localvideo{ /*local_video*/
+  grid-column: 4;
+  grid-row: 1;
+  align-self:stretch;
+  justify-self: stretch;
+}
+#chat{ /*chatting area*/
+  grid-column: 4;
+  grid-row: 2 / 4 ;
+  background: aliceblue;
+  text-align: center;
+  justify-items: center;
+  font-size: 20pt;
+}
 
-    .videos{ /*peer-video area setting*/
-      margin-top: 10px;
-      display: grid;
-      min-height: 90%;
-      grid-gap: 3px;
-      grid-auto-flow: row;
-      grid-template-columns: repeat(var(--col_num), var(--colWidth));
-      grid-template-rows: repeat(var(--row_num), var(--rowHeight));
-    }
+.videos{ /*peer-video area setting*/
+  margin-top: 10px;
+  display: grid;
+  min-height: 90%;
+  grid-gap: 3px;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(var(--col_num), var(--colWidth));
+  grid-template-rows: repeat(var(--row_num), var(--rowHeight));
+}
     
-      .video_content{
-        position: relative;
-        max-height: var(--rowHeight);
-        max-width: var(--colWidth);
-      }
-      .notVisit {
-        position: relative;
-        max-height: var(--rowHeight);
-        max-width: var(--colWidth);
-        background: black;
-        color: white;
-        text-align: center;
-        font-size: 20px;
-      }
+.video_content{
+  position: relative;
+  max-height: var(--rowHeight);
+  max-width: var(--colWidth);
+}
+.notVisit {
+  position: relative;
+  max-height: var(--rowHeight);
+  max-width: var(--colWidth);
+  background: black;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+}
 
-      .peer_video{
-        position: absolute;
-        overflow: hidden;
-        max-height: var(--rowHeight);
-        max-width: var(--colWidth);
-      }
+.peer_video{
+  position: absolute;
+  overflow: hidden;
+  max-height: var(--rowHeight);
+  max-width: var(--colWidth);
+}
 
-    #local_video{
-      max-width: 400px;
-      max-height: 300px;
-    }
+#local_video{
+max-width: 400px;
+max-height: 300px;
+}
 
 .name{
   font-size: calc(2*var(--font_num));
@@ -321,9 +321,6 @@ display: none;
   outline: 0;
 }
 
-
-
-
 /* 여기부터 집중도 테스트 */
 #testConcentration {
   display: none;
@@ -342,12 +339,14 @@ display: none;
   font-size: 30px;
   padding: 0px;
 }
+
 #timer {
   font-weight: 600;
   font-size: 18px;
   color: blue;
   padding: 0px;
 }
+
 #randomNumber {
   font-weight: 800;
   font-size: 70px;
@@ -355,6 +354,7 @@ display: none;
   padding: 0px;
   margin: 0px;
 }
+
 #input_randomNumber{
   width: 80px;
   height: 80px;
@@ -363,10 +363,12 @@ display: none;
   font-size: 50px;
   text-align: center;
 }
+
 #guideWord {
   font-weight: 600;
   font-size: 18px;
 }
+
 /*number타입 input태그 화살표(스피너) 없애기*/
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -417,14 +419,17 @@ input[type="number"]::-webkit-inner-spin-button {
   scroll-snap-type: mandatory;
   */
 }
+
 .slides::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
+
 .slides::-webkit-scrollbar-thumb {
   background: white;
   border-radius: 10px;
 }
+
 .slides::-webkit-scrollbar-track {
   background: transparent;
 }

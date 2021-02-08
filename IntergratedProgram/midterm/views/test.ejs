@@ -11,12 +11,27 @@
     <button id="but">hi</button>
     <button id="button2">username</button>
     <button id="getbutton">bye!</button>
+    <br>
+    <video id = "video1" src="./test1.mov" autoplay muted style="width : 360; height : 360"></video>
+    <video id = "video2" src="./test2.mov" autoplay muted style="width : 360; height : 360"></video>
+    <button id = "changeBtn">change!</button>
 
     <script>
         var btn = document.getElementById("but");
         var btn3 = document.getElementById("button2");
         var btn2 = document.getElementById("getbutton");
 
+        
+
+        var changeBtn = document.getElementById("changeBtn");
+        changeBtn.onclick = ()=>{
+            let video1 = document.getElementById("video1");
+            let video2 = document.getElementById("video2");
+
+            let tmpsrc = video1.src;
+            video1.src = video2.src;
+            video2.src = tmpsrc;
+        }
 
         var roomName = "안녕하세요";
         var totalScore = "100";
