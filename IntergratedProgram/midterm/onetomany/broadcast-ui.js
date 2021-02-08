@@ -917,7 +917,7 @@ function captureUserMedia(callback) {
 
     video_constraints = {
         width: { min: 320, ideal: 320 },
-        height: { min: 180, ideal: 180 }
+        height: { min: 228, ideal: 228 }
     }
 
     getUserMedia({
@@ -2123,6 +2123,7 @@ function soundOnOff(element) {
 function exitRoom() {
     $(".pop-up").css("display", "block");
     $(".modal").css("display", "block");
+    console.log(userInfo);
 }
 
 function exit_yes() {

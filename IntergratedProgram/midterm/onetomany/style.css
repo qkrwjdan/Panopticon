@@ -52,7 +52,7 @@ padding: .5em;
     display: grid;
     height: 100vh;
     grid-template-columns: 250px 1fr 1fr 400px;
-    grid-template-rows: 230px 1fr 1fr;
+    grid-template-rows: 290px 1fr 1fr;
     grid-gap: 3px;
     grid-auto-rows: minmax(10px, auto);
   }
