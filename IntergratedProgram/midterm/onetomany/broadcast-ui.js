@@ -415,8 +415,6 @@ function getScore(userNames, roomName) {
                 console.log("parentDiv : ",parentDiv[0]);
                 parentDiv[0].childNodes[1].innerText = name + ":" + data[name]
             }
-            // $(".cheeting").html(che_num);
-            // document.getElementById('cheeting').innerHTML = '<h1>점수 : ' + cheating_score[userNames]+ '</h1>';
         },
         error: function(e) {
             console.log(e);
@@ -528,14 +526,16 @@ var config = {
 
 
             var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
+            var user_name2 = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>" + media.response.studentName + "</div>"
             $(".video_content:last").append(user_name);
+            $(".parti_area").append(user_name2);
             $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
-            var btn_warn = "<button class='video_btn " + index + "' onclick='warning_event(this.classList)' style='opacity:0'>경고</button>";
-            var btn_kick = "<button class='video_btn " + index + "' onclick='kick_event(this.classList)' style='opacity:0'>강퇴</button>";
-            var btn_ban_chat = "<button class='video_btn " + index + "' onclick='ban_chat_event(this.classList)' style='opacity:0'>채팅금지</button>";
-            $(".flex_container:last").append(btn_warn);
-            $(".flex_container:last").append(btn_kick);
-            $(".flex_container:last").append(btn_ban_chat);
+            // var btn_warn = "<button class='video_btn " + index + "' onclick='warning_event(this.classList)' style='opacity:0'>경고</button>";
+            // var btn_kick = "<button class='video_btn " + index + "' onclick='kick_event(this.classList)' style='opacity:0'>강퇴</button>";
+            // var btn_ban_chat = "<button class='video_btn " + index + "' onclick='ban_chat_event(this.classList)' style='opacity:0'>채팅금지</button>";
+            // $(".flex_container:last").append(btn_warn);
+            // $(".flex_container:last").append(btn_kick);
+            // $(".flex_container:last").append(btn_ban_chat);
         }
         if (userInfo.job == "student") {
             obj = {
