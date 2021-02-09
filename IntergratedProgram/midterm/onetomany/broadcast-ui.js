@@ -406,9 +406,9 @@ function getScore(userNames, roomName) {
             console.log("success");
             console.log("data : ", data);
             cheating_score = data;
-            var data_num = "<div id=chat_notice>" + userNames + "부정행위 점수는? " + cheating_score[userNames] + "</div>"
+            // var data_num = "<div id=chat_notice>" + userNames + "부정행위 점수는? " + cheating_score[userNames] + "</div>"
             // var che_num = "<div>" + userNames + ":" + cheating_score[userNames] + "</div>"
-            $(".ale_area").append(data_num);
+            // $(".ale_area").append(data_num);
             for(var name in data){
                 console.log("name : ",name);
                 let parentDiv = document.getElementsByClassName(name);
@@ -434,12 +434,13 @@ function getScore(userNames, roomName) {
         success: function(data) {
             console.log("actiondata: ", data);
             if(data[0]["type"] == 'text'){
-                var data_action = "<div id=chat_notice>" + userNames + "의 음성 : " + data[0]["value"] + "</div>";
+                var data_action = "<div>" + userNames + "의 음성 : " + data[0]["value"] + "</div>";
+                console.log("음성검출");
                 $(".ale_area").append(data_action);
             }
 
             if(data[0]["type"] == 'face'){
-                var face = "<div id=chat_notice>" + userNames + "의 얼굴이 " + data[0]["value"] + "개 검출</div>";
+                var face = "<div>" + userNames + "의 얼굴이 " + data[0]["value"] + "개 검출</div>";
                 $(".ale_area").append(face);
             }
         },
