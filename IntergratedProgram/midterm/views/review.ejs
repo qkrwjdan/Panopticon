@@ -12,26 +12,23 @@
                 <div class="login-form-container shadow">
                     <div class="title">
                         <h1><br>"Panopticon"</h1>
-                        <h2><%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h2>
+                        <h2><%=userInfo.job%> <%=userInfo.name%>님 환영합니다</h2><br>
                     </div>
                     <div id="host_slides" class="container">
-                        <div class="login-input-container">
+                        <div>
+                            <h1>리뷰 다시보기 페이지.</h1><br>
                             <% if(userInfo.job == "professor"){%>
-                                <h1>리뷰 다시보기 페이지.</h1>
-                            <div class="login-input-wrap">
-                               <a href="/main/review/1">id = 1, 21/02/04 데이터마이닝 시험 점수 다시보기</a>
-                            </div>
-                            <div class="login-input-wrap">
-                                <a href="/main/review/2">id = 2, 21/02/04 파놥티콘 시험 점수 다시보기</a>
-                             </div>
-                             <div class="login-input-wrap">
+                            <div class="login-input-wrap" style="height:80%; overFlow-y : scroll;">
+                                <a href="/main/review/1">id = 1, 21/02/04 데이터마이닝 시험 점수 다시보기</a>
+                                <!-- <a href="/main/review/2">id = 2, 21/02/04 파놥티콘 시험 점수 다시보기</a>
                                 <a href="/main/review/3">id = 3, 21/02/04 행복에 관하여 시험 점수 다시보기</a>
-                             </div>
-                             <div class="login-input-wrap">
-                                <a href="/main/review/4">id = 4, 21/02/04 으어어어어어 시험 점수 다시보기</a>
+                                <a href="/main/review/4">id = 4, 21/02/04 박정무 멍청이 시험 점수 다시보기</a> -->
                              </div>
                             <% }%>
                         </div>
+                    </div>
+                    <div class="login-btn-wrap">
+                        <button class="login-btn" id="toMain">뒤로가기</button><br>
                     </div>
                 </div>
             </div>
@@ -42,12 +39,37 @@
         var toHost = document.getElementById("toHost");
         var toReview = document.getElementById("toReview");
         var toView = document.getElementById("toView");
+        var toMain = document.getElementById("toMain");
 
         var userInfo= "<%=JSON.stringify(userInfo)%>";
 
         userInfo = userInfo.replace(/&#34;/gi, '\"');
         userInfo = JSON.parse(userInfo);
         
+        if(toMain){
+            toMain.onclick = () =>{
+
+                var form = document.createElement('form');
+
+                objs1 = document.createElement('input');
+                objs1.setAttribute('type', 'hidden');
+                objs1.setAttribute('name', 'name');
+                objs1.setAttribute('value', userInfo.name);       
+                form.appendChild(objs1);
+
+                objs2 = document.createElement('input');
+                objs2.setAttribute('type', 'hidden');
+                objs2.setAttribute('name', 'job');
+                objs2.setAttribute('value', userInfo.job);
+                form.appendChild(objs2);
+
+                form.setAttribute('method', 'post');
+                form.setAttribute('action', "/main");
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+        }
 
         var data = {"userInfo" : userInfo};
 

@@ -172,7 +172,9 @@
                                 </div>
                                 <div class="login-btn-wrap">
                                     <p><button id="start-conferencing" class="login-btn">Create Room</button></p>
+                                    <button class="login-btn" id="toMain">뒤로가기</button>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -289,16 +291,6 @@
                         </div>
                     </div>
                 </div>
-            <!-- <div id="testConcentration">
-                <p id="testCon_title">집중도 테스트</p>
-                <p id="timer"></p>
-                <p id="randomNumber"></p>
-                <input type="number" id="input_randomNumber" min="1" max="9" maxlength="1" oninput="maxLengthCheck(this)"/>
-                <button type="button" onclick="submit_concentration()">제출</button>
-                <p id="guideWord">위 숫자를 입력해주세요.</p>
-            </div>
-             -->
-            <!--<button id="open_Concentration" onclick="testConcentration()">집중도테스트버튼</button>-->
 
             <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
             <script src="https://www.webrtc-experiment.com/socket.io.js"> </script>
@@ -314,6 +306,44 @@
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
             <script src="ReplaceableMediaStream.js"></script>
         </article>      
+
+        <script>
+            var toMain = document.getElementById("toMain");
+
+            var userInfo= "<%=JSON.stringify(userInfo)%>";
+
+            userInfo = userInfo.replace(/&#34;/gi, '\"');
+            userInfo = JSON.parse(userInfo);
+            
+            if(toMain){
+                toMain.onclick = () =>{
+
+                    var form = document.createElement('form');
+
+                    objs1 = document.createElement('input');
+                    objs1.setAttribute('type', 'hidden');
+                    objs1.setAttribute('name', 'name');
+                    objs1.setAttribute('value', userInfo.name);       
+                    form.appendChild(objs1);
+
+                    objs2 = document.createElement('input');
+                    objs2.setAttribute('type', 'hidden');
+                    objs2.setAttribute('name', 'job');
+                    objs2.setAttribute('value', userInfo.job);
+                    form.appendChild(objs2);
+
+                    form.setAttribute('method', 'post');
+                    form.setAttribute('action', "/main");
+                    document.body.appendChild(form);
+
+                    form.submit();
+                }
+            }
+
+            var data = {"userInfo" : userInfo};
+
+            console.log(userInfo);
+        </script>
     
         <!-- commits.js is useless for you! -->
         <script src="https://www.webrtc-experiment.com/commits.js" async> </script>
