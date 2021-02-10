@@ -18,12 +18,11 @@
                         <div>
                             <h1>리뷰 다시보기 페이지.</h1><br>
                             <% if(userInfo.job == "professor"){%>
-                            <div class="login-input-wrap" style="height:80%; overFlow-y : scroll;">
-                                <a href="/main/review/1">id = 1, 21/02/04 데이터마이닝 시험 점수 다시보기</a>
-                                <!-- <a href="/main/review/2">id = 2, 21/02/04 파놥티콘 시험 점수 다시보기</a>
-                                <a href="/main/review/3">id = 3, 21/02/04 행복에 관하여 시험 점수 다시보기</a>
-                                <a href="/main/review/4">id = 4, 21/02/04 박정무 멍청이 시험 점수 다시보기</a> -->
-                             </div>
+                                <% lectureInfo.forEach(function(val){ %>
+                                    <div class="login-input-wrap" style=" overFlow-y : scroll;">
+                                        <a href="/main/review/<%=val.id%>"><%=val.id%></a>
+                                    </div>
+                                <% }) %>
                             <% }%>
                         </div>
                     </div>

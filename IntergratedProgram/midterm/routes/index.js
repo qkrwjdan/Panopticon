@@ -157,16 +157,19 @@ router.post('/loginChk', function(req, res, next) {
 
                 if(userInfo.job == "student"){
                     // res.render('viewer', { userInfo : userInfo, error: false });
-                    req.session.vaild = { "name": doc.data().name,
-                                        "job": doc.data().job,
-                                        "email": doc.data().email};
-                    res.redirect(307, '/main');
+
+                    res.render('main',{userInfo : userInfo});
+                    // req.body = { "name": doc.data().name,
+                    //                     "job": doc.data().job,
+                    //                     "email": doc.data().email};
+                    // res.redirect(307, '/main');
                 }
                 else{ 
                     //session 으로 data 전달
-                    req.session.vaild = { "name": doc.data().name,
-                                            "job": doc.data().job};
-                    res.redirect(307, "/main");
+                    res.render('main',{userInfo : userInfo});
+                    // req.body = { "name": doc.data().name,
+                    //                         "job": doc.data().job};
+                    // res.redirect(307, "/main");
                 }        
             })
         })
