@@ -1,0 +1,96 @@
+body,html{
+    margin: 0;
+    padding:0;
+    height:100%;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Alata', sans-serif;
+}
+
+.page-container{
+    width: 100vw;
+    height: 100vh;
+    background: #eff0f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.shadow{
+    -webkit-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+    -moz-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+    box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+}
+.login-form-container{
+    background:#ffffff ;
+    width:450px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 10px black;
+    border-radius: 10px;
+    align-items: center;
+}
+.title{
+    background-image: 
+    radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
+    width:100%;
+    height:130px;
+    align-items: center;
+    border-radius: 10px 10px 0px 0px;
+}
+.title h1,h2{
+    color:white;
+}
+
+.container{
+    align-items: center;
+    width: 100%;
+    height: 400px;;
+}
+.login-btn-wrap{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 20%;
+}
+.login-btn-wrap .login-btn{
+    width:120px;
+    height:35px;
+    color:white;
+    border: 0;
+    border-radius: 4px;
+    font-weight: bold;
+    background:#9ED0FE;
+    background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
+}
+.login-input-container{
+    width:300px;
+    padding-left: 13%;
+    align-items: center;
+}
+.login-input-container .login-input-wrap{
+    width:300px;
+    height: 45px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    border-bottom: solid 2px #9ED0FE;
+}
+.login-input-container .login-input-wrap input{
+    background: none;
+    border: none;
+    line-height: 45px;
+    width:267px;
+}
+.login-input-container .login-input-wrap input:focus{
+    outline: none;
+}
+.selectpad{
+    padding-top:20px;
+}
