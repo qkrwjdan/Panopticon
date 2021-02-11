@@ -2127,6 +2127,36 @@ function exitRoom() {
     console.log(userInfo);
 }
 
+function go_main(){
+    var form = document.createElement('form');
+
+    objs1 = document.createElement('input');
+    objs1.setAttribute('type', 'hidden');
+    objs1.setAttribute('name', 'name');
+    objs1.setAttribute('value', userInfo.name);       
+    form.appendChild(objs1);
+
+    objs2 = document.createElement('input');
+    objs2.setAttribute('type', 'hidden');
+    objs2.setAttribute('name', 'job');
+    objs2.setAttribute('value', userInfo.job);
+    form.appendChild(objs2);
+
+    if('email' in userInfo){
+        objs3 = document.createElement('input');
+        objs3.setAttribute('type', 'hidden');
+        objs3.setAttribute('name', 'email');
+        objs3.setAttribute('value', userInfo.email);
+        form.appendChild(objs3);
+    }
+
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', "/main");
+    document.body.appendChild(form);
+
+    form.submit();
+}
+
 function exit_yes() {
     if (userInfo.job == "professor") {
         obj = {
@@ -2145,7 +2175,7 @@ function exit_yes() {
     $(".pop-up").css("display", "none");
     $(".modal").css("display", "none");
     // reloadUnnecessaryStuff();
-    location.href = "/main";
+    go_main()
 }
 
 function exit_no() {
