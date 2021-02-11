@@ -25,6 +25,9 @@
 	<br>
     <a href="/main/review">뒤로가기</a>
 	<script>
+		var lectureName="<%=lectureName%>";
+		console.log(lectureName);
+		var title = "강의 " + lectureName + " , 부정행위 점수 다시보기"
 		var data = "<%=JSON.stringify(data)%>";
 		data = data.replace(/&#34;/gi, '\"');
 		data = JSON.parse(data);
@@ -76,7 +79,7 @@
 				responsive: true,
 				title: {
 					display: true,
-					text: '부정행위 검사 차트, 강의 이름을 적을까?'
+					text: title
 				},
 				tooltips: {
 					mode: 'index',
@@ -91,14 +94,14 @@
 						display: true,
 						scaleLabel: {
 							display: true,
-							labelString: 'Month'
+							labelString: 'TIME'
 						}
 					}],
 					yAxes: [{
 						display: true,
 						scaleLabel: {
 							display: true,
-							labelString: 'Value'
+							labelString: 'SCORE'
 						},
 						ticks: {
 							min: 0,

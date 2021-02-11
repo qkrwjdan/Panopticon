@@ -136,7 +136,7 @@ router.get('/review/:id',function(req,res,next){
         console.log("data : ",data);
         receiveScore(id,data).then(value=>{
             console.log("value : ",value);
-            res.render("review-detail",{data:value});
+            res.render("review-detail",{data:value,lectureName:id});
         })
     })
 
