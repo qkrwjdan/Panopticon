@@ -52,6 +52,7 @@ router.post('/review',function(req,res,next){
             console.log(doc.data());
             returnList.push(doc.data());
         })
+        var userInfo = {name : name, job : job};
         
         res.render('review',{userInfo : userInfo, lectureInfo : returnList});
 
