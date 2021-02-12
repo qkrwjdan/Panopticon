@@ -411,7 +411,7 @@ function getScore(userNames, roomName) {
                 console.log("name : ",name);
                 let parentDiv = document.getElementsByClassName(name);
                 console.log("parentDiv : ",parentDiv[0]);
-                parentDiv[0].childNodes[1].innerText = name + " : " + data[name];
+                parentDiv[0].childNodes[1].innerText = name + " : " + parseInt(data[name]);
                 parentDiv[0].childNodes[2].innerText = data[name];
                 console.log("score : ",parentDiv[0].childNodes[2]);
             }
@@ -432,16 +432,19 @@ function getScore(userNames, roomName) {
         dataType: "json",
         success: function(data) {
             console.log("actiondata: ", data);
+
             if(data.length > 0){
-                if(data[0]["type"] == 'text'){
-                    var data_action = "<div>" + userNames + "의 음성 : " + data[0]["value"] + "</div>";
-                    console.log("음성검출");
-                    $(".ale_area").append(data_action);
-                }
-    
-                if(data[0]["type"] == 'face'){
-                    var face = "<div>" + userNames + "의 얼굴이 " + data[0]["value"] + "개 검출</div>";
-                    $(".ale_area").append(face);
+                for(let j=0;j<data.length;j++){
+                    if(data[j]["type"] == 'text'){
+                        var data_action = "<div>" + data[j]["username"] + "의 음성 : " + data[j]["value"] + "</div>";
+                        console.log("음성검출");
+                        $(".ale_area").append(data_action);
+                    }
+        
+                    if(data[j]["type"] == 'face'){
+                        var face = "<div>" + data[j]["username"] + "의 얼굴이 " + data[j]["value"] + "개 검출</div>";
+                        $(".ale_area").append(face);
+                    }
                 }
             }
         
@@ -477,7 +480,6 @@ function refreshScreen(){
     }
 
     //정렬해주기
-    console.log("videoTagList[0].childNodes[2].innerText",videoTagList[0].childNodes[2].innerText);
     sortVideoTagList();
 
     //다시 넣어주기
@@ -572,9 +574,7 @@ var config = {
 
             //videoTagList에 video div들 넣기
             var personalDiv = document.getElementsByClassName(String(media.response.studentName));
-            console.log(personalDiv[0]);
             videoTagList.push(personalDiv[0]);
-            console.log(videoTagList);
             
         }
 
