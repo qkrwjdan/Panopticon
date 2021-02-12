@@ -94,3 +94,23 @@ body,html{
 .selectpad{
     padding-top:20px;
 }
+
+#video_left{
+    position: absolute;
+    left: 250px;
+    background-color: red;
+    color: red;
+    height: 30px;
+    width: 30px;
+    bottom: 10px;
+}
+
+#video_right{
+    position: absolute;
+    left: 490px;
+    background-color: red;
+    color: red;
+    height: 30px;
+    width: 30px;
+    bottom: 10px;
+}
