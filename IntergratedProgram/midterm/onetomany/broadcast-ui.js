@@ -2,6 +2,7 @@ let model;
 var student_list = [];
 var cheating_score;
 var videoTagList = [];
+var video_index = 0;
 
 var testFlag = false;
 
@@ -20,6 +21,33 @@ const state = {
     predictIrises: true
 };
 
+var video_left = document.getElementById("video_left");
+var video_right = document.getElementById("video_right");
+
+if(video_left){
+    video_left.onclick = () =>{
+        console.log("left click");
+        if(video_index <= 0){
+            video_index = 0;
+        }
+        else{
+            video_index = video_index - 1;
+            refreshScreenNoSort();
+        }
+    }
+    
+    video_right.onclick = () =>{
+        console.log("click right");
+        if(video_index >= parseInt(videoTagList.length / 4)){
+            video_index = parseInt(videoTagList.length / 4);
+        }
+        else{
+            video_index = video_index + 1;
+            refreshScreenNoSort();
+        }
+    }    
+}
+
 
 //얼굴 인식
 async function facemesh(videoElement) {
@@ -30,9 +58,7 @@ async function facemesh(videoElement) {
         flipHorizontal: false,
         predictIrises: true
     });
-
     console.log(face);
-
 }
 
 const detectFaceRotate = (C1, C2) => {
@@ -224,7 +250,6 @@ function speechtextpost(text) {
 }
 
 
-
 async function checkscore(video, roomName) {
 
     if (!testFlag) return;
@@ -408,12 +433,9 @@ function getScore(userNames, roomName) {
             console.log("data : ", data);
             cheating_score = data;
             for(var name in data){
-                console.log("name : ",name);
                 let parentDiv = document.getElementsByClassName(name);
-                console.log("parentDiv : ",parentDiv[0]);
                 parentDiv[0].childNodes[1].innerText = name + " : " + parseInt(data[name]);
                 parentDiv[0].childNodes[2].innerText = data[name];
-                console.log("score : ",parentDiv[0].childNodes[2]);
             }
         },
         error: function(e) {
@@ -465,7 +487,37 @@ function sortVideoTagList(){
             return parseInt(b.childNodes[2].innerText) - parseInt(a.childNodes[2].innerText);
         });
     }
-} 
+    console.log("sorted videoTagList : ",videoTagList);
+}
+
+function refreshScreenNoSort(){
+    let videoBox = document.getElementById("participants");
+
+    let children = videoBox.childNodes;
+    console.log("child.length : ",children.length);
+    
+    let childLen = children.length;
+    console.log("videoTagList : ",videoTagList);
+
+    //제거하기
+    for(let i=0;i<childLen;i++){
+        console.log("i : ",i);
+        console.log("children.length : ",children.length);
+        videoBox.removeChild(children[0]);
+    }
+
+    //다시 넣어주기
+    for(let i=0;i<4;i++){
+        console.log("length : ",videoTagList.length);
+        if((video_index) * 4 + i >= videoTagList.length){
+            break;
+        }else{
+            console.log("(video_index) * 4 + i : ",(video_index) * 4 + i);
+            console.log("videoTagList[(video_index) * 4 + i] : ",videoTagList[(video_index) * 4 + i]);
+            videoBox.appendChild(videoTagList[(video_index) * 4 + i]);
+        }
+    }
+}
 
 function refreshScreen(){
     if (!testFlag) return;
@@ -476,16 +528,20 @@ function refreshScreen(){
 
     //제거하기
     for(let i=0;i<children.length;i++){
-        videoBox.removeChild(children[i]);
+        videoBox.removeChild(children[0]);
     }
 
     //정렬해주기
     sortVideoTagList();
 
     //다시 넣어주기
-    //capacity 따라서 넣어주기.
-    for(let i=0;i<videoTagList.length;i++){
-        videoBox.appendChild(videoTagList[i]);
+    for(let i=0;i<4;i++){
+        console.log("length : ",videoTagList.length);
+        if((video_index) * 4 + i >= videoTagList.length){
+            break;
+        }else{
+            videoBox.appendChild(videoTagList[(video_index) * 4 + i]);
+        }
     }
 
 }
@@ -531,10 +587,15 @@ var config = {
         console.log("remoteStream")
         var video = media.video;
 
+        let videoBox = document.getElementById("participants");
+
         //video content 생성.
         if (userInfo.job == "professor") {
-            $(".notVisit:first").before("<div class='video_content'></div>");
-            $(".notVisit").remove(String("." + media.response.studentName));
+            let videoContent = document.createElement("div");
+            videoContent.className = 'video_content'; 
+            videoBox.appendChild(videoContent);
+            // $(".notVisit:first").before("<div class='video_content'></div>");
+            // $(".notVisit").remove(String("." + media.response.studentName));
         } else {
             $(".videos").append("<div class='video_content'></div>");
         }
@@ -556,6 +617,7 @@ var config = {
 
         if (userInfo.job == "professor") {
             $(".video_content:last").addClass(String(media.response.studentName));
+
             $(".video_content:last").append("<div class ='cheeting'>점수</div>")
             $(".video_content:last").append("<div class ='person' id='scoreInfo'>0</div>")
             // cheeting = document.getElementsByClassName("cheeting");
@@ -574,8 +636,14 @@ var config = {
 
             //videoTagList에 video div들 넣기
             var personalDiv = document.getElementsByClassName(String(media.response.studentName));
+            console.log("personalDiv : ",personalDiv[0]);
             videoTagList.push(personalDiv[0]);
-            
+
+            // **님이 입장하셨습니다 알림 띄워주기
+            var enterMessage = "<div>" + media.response.studentName + " 님이 입장하셨습니다!</div>";
+            $(".ale_area").append(enterMessage);
+
+            refreshScreenNoSort();
         }
 
         if (userInfo.job == "student") {
@@ -909,7 +977,8 @@ function createButtonClickHandler() {
         return;
     }
 
-    capacity = selected_students.length;
+    // capacity = selected_students.length;
+    capacity = 4;
 
     globalRoomName = document.getElementById('conference-name').value;
 
@@ -928,9 +997,9 @@ function createButtonClickHandler() {
         notVisit = document.getElementsByClassName("notVisit");
         var index = notVisit.length - 1;
 
-        document.getElementsByName("students").value
+        document.getElementsByName("students").value;
 
-        $(".notVisit:last").addClass(String(selected_student_name[i]));
+        // $(".notVisit:last").addClass(String(selected_student_name[i]));
         // notVisit[index].innerHTML = "<br>" + selected_student_name[i] + "<br><br>미출석";
     }
 
