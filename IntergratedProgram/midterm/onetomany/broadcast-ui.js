@@ -1,6 +1,7 @@
 let model;
 var student_list = [];
 var cheating_score;
+var videoTagList = [];
 
 var testFlag = false;
 
@@ -406,20 +407,20 @@ function getScore(userNames, roomName) {
             console.log("success");
             console.log("data : ", data);
             cheating_score = data;
-            // var data_num = "<div id=chat_notice>" + userNames + "부정행위 점수는? " + cheating_score[userNames] + "</div>"
-            // var che_num = "<div>" + userNames + ":" + cheating_score[userNames] + "</div>"
-            // $(".ale_area").append(data_num);
             for(var name in data){
                 console.log("name : ",name);
                 let parentDiv = document.getElementsByClassName(name);
                 console.log("parentDiv : ",parentDiv[0]);
-                parentDiv[0].childNodes[1].innerText = name + ":" + data[name]
+                parentDiv[0].childNodes[1].innerText = name + " : " + data[name];
+                parentDiv[0].childNodes[2].innerText = data[name];
+                console.log("score : ",parentDiv[0].childNodes[2]);
             }
         },
         error: function(e) {
             console.log(e);
         }
     })
+
     $.ajax({
         type: 'POST',
         url: "host/receiveAction",
@@ -431,16 +432,19 @@ function getScore(userNames, roomName) {
         dataType: "json",
         success: function(data) {
             console.log("actiondata: ", data);
-            if(data[0]["type"] == 'text'){
-                var data_action = "<div>" + userNames + "의 음성 : " + data[0]["value"] + "</div>";
-                console.log("음성검출");
-                $(".ale_area").append(data_action);
+            if(data.length > 0){
+                if(data[0]["type"] == 'text'){
+                    var data_action = "<div>" + userNames + "의 음성 : " + data[0]["value"] + "</div>";
+                    console.log("음성검출");
+                    $(".ale_area").append(data_action);
+                }
+    
+                if(data[0]["type"] == 'face'){
+                    var face = "<div>" + userNames + "의 얼굴이 " + data[0]["value"] + "개 검출</div>";
+                    $(".ale_area").append(face);
+                }
             }
-
-            if(data[0]["type"] == 'face'){
-                var face = "<div>" + userNames + "의 얼굴이 " + data[0]["value"] + "개 검출</div>";
-                $(".ale_area").append(face);
-            }
+        
         },
         error: function(e) {
             console.log(e);
@@ -452,9 +456,43 @@ function getScore(userNames, roomName) {
     // })
 }
 
+function sortVideoTagList(){
+    if(videoTagList.length > 1){
+        videoTagList.sort(function(a, b) { // 내림차순
+            return parseInt(b.childNodes[2].innerText) - parseInt(a.childNodes[2].innerText);
+        });
+    }
+} 
+
+function refreshScreen(){
+    if (!testFlag) return;
+
+    let videoBox = document.getElementById("participants");
+
+    let children = videoBox.childNodes;
+
+    //제거하기
+    for(let i=0;i<children.length;i++){
+        videoBox.removeChild(children[i]);
+    }
+
+    //정렬해주기
+    console.log("videoTagList[0].childNodes[2].innerText",videoTagList[0].childNodes[2].innerText);
+    sortVideoTagList();
+
+    //다시 넣어주기
+    //capacity 따라서 넣어주기.
+    for(let i=0;i<videoTagList.length;i++){
+        videoBox.appendChild(videoTagList[i]);
+    }
+
+}
+
 function startGetScore(userNames, roomName) {
     setInterval(() => {
         getScore(userNames, roomName);
+        refreshScreen();
+
     }, 5000)
 }
 
@@ -490,14 +528,16 @@ var config = {
 
         console.log("remoteStream")
         var video = media.video;
-        // video.setAttribute('controls', true);
 
+        //video content 생성.
         if (userInfo.job == "professor") {
             $(".notVisit:first").before("<div class='video_content'></div>");
             $(".notVisit").remove(String("." + media.response.studentName));
         } else {
             $(".videos").append("<div class='video_content'></div>");
         }
+
+        //video content들.
         video_content = document.getElementsByClassName("video_content");
         console.log(video_content);
 
@@ -509,34 +549,35 @@ var config = {
             video.setAttribute("onClick", "clickevent_peer_video(this.id)");
         }
 
-        // video_content[index].setAttribute("id", id);
         video_content[index].insertBefore(video, video_content[index].firstChild);
         $(".video_content:last").addClass(String(index));
 
         if (userInfo.job == "professor") {
             $(".video_content:last").addClass(String(media.response.studentName));
             $(".video_content:last").append("<div class ='cheeting'>점수</div>")
-            cheeting = document.getElementsByClassName("cheeting");
+            $(".video_content:last").append("<div class ='person' id='scoreInfo'>0</div>")
+            // cheeting = document.getElementsByClassName("cheeting");
 
             console.log("media.response : ", media.response);
             console.log("media.response.stuname : ", media.response.studentName);
             student_list.push(media.response.studentName);
-
-            startGetScore(student_list, globalRoomName);
-
 
             var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
             var user_name2 = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>" + media.response.studentName + "</div>"
             $(".video_content:last").append(user_name);
             $(".parti_area").append(user_name2);
             $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
-            // var btn_warn = "<button class='video_btn " + index + "' onclick='warning_event(this.classList)' style='opacity:0'>경고</button>";
-            // var btn_kick = "<button class='video_btn " + index + "' onclick='kick_event(this.classList)' style='opacity:0'>강퇴</button>";
-            // var btn_ban_chat = "<button class='video_btn " + index + "' onclick='ban_chat_event(this.classList)' style='opacity:0'>채팅금지</button>";
-            // $(".flex_container:last").append(btn_warn);
-            // $(".flex_container:last").append(btn_kick);
-            // $(".flex_container:last").append(btn_ban_chat);
+
+            startGetScore(student_list, globalRoomName);
+
+            //videoTagList에 video div들 넣기
+            var personalDiv = document.getElementsByClassName(String(media.response.studentName));
+            console.log(personalDiv[0]);
+            videoTagList.push(personalDiv[0]);
+            console.log(videoTagList);
+            
         }
+
         if (userInfo.job == "student") {
             obj = {
                 "type": "name",
@@ -545,8 +586,8 @@ var config = {
             obj = JSON.stringify(obj);
             peerConnections[0].channel.send(obj);
         }
+        
         video.play();
-        //rotateVideo(video);
     },
     onRoomFound: function(room) {
 
