@@ -9,6 +9,52 @@
             -ms-user-select: none;
         }
     </style>
+	<style type="text/css">
+		body,html{
+            margin: 0;
+            padding:0;
+            height:100%;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Alata', sans-serif;
+        }
+        .page-container{
+            width: 100vw;
+            height: 100vh;
+            background: #eff0f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .shadow{
+            -webkit-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+            -moz-box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+            box-shadow: 27px 43px 43px -26px rgba(89,89,89,0.39);
+        }
+		.login-form-container{
+			background:#f5f5f5 ;
+			width:1550px;
+			height: 800px;
+			display: flex;
+			flex-direction: column;
+			box-shadow: 10px black;
+			border-radius: 10px;
+		}
+		.login-btn-wrap .login-btn{
+            width:120px;
+            height:35px;
+            color:white;
+            margin-top: 30px;
+            border: 0;
+            border-radius: 4px;
+            font-weight: bold;
+            background:#9ED0FE;
+            background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
+        }
+	</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -18,13 +64,50 @@
 </head>
 
 <body>
-	<div style="width:100%;">
-		<canvas id="canvas"></canvas>
+	<div class="page-container">
+		<div class="login-form-container shadow">
+			<canvas id="canvas"></canvas>
+			<div class="login-btn-wrap">
+				<span><button id="toReview" class="login-btn">뒤로가기</button></span>
+			</div>
+		</div>		
 	</div>
 	<br>
 	<br>
-    <a href="javascript:history.back()">뒤로가기</a>
+    
 	<script>
+		var toReview = document.getElementById("toReview");
+		var userInfo= "<%=JSON.stringify(userInfo)%>";
+
+        userInfo = userInfo.replace(/&#34;/gi, '\"');
+        userInfo = JSON.parse(userInfo);
+        
+        var data = {"userInfo" : userInfo};
+        
+		if(toReview){
+            toReview.onclick = () =>{
+
+                var form = document.createElement('form');
+
+                objs1 = document.createElement('input');
+                objs1.setAttribute('type', 'hidden');
+                objs1.setAttribute('name', 'name');
+                objs1.setAttribute('value', userInfo.name);       
+                form.appendChild(objs1);
+
+                objs2 = document.createElement('input');
+                objs2.setAttribute('type', 'hidden');
+                objs2.setAttribute('name', 'job');
+                objs2.setAttribute('value', userInfo.job);
+                form.appendChild(objs2);
+
+                form.setAttribute('method', 'post');
+                form.setAttribute('action', "/main/review");
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+        }
 		var lectureName="<%=lectureName%>";
 		console.log(lectureName);
 		var title = "강의 " + lectureName + " , 부정행위 점수 다시보기"
@@ -65,7 +148,7 @@
 					borderColor: newColor,
 					data: scoreData,
 					fill : false,
-					})
+			})
 		}
 
 		var config = {

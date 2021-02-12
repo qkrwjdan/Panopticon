@@ -4,6 +4,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>파놉티콘</title>
     <link rel="stylesheet" href="/style/review.css">
+    <style type="text/css">
+        .login-input-container{
+            padding-top:120px;
+            width:300px;
+            align-items: center;
+        }
+        .login-input-wrap{
+            width:80%;
+            height: 45px;
+            margin-top: 2px;
+            padding-left: 20%;
+            border-radius: 2px;
+            align-items: center;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <article style="background-color:#eff0f2">
@@ -17,13 +33,15 @@
                     <div id="host_slides" class="container">
                         <div>
                             <h1>리뷰 다시보기 페이지.</h1><br>
-                            <% if(userInfo.job == "professor"){%>
-                                <% lectureInfo.forEach(function(val){ %>
-                                    <div class="login-input-wrap" style=" overFlow-y : scroll;">
-                                        <a href="/main/review/<%=val.id%>"><%=val.id%></a>
-                                    </div>
-                                <% }) %>
-                            <% }%>
+                            <div style=" overFlow-y : scroll;">
+                                <% if(userInfo.job == "professor"){%>
+                                    <% lectureInfo.forEach(function(val){ %>
+                                        <div class="login-input-wrap">
+                                            <h3 style="background-color: white; border: 1px solid #9ED0FE;"><a href="/main/review/<%=val.id%>"><%=val.id%></a></h3>
+                                        </div>
+                                    <% }) %>
+                                <% }%>
+                            </div>
                         </div>
                     </div>
                     <div class="login-btn-wrap">
