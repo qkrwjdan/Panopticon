@@ -43,19 +43,39 @@
             video2.src = tmpsrc;
         }
 
+        function changeOrder(tmpList){
+            let temp = tmpList[0];
+            tmpList[0] = tmpList[1];
+            tmpList[1] = temp;
+        }
+
         var tagChangeBtn = document.getElementById("tagChangeBtn");
         tagChangeBtn.onclick = ()=>{
+            
             console.log("tage change!");
 
+            var childList = [];
+
+            var Video1Div = document.getElementById("video1Div");
+            var Video2Div = document.getElementById("video2Div");
+
+            childList.push(Video1Div,Video2Div);
+
             let parentNode = document.getElementById("videoBox");
-            parentNode.insertBefore();
 
-            // let tmpDiv = video1Div;
+            let children = parentNode.childNodes;
+            changeOrder(childList);
 
-            // video1Div = video2Div;
-            // video2Div = tmpDiv;
+            for(var i=0;i<children.length;i++){
+                parentNode.removeChild(children[i]);
+            }
 
+            for(var i=0;i<childList.length;i++){
+                parentNode.appendChild(childList[i]);
+            }
         }
+
+
 
         var roomName = "안녕하세요";
         var totalScore = "100";
