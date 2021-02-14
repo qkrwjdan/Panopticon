@@ -46,6 +46,16 @@ body,html{
 .title h1,h2{
     color:white;
 }
+.parti_area{
+    border: 2px solid #9ED0FE;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+.ale_area{
+    border: 2px solid #9ED0FE;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
 
 .container{
     align-items: center;

@@ -60,14 +60,16 @@ padding: .5em;
   grid-column: 1;
   grid-row: 1 / 2;
   text-align: center;
-  background-color: #fefefe;
+  background-image: 
+    radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
 }
 #ale{ /*알림창*/
   grid-column: 1;
   grid-row: 2 / 4;
   position: relative;
   text-align: center;
-  background-color:#9ED0FE;
+  background-image: 
+    radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
   max-width: 250px;
 }
 .as{
@@ -90,7 +92,8 @@ padding: .5em;
 #chat{ /*chatting area*/
   grid-column: 4;
   grid-row: 2 / 4 ;
-  background: aliceblue;
+  background: linear-gradient( 45deg, #cde7ff, aliceblue );
+  /* background-image: radial-gradient(ellipse farthest-corner at 0 140%, #cde7ff 0%, #daedff 70%, aliceblue 70%); */
   text-align: center;
   justify-items: center;
   font-size: 20pt;
@@ -194,7 +197,7 @@ max-height: 300px;
 
 /*---other button setting---*/
 .basicBtns{
-  background-color: #9ED0FE;
+  background-color: rgba(255,255,255,0);
   border: none;
   width: 40px;
   text-decoration: none;
@@ -214,7 +217,7 @@ left:50%;
 margin-top: -40px;
 margin-left : -275px;
 overflow: hidden;
-background-color: #9ED0FE;
+background: linear-gradient( 45deg, #7cc0ff, #9ED0FE );
 z-index: 1100;
 position: relative;
 opacity: 0.9;
@@ -227,7 +230,7 @@ width: fit-content;
 margin-top : 10px;
 margin-left : 10px;
 overflow: hidden;
-background-color: #9ED0FE;
+background: linear-gradient( 45deg, #7cc0ff, #9ED0FE );
 z-index: 1100;
 position: relative;
 opacity: 0.9;
@@ -736,7 +739,7 @@ img{
 }
 
 .exit_btn{
-  background-color: #9ED0FE;
+  background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
   display: inline-block;
   position: relative;
   width: 80px;
@@ -745,7 +748,7 @@ img{
   margin-left: 10px;
   color : white;
   border-radius: 10px;
-  font-family: inherit;
+  font-family: inherit;background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
   font-size: 1.8rem;
   border : 0;
   outline: 0;
