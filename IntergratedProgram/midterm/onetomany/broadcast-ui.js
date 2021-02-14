@@ -4,6 +4,7 @@ var cheating_score;
 var videoTagList = [];
 var video_index = 0;
 var videoObjList = [];
+let checkFirst = 0;
 
 /*
 
@@ -44,7 +45,7 @@ if (video_left) {
             video_index = 0;
         } else {
             video_index = video_index - 1;
-            refreshScreenNoSort();
+            refreshScreenWithSort();
         }
     }
 
@@ -54,10 +55,11 @@ if (video_left) {
             video_index = parseInt(videoTagList.length / 4);
         } else {
             video_index = video_index + 1;
-            refreshScreenNoSort();
+            refreshScreenWithSort();
         }
     }
 }
+
 //얼굴 인식
 async function facemesh(videoElement) {
 
@@ -471,13 +473,13 @@ function getScore(userNames, roomName) {
             if (data.length > 0) {
                 for (let j = 0; j < data.length; j++) {
                     if (data[j]["type"] == 'text') {
-                        var data_action = "<div style='padding-left: 5px;'>" + data[j]["username"] + "의 음성 : " + data[j]["value"] + "</div>";
+                        var data_action = "<div>" + data[j]["username"] + "의 음성 : " + data[j]["value"] + "</div>";
                         console.log("음성검출");
                         $(".ale_area").append(data_action);
                     }
 
                     if (data[j]["type"] == 'face') {
-                        var face = "<div style='padding-left: 5px;'>" + data[j]["username"] + "의 얼굴이 " + data[j]["value"] + "개 검출</div>";
+                        var face = "<div>" + data[j]["username"] + "의 얼굴이 " + data[j]["value"] + "개 이상 검출</div>";
                         $(".ale_area").append(face);
                     }
                 }
@@ -525,9 +527,12 @@ function refreshScreenWithSort(){
 
     let video_contents = document.getElementsByClassName('video_content');
     for(let i=0;i<videoObjList.length;i++){
-        video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
-        video_contents[videoObjList.length - (i+1)].childNodes[0].play();
-        video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+        console.log("video index : ",(4 * video_index) + i);
+
+        video_contents[(4 * video_index) + i].childNodes[0].srcObject = videoObjList[i].videoSrc;
+        video_contents[(4 * video_index) + i].childNodes[0].play();
+        video_contents[(4 * video_index) + i].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+
         if(i == 3) break;
     }
 }
@@ -536,7 +541,6 @@ function startGetScore(userNames, roomName) {
     setInterval(() => {
         getScore(userNames, roomName);
         refreshScreenWithSort();
-
     }, 5000)
 }
 
@@ -617,11 +621,7 @@ var config = {
                 dataType: "json",
                 success: function(data) {
                     console.log("IpLIST: ", data);
-<<<<<<< Updated upstream
-                    var ipalert = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 13px'>아이피도착</div>"
-=======
                     var ipalert = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>아이피도착</div><div class='line'></div>"
->>>>>>> Stashed changes
                     $(".parti_area").append(ipalert);
                 },
                 error: function(e) {
@@ -637,11 +637,12 @@ var config = {
 
             //onclick으로 바꿔야될까??
             //귀찮으니까 바꾸지 말자.
+            //바꿔야겠다.
             student_list.push(media.response.studentName);
-            startGetScore(student_list, globalRoomName);
+            // startGetScore(student_list, globalRoomName);
 
             // **님이 입장하셨습니다 알림 띄워주기
-            var enterMessage = "<div style='margin-top: 2%; padding-left: 5px; color:#3aa0ff'>" + media.response.studentName + " 님이 입장하셨습니다.</div>";
+            var enterMessage = "<div>" + media.response.studentName + " 님이 입장하셨습니다.</div>";
             $(".ale_area").append(enterMessage);
 
         } else {
@@ -993,18 +994,25 @@ var config = {
 
 function createButtonClickHandler() {
 
-    var selected_students = [];
-    var selected_student_name = [];
+    studentInfo = studentInfo.replace(/&#34;/gi, '\"');
+    studentInfo = JSON.parse(studentInfo);
 
-    $("option[name='students']:checked").each(function() {
-        selected_students.push($(this).val());
-        selected_student_name.push($(this).text());
-    })
+    console.log("studentInfo : ",studentInfo);
 
-    if (selected_students.length == 0) {
-        alert("초대할 학생을 1명 이상 선택해 주세요.");
-        return;
-    }
+    var selected_students = studentInfo.email;
+    var selected_student_name = studentInfo.name;
+
+    // $("option[name='students']:checked").each(function() {
+    //     selected_students.push($(this).val());
+    //     console.log("val : ",$(this).val());
+    //     selected_student_name.push($(this).text());
+    //     console.log("text : ",$(this).text())
+    // })
+
+    // if (selected_students.length == 0) {
+    //     alert("초대할 학생을 1명 이상 선택해 주세요.");
+    //     return;
+    // }
 
     // capacity = selected_students.length;
     capacity = 4;
@@ -1218,6 +1226,11 @@ function sendStartTestMessage(element) {
             peerConnections[id].channel.send(obj);
         }
         testFlag = true;
+
+        if(checkFirst == 0){
+            startGetScore(student_list, globalRoomName);
+        }
+        
         ele.classList.replace('fa-play', 'fa-pause');
     } else if (ele.classList[1] == "fa-pause") {
 
