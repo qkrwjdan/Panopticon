@@ -3,6 +3,7 @@ var student_list = [];
 var cheating_score;
 var videoTagList = [];
 var video_index = 0;
+var videoObjList = [];
 
 /*
 
@@ -447,10 +448,8 @@ function getScore(userNames, roomName) {
             cheating_score = data;
             for (var name in data) {
                 // div에 넣어주는게 아니라 videoObjList.score에 점수 넣어주기.
-                // videoObjList[i].score = parseInt(data[videoObjList[i].name])
-                let parentDiv = document.getElementsByClassName(name);
-                parentDiv[0].childNodes[1].innerText = name + " : " + parseInt(data[name]);
-                parentDiv[0].childNodes[2].innerText = data[name];
+                console.log("parseInt() : ",videoObjList[i].name,parseInt(data[videoObjList[i].name]));
+                videoObjList[i].score = parseInt(data[videoObjList[i].name]);
             }
         },
         error: function(e) {
@@ -607,43 +606,92 @@ var config = {
         var video = media.video;
         console.log("video : ", video);
         console.log("video type : ", typeof(video));
+
         let videoBox = document.getElementById("participants");
 
         //video content 생성.
         if (userInfo.job == "professor") {
 
             /* videoObj 객체 생성,  videoObjList에 push */
+            let videoObj = {
+                videoSrc : video.srcObject,
+                name : media.response.studentName,
+                score : 0
+            }
+
+            console.log("videoObj : ",videoObj);
+            videoObjList.push(videoObj);
+            
             /* videoObjList에서 최근 4개(있는만큼) 뽑아서 videoBox에 뿌려주기 */
             /* 뿌려주기 => i번째 div에 src, name, score(없으면 0) 넣어주기 */
+            var video_contents = document.getElementsByClassName("video_content");
+            console.log("video_contents : ",video_contents);
+            
+            for(let i=0;i<videoObjList.length;i++){
+                console.log(i);
+                console.log("video_contents.childNodes : ",video_contents[i].childNodes);
+                video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
+                video_contents[videoObjList.length - (i+1)].childNodes[0].play();
+                video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+                if(i == 3) break;
+            }
+
             /* peer_video id 없으니 관련 이벤트 다 지워야함. */
             /* video.play() 해줘야함. */
 
-            let videoContent = document.createElement("div");
-            videoContent.className = 'video_content';
-            videoBox.appendChild(videoContent);
-            // $(".notVisit:first").before("<div class='video_content'></div>");
-            // $(".notVisit").remove(String("." + media.response.studentName));
+            $.ajax({
+                type: 'POST',
+                url: "host/receivelist",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    name: userInfo.name,
+                }),
+                dataType: "json",
+                success: function(data) {
+                    console.log("IpLIST: ", data);
+                    var ipalert = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 13px'>아이피도착</div>"
+                    $(".parti_area").append(ipalert);
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+            })
+
+            var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
+            var user_name2 = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>" + media.response.studentName + "</div>"
+            $(".video_content:last").append(user_name);
+            $(".parti_area").append(user_name2);
+            $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
+
+            //onclick으로 바꿔야될까??
+            //귀찮으니까 바꾸지 말자.
+            startGetScore(student_list, globalRoomName);
+
+            // **님이 입장하셨습니다 알림 띄워주기
+            var enterMessage = "<div>" + media.response.studentName + " 님이 입장하셨습니다.</div>";
+            $(".ale_area").append(enterMessage);
+
         } else {
             $(".videos").append("<div class='video_content'></div>");
-        }
 
-        //video content들.
-        video_content = document.getElementsByClassName("video_content");
-        console.log(video_content);
+            //video content들.
+            video_content = document.getElementsByClassName("video_content");
+            console.log(video_content);
 
-        var index = video_content.length - 1;
-        var id = "peer_video" + index.toString();
-        video.setAttribute("class", "peer_video");
-        video.id = id;
-        if (userInfo.job == "professor") {
-            video.setAttribute("onClick", "clickevent_peer_video(this.id)");
-        }
+            var index = video_content.length - 1;
+            var id = "peer_video" + index.toString();
+            video.setAttribute("class", "peer_video");
+            video.id = id;
+            if (userInfo.job == "professor") {
+                video.setAttribute("onClick", "clickevent_peer_video(this.id)");
+            }
 
-        video_content[index].insertBefore(video, video_content[index].firstChild);
-        $(".video_content:last").addClass(String(index));
-        if (userInfo.job == "student") {
+            video_content[index].insertBefore(video, video_content[index].firstChild);
+            $(".video_content:last").addClass(String(index));
+
             var userIP = ip();
             console.log(userIP);
+
             $.ajax({
                 type: 'POST',
                 url: "/host/IpLocate",
@@ -663,58 +711,6 @@ var config = {
             peerConnections[0].channel.send(obj);
         }
 
-        if (userInfo.job == "professor") {
-            $(".video_content:last").addClass(String(media.response.studentName));
-            $.ajax({
-                type: 'POST',
-                url: "host/receivelist",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    name: userInfo.name,
-                }),
-                dataType: "json",
-                success: function(data) {
-                    console.log("IpLIST: ", data);
-                    var ipalert = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 13px '>아이피도착</div>"
-                    $(".parti_area").append(ipalert);
-                },
-                error: function(e) {
-                    console.log(e);
-                }
-            })
-
-            $(".video_content:last").append("<div class ='cheeting'>점수</div>")
-            $(".video_content:last").append("<div class ='person' id='scoreInfo'>0</div>")
-                // cheeting = document.getElementsByClassName("cheeting");
-
-            console.log("media.response : ", media.response);
-            console.log("media.response.stuname : ", media.response.studentName);
-            student_list.push(media.response.studentName);
-
-            var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
-            var user_name2 = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>" + media.response.studentName + "</div>"
-            $(".video_content:last").append(user_name);
-            $(".parti_area").append(user_name2);
-            $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
-
-            //onclick으로 바꿔야될까??
-            //귀찮으니까 바꾸지 말자.
-            startGetScore(student_list, globalRoomName);
-
-            //videoTagList에 video div들 넣기
-            var personalDiv = document.getElementsByClassName(String(media.response.studentName));
-            console.log("personalDiv : ", personalDiv[0]);
-            videoTagList.push(personalDiv[0]);
-
-            // **님이 입장하셨습니다 알림 띄워주기
-            var enterMessage = "<div>" + media.response.studentName + " 님이 입장하셨습니다.</div>";
-            $(".ale_area").append(enterMessage);
-
-            refreshScreenNoSort();
-        }
-
-
-        video.play();
     },
     onRoomFound: function(room) {
 
@@ -1051,17 +1047,34 @@ function createButtonClickHandler() {
     updateLayout(capacity);
     hideUnnecessaryStuff();
 
+    let videoBox = document.getElementById("participants");
+
     //진행중
     for (var i = 0; i < capacity; i++) {
         /* videos에 4개의 Div 넣어주기 */
         /* box(video, name, score,flex_container)  */
         /* id or class에 각 순서 만들어주기 */
 
-        $(".videos").append("<div class='notVisit'></div>");
-        notVisit = document.getElementsByClassName("notVisit");
-        var index = notVisit.length - 1;
+        let ele = document.createElement('div');
+        ele.className = "video_content " + String(i);
+        let videoTag = document.createElement('video');
+        videoTag.className = "peer_video " + String(i);
+        let cheetingTag = document.createElement('div');
+        cheetingTag.className = "cheeting";
+        let flex = document.createElement('div');
+        flex.className = "flex_container";
 
-        document.getElementsByName("students").value;
+        ele.appendChild(videoTag);
+        ele.appendChild(cheetingTag);
+        ele.appendChild(flex);
+
+        videoBox.appendChild(ele);
+
+        // $(".videos").append("<div class='notVisit'></div>");
+        // notVisit = document.getElementsByClassName("notVisit");
+        // var index = notVisit.length - 1;
+
+        // document.getElementsByName("students").value;
 
         // $(".notVisit:last").addClass(String(selected_student_name[i]));
         // notVisit[index].innerHTML = "<br>" + selected_student_name[i] + "<br><br>미출석";
@@ -1072,13 +1085,14 @@ function createButtonClickHandler() {
         url: "/host/createRoom",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            roomName: globalRoomName,
-            professor: userInfo.name,
+            roomName : globalRoomName,
+            professor : userInfo.name,
         }),
         dataType: "json",
     })
 
 }
+
 
 
 function captureUserMedia(callback) {
