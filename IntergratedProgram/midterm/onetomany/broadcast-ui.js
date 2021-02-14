@@ -4,6 +4,18 @@ var cheating_score;
 var videoTagList = [];
 var video_index = 0;
 
+/*
+
+videoObj {
+    src : videoSrc,
+    name : name,
+    score : score, 
+}
+
+var videoObjList = [];
+
+*/
+
 var testFlag = false;
 
 peer_name = [];
@@ -45,9 +57,8 @@ if(video_left){
             video_index = video_index + 1;
             refreshScreenNoSort();
         }
-    }    
+    }
 }
-
 
 //얼굴 인식
 async function facemesh(videoElement) {
@@ -433,6 +444,8 @@ function getScore(userNames, roomName) {
             console.log("data : ", data);
             cheating_score = data;
             for(var name in data){
+                // div에 넣어주는게 아니라 videoObjList.score에 점수 넣어주기.
+                // videoObjList[i].score = parseInt(data[videoObjList[i].name])
                 let parentDiv = document.getElementsByClassName(name);
                 parentDiv[0].childNodes[1].innerText = name + " : " + parseInt(data[name]);
                 parentDiv[0].childNodes[2].innerText = data[name];
@@ -462,7 +475,7 @@ function getScore(userNames, roomName) {
                         console.log("음성검출");
                         $(".ale_area").append(data_action);
                     }
-        
+
                     if(data[j]["type"] == 'face'){
                         var face = "<div>" + data[j]["username"] + "의 얼굴이 " + data[j]["value"] + "개 검출</div>";
                         $(".ale_area").append(face);
@@ -491,6 +504,8 @@ function sortVideoTagList(){
 }
 
 function refreshScreenNoSort(){
+    //videoObjList에서 맨 처음 4개 뽑아서 videoBox에 뿌려주기
+
     let videoBox = document.getElementById("participants");
 
     let children = videoBox.childNodes;
@@ -520,6 +535,8 @@ function refreshScreenNoSort(){
 }
 
 function refreshScreen(){
+    //정렬하고 refreshScreenNoSort()호출하면 될듯.
+
     if (!testFlag) return;
 
     let videoBox = document.getElementById("participants");
@@ -586,13 +603,20 @@ var config = {
 
         console.log("remoteStream")
         var video = media.video;
-
+        console.log("video : ",video);
+        console.log("video type : ",typeof(video));
         let videoBox = document.getElementById("participants");
 
         //video content 생성.
         if (userInfo.job == "professor") {
+            /* videoObj 객체 생성,  videoObjList에 push */
+            /* videoObjList에서 최근 4개(있는만큼) 뽑아서 videoBox에 뿌려주기 */
+            /* 뿌려주기 => i번째 div에 src, name, score(없으면 0) 넣어주기 */
+            /* peer_video id 없으니 관련 이벤트 다 지워야함. */
+            /* video.play() 해줘야함. */
+
             let videoContent = document.createElement("div");
-            videoContent.className = 'video_content'; 
+            videoContent.className = 'video_content';
             videoBox.appendChild(videoContent);
             // $(".notVisit:first").before("<div class='video_content'></div>");
             // $(".notVisit").remove(String("." + media.response.studentName));
@@ -608,6 +632,7 @@ var config = {
         var id = "peer_video" + index.toString();
         video.setAttribute("class", "peer_video");
         video.id = id;
+
         if (userInfo.job == "professor") {
             video.setAttribute("onClick", "clickevent_peer_video(this.id)");
         }
@@ -632,6 +657,8 @@ var config = {
             $(".parti_area").append(user_name2);
             $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
 
+            //onclick으로 바꿔야될까??
+            //귀찮으니까 바꾸지 말자.
             startGetScore(student_list, globalRoomName);
 
             //videoTagList에 video div들 넣기
@@ -964,6 +991,7 @@ var config = {
 
 
 function createButtonClickHandler() {
+
     var selected_students = [];
     var selected_student_name = [];
 
@@ -993,6 +1021,10 @@ function createButtonClickHandler() {
 
     //진행중
     for (var i = 0; i < capacity; i++) {
+        /* videos에 4개의 Div 넣어주기 */
+        /* box(video, name, score,flex_container)  */
+        /* id or class에 각 순서 만들어주기 */
+
         $(".videos").append("<div class='notVisit'></div>");
         notVisit = document.getElementsByClassName("notVisit");
         var index = notVisit.length - 1;
