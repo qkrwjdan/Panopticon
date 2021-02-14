@@ -97,20 +97,16 @@ body,html{
 
 #video_left{
     position: absolute;
-    left: 250px;
-    background-color: red;
-    color: red;
-    height: 30px;
-    width: 30px;
+    left: 40%;
+    height: 50px;
+    width: 50px;
     bottom: 10px;
 }
 
 #video_right{
     position: absolute;
-    left: 490px;
-    background-color: red;
-    color: red;
-    height: 30px;
-    width: 30px;
+    left: 60%;
+    height: 50px;
+    width: 50px;
     bottom: 10px;
 }
