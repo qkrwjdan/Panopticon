@@ -5,7 +5,6 @@ var videoTagList = [];
 var video_index = 0;
 var videoObjList = [];
 let checkFirst = 0;
-var ipnum = 1;
 
 /*
 
@@ -621,11 +620,10 @@ var config = {
                 }),
                 dataType: "json",
                 success: function(data) {
-                    // console.log(data[0]["userIP"]);
+                    console.log(data[0]["userIP"]);
                     console.log("IpLIST: ", data);
-                    var ipalert = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>" + data[ipnum]["userIP"] + "</div><div class='line'></div>"
+                    var ipalert = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>아이피도착</div><div class='line'></div>"
                     $(".parti_area").append(ipalert);
-                    ipnum++;
                 },
                 error: function(e) {
                     console.log(e);
