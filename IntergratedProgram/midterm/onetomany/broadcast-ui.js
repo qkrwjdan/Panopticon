@@ -495,79 +495,48 @@ function getScore(userNames, roomName) {
     // })
 }
 
-function sortVideoTagList() {
-    if (videoTagList.length > 1) {
-        videoTagList.sort(function(a, b) { // 내림차순
-            return parseInt(b.childNodes[2].innerText) - parseInt(a.childNodes[2].innerText);
+function sortVideoObjList() {
+    // sort 수정.
+    if (videoObjList.length > 1) {
+        videoObjList.sort(function(a, b) { // 내림차순
+            return parseInt(b.score) - parseInt(a.score);
         });
     }
     console.log("sorted videoTagList : ", videoTagList);
 }
 
-function refreshScreenNoSort() {
-    //videoObjList에서 맨 처음 4개 뽑아서 videoBox에 뿌려주기
-
-    let videoBox = document.getElementById("participants");
-
-    let children = videoBox.childNodes;
-    console.log("child.length : ", children.length);
-
-    let childLen = children.length;
-    console.log("videoTagList : ", videoTagList);
-
-    //제거하기
-    for (let i = 0; i < childLen; i++) {
-        console.log("i : ", i);
-        console.log("children.length : ", children.length);
-        videoBox.removeChild(children[0]);
-    }
-
-    //다시 넣어주기
-    for (let i = 0; i < 4; i++) {
-        console.log("length : ", videoTagList.length);
-        if ((video_index) * 4 + i >= videoTagList.length) {
-            break;
-        } else {
-            console.log("(video_index) * 4 + i : ", (video_index) * 4 + i);
-            console.log("videoTagList[(video_index) * 4 + i] : ", videoTagList[(video_index) * 4 + i]);
-            videoBox.appendChild(videoTagList[(video_index) * 4 + i]);
-        }
-    }
-}
-
 function refreshScreen() {
-    //정렬하고 refreshScreenNoSort()호출하면 될듯.
 
     if (!testFlag) return;
 
-    let videoBox = document.getElementById("participants");
-
-    let children = videoBox.childNodes;
-
-    //제거하기
-    for (let i = 0; i < children.length; i++) {
-        videoBox.removeChild(children[0]);
+    let video_contents = document.getElementsByClassName('video_content');
+    for(let i=0;i<videoObjList.length;i++){
+        video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
+        video_contents[videoObjList.length - (i+1)].childNodes[0].play();
+        video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+        if(i == 3) break;
     }
+}
 
-    //정렬해주기
-    sortVideoTagList();
+function refreshScreenWithSort(){
 
-    //다시 넣어주기
-    for (let i = 0; i < 4; i++) {
-        console.log("length : ", videoTagList.length);
-        if ((video_index) * 4 + i >= videoTagList.length) {
-            break;
-        } else {
-            videoBox.appendChild(videoTagList[(video_index) * 4 + i]);
-        }
+    if (!testFlag) return;
+
+    sortVideoObjList();
+
+    let video_contents = document.getElementsByClassName('video_content');
+    for(let i=0;i<videoObjList.length;i++){
+        video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
+        video_contents[videoObjList.length - (i+1)].childNodes[0].play();
+        video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+        if(i == 3) break;
     }
-
 }
 
 function startGetScore(userNames, roomName) {
     setInterval(() => {
         getScore(userNames, roomName);
-        refreshScreen();
+        refreshScreenWithScore();
 
     }, 5000)
 }
@@ -624,17 +593,7 @@ var config = {
             
             /* videoObjList에서 최근 4개(있는만큼) 뽑아서 videoBox에 뿌려주기 */
             /* 뿌려주기 => i번째 div에 src, name, score(없으면 0) 넣어주기 */
-            var video_contents = document.getElementsByClassName("video_content");
-            console.log("video_contents : ",video_contents);
-            
-            for(let i=0;i<videoObjList.length;i++){
-                console.log(i);
-                console.log("video_contents.childNodes : ",video_contents[i].childNodes);
-                video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
-                video_contents[videoObjList.length - (i+1)].childNodes[0].play();
-                video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
-                if(i == 3) break;
-            }
+            refreshScreen();
 
             /* peer_video id 없으니 관련 이벤트 다 지워야함. */
             /* video.play() 해줘야함. */
