@@ -667,7 +667,7 @@ var config = {
             videoTagList.push(personalDiv[0]);
 
             // **님이 입장하셨습니다 알림 띄워주기
-            var enterMessage = "<div>" + media.response.studentName + " 님이 입장하셨습니다!</div>";
+            var enterMessage = "<div>" + media.response.studentName + " 님이 입장하셨습니다.</div>";
             $(".ale_area").append(enterMessage);
 
             refreshScreenNoSort();
