@@ -19,6 +19,7 @@ const db = firebase.firestore();
 
 const userDB = db.collection('users');
 var specialaction = [];
+var NameIPLoclist = [];
 var i = 0;
 
 function insertvalue(user_type, user_timeStamp, user_lecture, user_name, user_value) {
@@ -33,9 +34,20 @@ function insertvalue(user_type, user_timeStamp, user_lecture, user_name, user_va
     return spcial;
 }
 
+function insertlist(user_name, user_IP) {
+
+    var userlist = {
+        username: user_name,
+        userIP: user_IP
+    }
+    return userlist;
+}
+
 function main() {
     var timeStamp = +new Date();
     specialaction.push(insertvalue("ex) text", timeStamp, "ex) 자료와구조", "ex) 홍길동", "ex) 1번 답이뭐야?"))
+    NameIPLoclist.push(insertlist("홍길동", "IP"))
+
 }
 
 router.post('/specialface', function(req, res) {
@@ -59,24 +71,33 @@ router.post('/specialtext', function(req, res) {
     console.log("req.body.type : ", req.body.type);*/
     res.end();
 })
+
+router.post('/IpLocate', function(req, res) {
+    userNames = req.body.name;
+    userIP = req.body.userIP;
+
+    NameIPLoclist.push(insertlist(req.body.name, req.body.userIP));
+    console.log(NameIPLoclist);
+
+})
 main();
 
-router.post('/createRoom',function(req, res) {
+router.post('/createRoom', function(req, res) {
     let roomName = req.body.roomName;
     let professor = req.body.professor;
 
     db.collection('lecture').doc(roomName).set({
-        id : roomName,
-        time : (+new Date()),
-        professor : professor,
-    })
-    .then(()=>{
-        console.log("추가성공");
-    })
-    .catch((error)=>{
-        console.log("에러발생");
-        console.log(error)
-    })
+            id: roomName,
+            time: (+new Date()),
+            professor: professor,
+        })
+        .then(() => {
+            console.log("추가성공");
+        })
+        .catch((error) => {
+            console.log("에러발생");
+            console.log(error)
+        })
 
     res.end();
 
@@ -127,15 +148,13 @@ async function receiveAction() {
 
     }
     return specialactionlist;
-
-
 }
+
 
 router.post('/receiveAction', function(req, res) {
     userNames = req.body.name;
     lecture = req.body.lecture;
     receiveAction().then((dict) => {
-        console.log("dict2: ", dict);
         res.json(dict);
 
     });
@@ -151,10 +170,14 @@ router.post('/receiveData', function(req, res) {
     // console.log(lecture);
 
     receiveScore(lecture, userNames).then((dict) => {
-        console.log("dict: ", dict);
 
         res.json(dict);
     });
+
+})
+router.post('/receivelist', function(req, res) {
+    userNames = req.body.name;
+    res.json(NameIPLoclist);
 
 })
 

@@ -36,30 +36,27 @@ const state = {
 var video_left = document.getElementById("video_left");
 var video_right = document.getElementById("video_right");
 
-if(video_left){
-    video_left.onclick = () =>{
+if (video_left) {
+    video_left.onclick = () => {
         console.log("left click");
-        if(video_index <= 0){
+        if (video_index <= 0) {
             video_index = 0;
-        }
-        else{
+        } else {
             video_index = video_index - 1;
             refreshScreenNoSort();
         }
     }
-    
-    video_right.onclick = () =>{
+
+    video_right.onclick = () => {
         console.log("click right");
-        if(video_index >= parseInt(videoTagList.length / 4)){
+        if (video_index >= parseInt(videoTagList.length / 4)) {
             video_index = parseInt(videoTagList.length / 4);
-        }
-        else{
+        } else {
             video_index = video_index + 1;
             refreshScreenNoSort();
         }
     }
 }
-
 //얼굴 인식
 async function facemesh(videoElement) {
 
@@ -321,6 +318,8 @@ async function checkscore(video, roomName) {
                 facenum: 2,
                 name: userInfo.name,
                 lecture: roomName,
+                type: "face"
+
             }),
             dataType: "json",
         })
@@ -370,6 +369,8 @@ async function checkscore(video, roomName) {
         dataType: "json"
     })
     console.log("ajax finish");
+
+
 };
 
 const runcheckscore = async(video, roomName) => {
@@ -443,7 +444,7 @@ function getScore(userNames, roomName) {
             console.log("success");
             console.log("data : ", data);
             cheating_score = data;
-            for(var name in data){
+            for (var name in data) {
                 // div에 넣어주는게 아니라 videoObjList.score에 점수 넣어주기.
                 // videoObjList[i].score = parseInt(data[videoObjList[i].name])
                 let parentDiv = document.getElementsByClassName(name);
@@ -468,21 +469,21 @@ function getScore(userNames, roomName) {
         success: function(data) {
             console.log("actiondata: ", data);
 
-            if(data.length > 0){
-                for(let j=0;j<data.length;j++){
-                    if(data[j]["type"] == 'text'){
+            if (data.length > 0) {
+                for (let j = 0; j < data.length; j++) {
+                    if (data[j]["type"] == 'text') {
                         var data_action = "<div>" + data[j]["username"] + "의 음성 : " + data[j]["value"] + "</div>";
                         console.log("음성검출");
                         $(".ale_area").append(data_action);
                     }
 
-                    if(data[j]["type"] == 'face'){
-                        var face = "<div>" + data[j]["username"] + "의 얼굴이 " + data[j]["value"] + "개 검출</div>";
+                    if (data[j]["type"] == 'face') {
+                        var face = "<div>" + data[j]["username"] + "의 얼굴이 " + data[j]["value"] + "개 이상 검출</div>";
                         $(".ale_area").append(face);
                     }
                 }
             }
-        
+
         },
         error: function(e) {
             console.log(e);
@@ -494,47 +495,47 @@ function getScore(userNames, roomName) {
     // })
 }
 
-function sortVideoTagList(){
-    if(videoTagList.length > 1){
+function sortVideoTagList() {
+    if (videoTagList.length > 1) {
         videoTagList.sort(function(a, b) { // 내림차순
             return parseInt(b.childNodes[2].innerText) - parseInt(a.childNodes[2].innerText);
         });
     }
-    console.log("sorted videoTagList : ",videoTagList);
+    console.log("sorted videoTagList : ", videoTagList);
 }
 
-function refreshScreenNoSort(){
+function refreshScreenNoSort() {
     //videoObjList에서 맨 처음 4개 뽑아서 videoBox에 뿌려주기
 
     let videoBox = document.getElementById("participants");
 
     let children = videoBox.childNodes;
-    console.log("child.length : ",children.length);
-    
+    console.log("child.length : ", children.length);
+
     let childLen = children.length;
-    console.log("videoTagList : ",videoTagList);
+    console.log("videoTagList : ", videoTagList);
 
     //제거하기
-    for(let i=0;i<childLen;i++){
-        console.log("i : ",i);
-        console.log("children.length : ",children.length);
+    for (let i = 0; i < childLen; i++) {
+        console.log("i : ", i);
+        console.log("children.length : ", children.length);
         videoBox.removeChild(children[0]);
     }
 
     //다시 넣어주기
-    for(let i=0;i<4;i++){
-        console.log("length : ",videoTagList.length);
-        if((video_index) * 4 + i >= videoTagList.length){
+    for (let i = 0; i < 4; i++) {
+        console.log("length : ", videoTagList.length);
+        if ((video_index) * 4 + i >= videoTagList.length) {
             break;
-        }else{
-            console.log("(video_index) * 4 + i : ",(video_index) * 4 + i);
-            console.log("videoTagList[(video_index) * 4 + i] : ",videoTagList[(video_index) * 4 + i]);
+        } else {
+            console.log("(video_index) * 4 + i : ", (video_index) * 4 + i);
+            console.log("videoTagList[(video_index) * 4 + i] : ", videoTagList[(video_index) * 4 + i]);
             videoBox.appendChild(videoTagList[(video_index) * 4 + i]);
         }
     }
 }
 
-function refreshScreen(){
+function refreshScreen() {
     //정렬하고 refreshScreenNoSort()호출하면 될듯.
 
     if (!testFlag) return;
@@ -544,7 +545,7 @@ function refreshScreen(){
     let children = videoBox.childNodes;
 
     //제거하기
-    for(let i=0;i<children.length;i++){
+    for (let i = 0; i < children.length; i++) {
         videoBox.removeChild(children[0]);
     }
 
@@ -552,11 +553,11 @@ function refreshScreen(){
     sortVideoTagList();
 
     //다시 넣어주기
-    for(let i=0;i<4;i++){
-        console.log("length : ",videoTagList.length);
-        if((video_index) * 4 + i >= videoTagList.length){
+    for (let i = 0; i < 4; i++) {
+        console.log("length : ", videoTagList.length);
+        if ((video_index) * 4 + i >= videoTagList.length) {
             break;
-        }else{
+        } else {
             videoBox.appendChild(videoTagList[(video_index) * 4 + i]);
         }
     }
@@ -603,8 +604,8 @@ var config = {
 
         console.log("remoteStream")
         var video = media.video;
-        console.log("video : ",video);
-        console.log("video type : ",typeof(video));
+        console.log("video : ", video);
+        console.log("video type : ", typeof(video));
         let videoBox = document.getElementById("participants");
 
         //video content 생성.
@@ -632,7 +633,6 @@ var config = {
         var id = "peer_video" + index.toString();
         video.setAttribute("class", "peer_video");
         video.id = id;
-
         if (userInfo.job == "professor") {
             video.setAttribute("onClick", "clickevent_peer_video(this.id)");
         }
@@ -641,11 +641,26 @@ var config = {
         $(".video_content:last").addClass(String(index));
 
         if (userInfo.job == "professor") {
+            $.ajax({
+                type: 'POST',
+                url: "host/receivelist",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    name: userInfo.name,
+                }),
+                dataType: "json",
+                success: function(data) {
+                    console.log("IpLIST: ", data);
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+            })
             $(".video_content:last").addClass(String(media.response.studentName));
 
             $(".video_content:last").append("<div class ='cheeting'>점수</div>")
             $(".video_content:last").append("<div class ='person' id='scoreInfo'>0</div>")
-            // cheeting = document.getElementsByClassName("cheeting");
+                // cheeting = document.getElementsByClassName("cheeting");
 
             console.log("media.response : ", media.response);
             console.log("media.response.stuname : ", media.response.studentName);
@@ -663,7 +678,7 @@ var config = {
 
             //videoTagList에 video div들 넣기
             var personalDiv = document.getElementsByClassName(String(media.response.studentName));
-            console.log("personalDiv : ",personalDiv[0]);
+            console.log("personalDiv : ", personalDiv[0]);
             videoTagList.push(personalDiv[0]);
 
             // **님이 입장하셨습니다 알림 띄워주기
@@ -674,6 +689,21 @@ var config = {
         }
 
         if (userInfo.job == "student") {
+            var userIP = ip();
+            console.log(userIP);
+            //document.write("UserIP: " + ip());
+
+            $.ajax({
+                type: 'POST',
+                url: "/host/IpLocate",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    name: userInfo.name,
+                    userIP: userIP,
+                }),
+                dataType: "json"
+            })
+
             obj = {
                 "type": "name",
                 "name": userInfo.name,
@@ -681,14 +711,14 @@ var config = {
             obj = JSON.stringify(obj);
             peerConnections[0].channel.send(obj);
         }
-        
+
         video.play();
     },
     onRoomFound: function(room) {
 
         if (document.getElementById("job").innerText == "professor") return;
 
-        if(document.getElementById("no_class")){            
+        if (document.getElementById("no_class")) {
             document.getElementById("no_class").style.display = "none";
         }
 
@@ -1040,8 +1070,8 @@ function createButtonClickHandler() {
         url: "/host/createRoom",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            roomName : globalRoomName,
-            professor : userInfo.name,
+            roomName: globalRoomName,
+            professor: userInfo.name,
         }),
         dataType: "json",
     })
@@ -2269,13 +2299,13 @@ function exitRoom() {
     console.log(userInfo);
 }
 
-function go_main(){
+function go_main() {
     var form = document.createElement('form');
 
     objs1 = document.createElement('input');
     objs1.setAttribute('type', 'hidden');
     objs1.setAttribute('name', 'name');
-    objs1.setAttribute('value', userInfo.name);       
+    objs1.setAttribute('value', userInfo.name);
     form.appendChild(objs1);
 
     objs2 = document.createElement('input');
@@ -2284,7 +2314,7 @@ function go_main(){
     objs2.setAttribute('value', userInfo.job);
     form.appendChild(objs2);
 
-    if('email' in userInfo){
+    if ('email' in userInfo) {
         objs3 = document.createElement('input');
         objs3.setAttribute('type', 'hidden');
         objs3.setAttribute('name', 'email');
