@@ -160,6 +160,9 @@
                         </div>
                         <br><br>
                         <button id="redirect_replay_area" onclick="redirect_replay()">다시보기</button> -->
+                        <div class="login-btn-wrap">
+                            <button class="login-btn" id="toMain">뒤로가기</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -249,6 +252,7 @@
             <canvas id="canvas" width="300" height="300" style="display: none;"></canvas>
             <!--<button id="open_Concentration" onclick="testConcentration()">집중도테스트버튼</button>-->
             
+            
             <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
             <script src="https://www.webrtc-experiment.com/socket.io.js"> </script>
             <script src="https://www.webrtc-experiment.com/RTCPeerConnection-v1.5.js"> </script>
@@ -263,7 +267,44 @@
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
             <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
             
-        </article>      
+        </article>   
+        <script>
+            var toMain = document.getElementById("toMain");
+
+            var userInfo= "<%=JSON.stringify(userInfo)%>";
+
+            userInfo = userInfo.replace(/&#34;/gi, '\"');
+            userInfo = JSON.parse(userInfo);
+            
+            if(toMain){
+                toMain.onclick = () =>{
+
+                    var form = document.createElement('form');
+
+                    objs1 = document.createElement('input');
+                    objs1.setAttribute('type', 'hidden');
+                    objs1.setAttribute('name', 'name');
+                    objs1.setAttribute('value', userInfo.name);       
+                    form.appendChild(objs1);
+
+                    objs2 = document.createElement('input');
+                    objs2.setAttribute('type', 'hidden');
+                    objs2.setAttribute('name', 'job');
+                    objs2.setAttribute('value', userInfo.job);
+                    form.appendChild(objs2);
+
+                    form.setAttribute('method', 'post');
+                    form.setAttribute('action', "/main");
+                    document.body.appendChild(form);
+
+                    form.submit();
+                }
+            }
+
+            var data = {"userInfo" : userInfo};
+
+            console.log(userInfo);
+        </script>   
     
         <!-- commits.js is useless for you! -->
         <script src="https://www.webrtc-experiment.com/commits.js" async> </script>
