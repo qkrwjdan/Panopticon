@@ -473,13 +473,13 @@ function getScore(userNames, roomName) {
             if (data.length > 0) {
                 for (let j = 0; j < data.length; j++) {
                     if (data[j]["type"] == 'text') {
-                        var data_action = "<div>" + data[j]["username"] + "의 음성 : " + data[j]["value"] + "</div>";
+                        var data_action = "<div style='padding-left: 5px'>" + data[j]["username"] + "의 음성 : " + data[j]["value"] + "</div>";
                         console.log("음성검출");
                         $(".ale_area").append(data_action);
                     }
 
                     if (data[j]["type"] == 'face') {
-                        var face = "<div>" + data[j]["username"] + "의 얼굴이 " + data[j]["value"] + "개 이상 검출</div>";
+                        var face = "<div style='padding-left: 5px'>" + data[j]["username"] + "의 얼굴이 " + data[j]["value"] + "개 검출</div>";
                         $(".ale_area").append(face);
                     }
                 }
