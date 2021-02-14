@@ -431,6 +431,7 @@ function getScore(userNames, roomName) {
     if (!testFlag) return;
 
     //감독자가 보내는거
+
     $.ajax({
         type: 'POST',
         url: "host/receiveData",
@@ -610,6 +611,7 @@ var config = {
 
         //video content 생성.
         if (userInfo.job == "professor") {
+
             /* videoObj 객체 생성,  videoObjList에 push */
             /* videoObjList에서 최근 4개(있는만큼) 뽑아서 videoBox에 뿌려주기 */
             /* 뿌려주기 => i번째 div에 src, name, score(없으면 0) 넣어주기 */
@@ -639,8 +641,30 @@ var config = {
 
         video_content[index].insertBefore(video, video_content[index].firstChild);
         $(".video_content:last").addClass(String(index));
+        if (userInfo.job == "student") {
+            var userIP = ip();
+            console.log(userIP);
+            $.ajax({
+                type: 'POST',
+                url: "/host/IpLocate",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    name: userInfo.name,
+                    userIP: userIP,
+                }),
+                dataType: "json"
+            })
+
+            obj = {
+                "type": "name",
+                "name": userInfo.name,
+            };
+            obj = JSON.stringify(obj);
+            peerConnections[0].channel.send(obj);
+        }
 
         if (userInfo.job == "professor") {
+            $(".video_content:last").addClass(String(media.response.studentName));
             $.ajax({
                 type: 'POST',
                 url: "host/receivelist",
@@ -658,7 +682,6 @@ var config = {
                     console.log(e);
                 }
             })
-            $(".video_content:last").addClass(String(media.response.studentName));
 
             $(".video_content:last").append("<div class ='cheeting'>점수</div>")
             $(".video_content:last").append("<div class ='person' id='scoreInfo'>0</div>")
@@ -690,29 +713,6 @@ var config = {
             refreshScreenNoSort();
         }
 
-        if (userInfo.job == "student") {
-            var userIP = ip();
-            console.log(userIP);
-            //document.write("UserIP: " + ip());
-
-            $.ajax({
-                type: 'POST',
-                url: "/host/IpLocate",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    name: userInfo.name,
-                    userIP: userIP,
-                }),
-                dataType: "json"
-            })
-
-            obj = {
-                "type": "name",
-                "name": userInfo.name,
-            };
-            obj = JSON.stringify(obj);
-            peerConnections[0].channel.send(obj);
-        }
 
         video.play();
     },
