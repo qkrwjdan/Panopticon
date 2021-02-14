@@ -51,10 +51,10 @@ router.post('/receiveData', function(req, res) {
         idDict[userName] = 0;
     }
 
-    // console.log("hi");
-    //console.log("req.body.lecture : ",req.body.lecture);
-    //console.log("req.body.name : ",req.body.name);
-    //console.log("req.body.score : ",req.body.score);
+    console.log("hi");
+    console.log("req.body.lecture : ",req.body.lecture);
+    console.log("req.body.name : ",req.body.name);
+    console.log("req.body.score : ",req.body.score);
 
     sendScore(lecture, userName, ++idDict[userName], score);
     res.end();

@@ -371,7 +371,6 @@ async function checkscore(video, roomName) {
     })
     console.log("ajax finish");
 
-
 };
 
 const runcheckscore = async(video, roomName) => {
@@ -446,7 +445,7 @@ function getScore(userNames, roomName) {
             console.log("success");
             console.log("data : ", data);
             cheating_score = data;
-            for (var name in data) {
+            for (let i=0;i<videoObjList.length;i++) {
                 // div에 넣어주는게 아니라 videoObjList.score에 점수 넣어주기.
                 console.log("parseInt() : ",videoObjList[i].name,parseInt(data[videoObjList[i].name]));
                 videoObjList[i].score = parseInt(data[videoObjList[i].name]);
@@ -536,7 +535,7 @@ function refreshScreenWithSort(){
 function startGetScore(userNames, roomName) {
     setInterval(() => {
         getScore(userNames, roomName);
-        refreshScreenWithScore();
+        refreshScreenWithSort();
 
     }, 5000)
 }
@@ -593,7 +592,17 @@ var config = {
             
             /* videoObjList에서 최근 4개(있는만큼) 뽑아서 videoBox에 뿌려주기 */
             /* 뿌려주기 => i번째 div에 src, name, score(없으면 0) 넣어주기 */
-            refreshScreen();
+            var video_contents = document.getElementsByClassName("video_content");
+            console.log("video_contents : ",video_contents);
+            
+            for(let i=0;i<videoObjList.length;i++){
+                console.log(i);
+                console.log("video_contents.childNodes : ",video_contents[i].childNodes);
+                video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
+                video_contents[videoObjList.length - (i+1)].childNodes[0].play();
+                video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+                if(i == 3) break;
+            }
 
             /* peer_video id 없으니 관련 이벤트 다 지워야함. */
             /* video.play() 해줘야함. */
@@ -624,6 +633,7 @@ var config = {
 
             //onclick으로 바꿔야될까??
             //귀찮으니까 바꾸지 말자.
+            student_list.push(media.response.studentName);
             startGetScore(student_list, globalRoomName);
 
             // **님이 입장하셨습니다 알림 띄워주기
