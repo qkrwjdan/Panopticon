@@ -56,6 +56,7 @@ padding: .5em;
   grid-gap: 3px;
   grid-auto-rows: minmax(10px, auto);
 }
+
 #par{
   grid-column: 1;
   grid-row: 1 / 2;
@@ -63,6 +64,7 @@ padding: .5em;
   background-image: 
     radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
 }
+
 #ale{ /*알림창*/
   grid-column: 1;
   grid-row: 2 / 4;
@@ -72,23 +74,27 @@ padding: .5em;
     radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
   max-width: 250px;
 }
+
 .as{
   width: 100%;
   height: 100%;
   /* border: 4px dashed #bcbcbc; */
 }
+
 .content{ /*peer video and navbar*/
   grid-column: 2 / 4;
   grid-row: 1 / 4 ;
   position: relative;
   z-index: 0;
 }
+
 #localvideo{ /*local_video*/
   grid-column: 4;
   grid-row: 1;
   align-self:stretch;
   justify-self: stretch;
 }
+
 #chat{ /*chatting area*/
   grid-column: 4;
   grid-row: 2 / 4 ;
@@ -124,17 +130,17 @@ padding: .5em;
   font-size: 20px;
 }
 
-.peer_video{
+/* .peer_video{
   position: absolute;
   overflow: hidden;
   max-height: var(--rowHeight);
   max-width: var(--colWidth);
-}
+} */
 
-#local_video{
+/* #local_video{
 max-width: 400px;
 max-height: 300px;
-}
+} */
 
 .name{
   font-size: calc(2*var(--font_num));
@@ -147,6 +153,7 @@ max-height: 300px;
   color : white;
   position: relative;
 }
+
 .line{
   width: 100%;
   background-color: #7cc0ff;
@@ -161,6 +168,7 @@ max-height: 300px;
   margin-top : 10%;
   flex-direction: column-reverse;
 }
+
 .cheeting{ /*Display Cheeting number*/
   position: relative;
   background-color: #9ED0FE;

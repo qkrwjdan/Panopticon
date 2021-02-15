@@ -60,13 +60,6 @@
                                     </span>
                                     <input type="text" id="meetingTime" placeholder="수업 시간"><br>
                                 </div>
-                                <div class="selectpad">
-                                    <select id="studentlist" multiple="multiple">
-                                        <% for(var i =0; i<studentInfo.name.length; i++){ %>
-                                        <option name="students" value="<%=studentInfo.email[i]%>"><%=studentInfo.name[i]%></option>
-                                        <% } %>          
-                                    </select>
-                                </div>
                                 <div class="login-btn-wrap">
                                     <p><button id="start-conferencing" class="login-btn">Create Room</button></p>
                                     <button class="login-btn" id="toMain">뒤로가기</button>

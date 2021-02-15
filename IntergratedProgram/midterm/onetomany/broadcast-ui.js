@@ -527,7 +527,6 @@ function refreshScreenWithSort(){
 
     let video_contents = document.getElementsByClassName('video_content');
     for(let i=0;i<videoObjList.length;i++){
-        console.log("video index : ",(4 * video_index) + i);
 
         video_contents[(4 * video_index) + i].childNodes[0].srcObject = videoObjList[i].videoSrc;
         video_contents[(4 * video_index) + i].childNodes[0].play();
@@ -602,6 +601,7 @@ var config = {
             for(let i=0;i<videoObjList.length;i++){
                 console.log(i);
                 console.log("video_contents.childNodes : ",video_contents[i].childNodes);
+                //에러나는 부분.
                 video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
                 video_contents[videoObjList.length - (i+1)].childNodes[0].play();
                 video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
@@ -630,9 +630,9 @@ var config = {
                 }
             })
 
-            var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
+            // var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
             var user_name2 = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>" + media.response.studentName + "</div>"
-            $(".video_content:last").append(user_name);
+            // $(".video_content:last").append(user_name);
             $(".parti_area").append(user_name2);
             $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
 

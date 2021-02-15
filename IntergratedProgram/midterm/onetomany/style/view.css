@@ -1,3 +1,24 @@
+.peer_video{
+  position: absolute;
+  overflow: hidden;
+  border : 3px solid #9ED0FE;
+  border-radius : 20px;
+  max-height: var(--rowHeight);
+  max-width: var(--colWidth);
+}
+
+#local_video{
+    border : 3px solid #9ED0FE;
+    border-radius : 20px;
+    max-height : 300px;
+    max-width : 400px;
+}
+
+.video_btn{ 
+    display:none; 
+} 
+
+#take_notes{position:absolute;display:none;left:60%;top:15%; background-color: #ffd700;}
 body,html{
     margin: 0;
     padding:0;
@@ -35,6 +56,7 @@ body,html{
     border-radius: 10px;
     align-items: center;
 }
+
 .title{
     background-image: 
     radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #8bc7ff 70%, #9ED0FE 70%);
@@ -43,18 +65,9 @@ body,html{
     align-items: center;
     border-radius: 10px 10px 0px 0px;
 }
+
 .title h1,h2{
     color:white;
-}
-.parti_area{
-    border: 2px solid #9ED0FE;
-    border-radius: 6px;
-    background-color: #ffffff;
-}
-.ale_area{
-    border: 2px solid #9ED0FE;
-    border-radius: 6px;
-    background-color: #ffffff;
 }
 
 .container{
@@ -62,12 +75,12 @@ body,html{
     width: 100%;
     height: 400px;;
 }
+
 .login-btn-wrap{
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-left: 20%;
 }
 .login-btn-wrap .login-btn{
     width:120px;
@@ -76,12 +89,13 @@ body,html{
     border: 0;
     border-radius: 4px;
     font-weight: bold;
+
     background:#9ED0FE;
     background: linear-gradient(162deg, #9ED0FE 0%, #87c5ff 50%, #4faaff 100%);
 }
+
 .login-input-container{
     width:300px;
-    padding-left: 13%;
     align-items: center;
 }
 .login-input-container .login-input-wrap{
@@ -103,35 +117,4 @@ body,html{
 }
 .selectpad{
     padding-top:20px;
-}
-
-#video_left{
-    position: absolute;
-    left: 40%;
-    border: 0;
-    outline: 0;
-    bottom: 10px;
-    background-color: rgba(255,255,255,0.1);
-}
-
-#video_right{
-    position: absolute;
-    left: 60%;
-    bottom: 10px;
-    border: 0;
-    background-color: rgba(255,255,255,0.1);
-}
-
-.peer_video{
-    border : 3px solid #9ED0FE;
-    border-radius : 20px;
-    max-height : 300px;
-    max-width : 400px;
-}
-
-#local_video{
-    border : 3px solid #9ED0FE;
-    border-radius : 20px;
-    max-height : 300x;
-    max-width : 400px;
 }
