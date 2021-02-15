@@ -447,9 +447,9 @@ function getScore(userNames, roomName) {
             console.log("success");
             console.log("data : ", data);
             cheating_score = data;
-            for (let i=0;i<videoObjList.length;i++) {
+            for (let i = 0; i < videoObjList.length; i++) {
                 // div에 넣어주는게 아니라 videoObjList.score에 점수 넣어주기.
-                console.log("parseInt() : ",videoObjList[i].name,parseInt(data[videoObjList[i].name]));
+                console.log("parseInt() : ", videoObjList[i].name, parseInt(data[videoObjList[i].name]));
                 videoObjList[i].score = parseInt(data[videoObjList[i].name]);
             }
         },
@@ -511,28 +511,28 @@ function refreshScreen() {
     if (!testFlag) return;
 
     let video_contents = document.getElementsByClassName('video_content');
-    for(let i=0;i<videoObjList.length;i++){
-        video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
-        video_contents[videoObjList.length - (i+1)].childNodes[0].play();
-        video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
-        if(i == 3) break;
+    for (let i = 0; i < videoObjList.length; i++) {
+        video_contents[videoObjList.length - (i + 1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
+        video_contents[videoObjList.length - (i + 1)].childNodes[0].play();
+        video_contents[videoObjList.length - (i + 1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+        if (i == 3) break;
     }
 }
 
-function refreshScreenWithSort(){
+function refreshScreenWithSort() {
 
     if (!testFlag) return;
 
     sortVideoObjList();
 
     let video_contents = document.getElementsByClassName('video_content');
-    for(let i=0;i<videoObjList.length;i++){
+    for (let i = 0; i < videoObjList.length; i++) {
 
         video_contents[(4 * video_index) + i].childNodes[0].srcObject = videoObjList[i].videoSrc;
         video_contents[(4 * video_index) + i].childNodes[0].play();
         video_contents[(4 * video_index) + i].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
 
-        if(i == 3) break;
+        if (i == 3) break;
     }
 }
 
@@ -585,27 +585,27 @@ var config = {
 
             /* videoObj 객체 생성,  videoObjList에 push */
             let videoObj = {
-                videoSrc : video.srcObject,
-                name : media.response.studentName,
-                score : 0
+                videoSrc: video.srcObject,
+                name: media.response.studentName,
+                score: 0
             }
 
-            console.log("videoObj : ",videoObj);
+            console.log("videoObj : ", videoObj);
             videoObjList.push(videoObj);
-            
+
             /* videoObjList에서 최근 4개(있는만큼) 뽑아서 videoBox에 뿌려주기 */
             /* 뿌려주기 => i번째 div에 src, name, score(없으면 0) 넣어주기 */
             var video_contents = document.getElementsByClassName("video_content");
-            console.log("video_contents : ",video_contents);
-            
-            for(let i=0;i<videoObjList.length;i++){
+            console.log("video_contents : ", video_contents);
+
+            for (let i = 0; i < videoObjList.length; i++) {
                 console.log(i);
-                console.log("video_contents.childNodes : ",video_contents[i].childNodes);
+                console.log("video_contents.childNodes : ", video_contents[i].childNodes);
                 //에러나는 부분.
-                video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
-                video_contents[videoObjList.length - (i+1)].childNodes[0].play();
-                video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
-                if(i == 3) break;
+                video_contents[videoObjList.length - (i + 1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
+                video_contents[videoObjList.length - (i + 1)].childNodes[0].play();
+                video_contents[videoObjList.length - (i + 1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+                if (i == 3) break;
             }
 
             /* peer_video id 없으니 관련 이벤트 다 지워야함. */
@@ -632,7 +632,7 @@ var config = {
 
             // var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
             var user_name2 = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>" + media.response.studentName + "</div>"
-            // $(".video_content:last").append(user_name);
+                // $(".video_content:last").append(user_name);
             $(".parti_area").append(user_name2);
             $(".video_content:last").append("<div class='flex_container " + index + "'></div>");
 
@@ -998,7 +998,7 @@ function createButtonClickHandler() {
     studentInfo = studentInfo.replace(/&#34;/gi, '\"');
     studentInfo = JSON.parse(studentInfo);
 
-    console.log("studentInfo : ",studentInfo);
+    console.log("studentInfo : ", studentInfo);
 
     var selected_students = studentInfo.email;
     var selected_student_name = studentInfo.name;
@@ -1017,6 +1017,15 @@ function createButtonClickHandler() {
 
     // capacity = selected_students.length;
     capacity = 4;
+    $.ajax({
+        type: 'POST',
+        url: "/host/removeIP",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            removesign: "r"
+        }),
+        dataType: "json"
+    })
 
     globalRoomName = document.getElementById('conference-name').value;
 
@@ -1067,8 +1076,8 @@ function createButtonClickHandler() {
         url: "/host/createRoom",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            roomName : globalRoomName,
-            professor : userInfo.name,
+            roomName: globalRoomName,
+            professor: userInfo.name,
         }),
         dataType: "json",
     })
@@ -1228,10 +1237,10 @@ function sendStartTestMessage(element) {
         }
         testFlag = true;
 
-        if(checkFirst == 0){
+        if (checkFirst == 0) {
             startGetScore(student_list, globalRoomName);
         }
-        
+
         ele.classList.replace('fa-play', 'fa-pause');
     } else if (ele.classList[1] == "fa-pause") {
 

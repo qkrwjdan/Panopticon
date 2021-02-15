@@ -101,6 +101,14 @@ router.post('/createRoom', function(req, res) {
 
     res.end();
 })
+router.post('/removeIP', function(req, res) {
+
+    for (var i = NameIPLoclist.length; i > 0; i--) {
+        NameIPLoclist.pop();
+    }
+
+    res.end();
+})
 
 
 
