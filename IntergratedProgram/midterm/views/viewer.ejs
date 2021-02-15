@@ -43,8 +43,13 @@
                         <p id="job" style="display:none"><%=userInfo.job%></p>
                         <p id="studentName" style="display:none"><%=userInfo.name%></p>
                         <p id="userEmail" style="display:none"><%=userInfo.email%></p>
-                        <div class="slides" style="text-align:center">
-                            <h1 id="no_class" style="padding-left: 80px;">진행중인 강의가 없습니다</h1>
+                        <div class="slides" style="text-align:center; margin-top: 5%;">
+                            <h2 id="no_class" style="margin-left: 80px; color: #70baff; margin-top: 5%;">
+                                진행중인 강의가 없습니다.<br><br>
+                                <span style="color:#70baff">
+                                    <i class="far fa-calendar-times fa-5x"></i>
+                                </span>
+                            </h2>
                         </div>
                         <!-- <div class="login-input-container">
                             <div class="login-input-wrap">
@@ -56,8 +61,8 @@
                         </div>
                         <br><br>
                         <button id="redirect_replay_area" onclick="redirect_replay()">다시보기</button> -->
-                        <div class="login-btn-wrap">
-                            <button class="login-btn" id="toMain">뒤로가기</button>
+                        <div class="login-btn-wrap" style="background-color: rgba(255,255,255,0);">
+                            <button class="login-btn" id="toMain" style="margin-bottom: 20%;">뒤로가기</button>
                         </div>
                     </div>
                 </div>
