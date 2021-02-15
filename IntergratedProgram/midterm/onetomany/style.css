@@ -427,11 +427,10 @@ input[type="number"]::-webkit-inner-spin-button {
   width: 1000px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  
-  
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   margin: auto;
+  background-color: rgba(255,255,255,0);
   /*
   scroll-snap-points-x: repeat(300px);
   scroll-snap-type: mandatory;
@@ -444,7 +443,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .slides::-webkit-scrollbar-thumb {
-  background: white;
+  background-color: rgba(255,255,255,0);
   border-radius: 10px;
 }
 
@@ -464,7 +463,7 @@ input[type="number"]::-webkit-inner-spin-button {
   transform: scale(1);
   transition: transform 0.5s;
   position: relative;
-  
+  z-index: 10000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -480,7 +479,8 @@ input[type="number"]::-webkit-inner-spin-button {
 /* Some left and right padding inside the container */
 .container {
   padding: 0 16px;
-  background-color: #fefefe;
+  background-color: #ffffff;
+  max-height: 450px;
 }
 
 /* Clear floats */

@@ -729,17 +729,18 @@ var config = {
         //   hideUnnecessaryStuff();
         // };
 
-        var html = '<div class="column">' +
-            '<div style="width:100%">' +
-            '<div class="container">' +
-            '<h1 style="color:black">미팅 참여 요청</h1>' + '<br></br>' +
-            '<h2 style="color:black">' + room.professorName + ' 교수님</h2>' +
-            '<h2 style="color:black">' + room.roomName + '</h2>' +
-            '<h2 style="color:black">' + room.description + '</h2>' +
-            '<h2 style="color:black">미팅시간 : ' + room.meetingTime + '</h2>' + '<br>' +
-            '<h2><button id="join_btn" class="button">화상회의 참여</button></h2>' +
-            '</div>' +
-            '</div>' +
+        var html = 
+            '<div class="column">' +
+                '<div style="width:100%">' +
+                    '<div class="container" >' +
+                        '<h1 style="color:#70baff"><span style="color:#9ED0FE"><i class="fas fa-envelope"></i></span> 미팅 참여 요청</h1>' + '<br></br>' +
+                        '<h2 style="color:black">' + room.professorName + ' 교수님</h2>' +
+                        '<h2 style="color:black">' + room.roomName + '</h2>' +
+                        '<h3 style="color:black">' + room.description + '</h3>' +
+                        '<h2 style="color:black">미팅시간 : ' + room.meetingTime + '</h2>' + '<br>' +
+                        '<h2><button id="join_btn" class="button">화상회의 참여</button></h2>' +
+                    '</div>' +
+                '</div>' +
             '</div>';
         $('.slides').append(html);
 
