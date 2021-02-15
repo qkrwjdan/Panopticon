@@ -51,6 +51,7 @@ body,html{
     border-radius: 6px;
     background-color: #ffffff;
 }
+
 .ale_area{
     border: 2px solid #9ED0FE;
     border-radius: 6px;
@@ -124,14 +125,14 @@ body,html{
 
 .peer_video{
     border : 3px solid #9ED0FE;
-    border-radius : 20px;
-    max-height : 300px;
-    max-width : 400px;
+    border-radius : 10px;
+    max-height : 500px;
+    max-width : 600px;
 }
 
 #local_video{
     border : 3px solid #9ED0FE;
-    border-radius : 20px;
+    border-radius : 10px;
     max-height : 300x;
     max-width : 400px;
 }

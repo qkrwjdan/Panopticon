@@ -6,11 +6,21 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>Test</title>
+    <style>
+        .video_content{
+            border : 3px solid black;
+            width : 400px;
+            height : 300px;
+            display : inline-block;
+        }
+    </style>
 </head>
 <body>
     <button id="but">hi</button>
     <button id="button2">username</button>
     <button id="getbutton">bye!</button>
+    <hr>
+    <h1>VIDEO CHANGE!</h1>
     <br>
     <div id = "videoBox">
         <div id = "video1Div">
@@ -25,13 +35,98 @@
     
     <button id = "srcChangeBtn">srcChange!</button>
     <button id = "tagChangeBtn">tagChange!</button>
+    <hr>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>INDEX TEST!</h1>
+    <div class="videos" id="participants">
+        <div class = "video_content 0">
+            <h2 id="index"></h1>
+        </div>
+
+        <div class = "video_content 1">
+            <h2 id="index"></h1>
+            
+        </div>
+
+        <div class = "video_content 2">
+            <h2 id="index"></h1>
+        </div>
+
+        <div class = "video_content 3">
+            <h2 id="index"></h1>
+        </div>
+
+    </div>
+
+    <button id="left">left</button>
+    <button id="right">right</button>
+    <button id="addPerson">addPerson</button>
+
+    <h3 id="personListLength">0</h3>
+
+    <hr>
+
 
     <script>
+        var personLength = 0;
+        var index = 0;
+
+        var leftBtn = document.getElementById("left");
+        var rightBtn = document.getElementById("right");
+        var addPersonBtn = document.getElementById("addPerson");
+        var personListLength = document.getElementById("personListLength");
+
+        function refresh(){
+            console.log("refresh");
+            for(let i=0;i<personLength;i++){
+                var video_contents = document.getElementsByClassName("video_content");
+
+                video_contents[i].childNodes[1].innerText = personLength - (i+1);
+                if(i==3) break;
+            }
+
+            personListLength.innerText = String(personLength);
+        }
+
+        leftBtn.onclick = ()=>{
+            console.log("leftClick");
+            if (index <= 0) {
+                index = 0;
+            } else {
+                index = index - 1;
+                refresh();
+            }
+            console.log("index : ",index);
+        }
+
+        rightBtn.onclick = ()=>{
+            console.log("right click");
+
+            if (index+1 < (personLength / 4) - 0.1) {
+                console.log(personLength/4);
+                index = index + 1;
+                refresh();
+            }
+            console.log("index : ",index);
+        }
+
+        addPersonBtn.onclick = ()=>{
+            personLength += 1;
+            console.log("person : ",personLength);
+            refresh();
+        }
+
+
+
+
         var btn = document.getElementById("but");
         var btn3 = document.getElementById("button2");
         var btn2 = document.getElementById("getbutton");
-
-        
 
         var srcChangeBtn = document.getElementById("srcChangeBtn");
         srcChangeBtn.onclick = ()=>{
@@ -51,7 +146,7 @@
 
         var tagChangeBtn = document.getElementById("tagChangeBtn");
         tagChangeBtn.onclick = ()=>{
-            
+
             console.log("tage change!");
 
             var childList = [];
