@@ -83,11 +83,26 @@
 
         function refresh(){
             console.log("refresh");
-            for(let i=0;i<personLength;i++){
-                var video_contents = document.getElementsByClassName("video_content");
+            let i=0;
+            var video_contents = document.getElementsByClassName("video_content");
 
-                video_contents[i].childNodes[1].innerText = personLength - (i+1);
-                if(i==3) break;
+            for(i=0;i<personLength - (4*index);i++){
+                if(i == 4) break;
+                
+                console.log("in first for loop : ", i);
+
+                video_contents[i].childNodes[1].innerText = personLength - (4*index + (i+1));
+                
+                if(i>3) break;
+            }
+
+            console.log("i : ",i);
+
+            if( i< 4){
+                for(let j=0;j<4-i;j){
+                    console.log("in for loop : ",i);
+                    video_contents[i++].childNodes[1].innerText = "";
+                }
             }
 
             personListLength.innerText = String(personLength);

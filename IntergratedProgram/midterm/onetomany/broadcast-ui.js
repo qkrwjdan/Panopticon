@@ -45,18 +45,19 @@ if (video_left) {
             video_index = 0;
         } else {
             video_index = video_index - 1;
-            refreshScreenWithSort();
+            refreshScreen();
         }
     }
 
     video_right.onclick = () => {
-        console.log("click right");
-        if (video_index >= parseInt(videoTagList.length / 4)) {
-            video_index = parseInt(videoTagList.length / 4);
-        } else {
+        console.log("right click");
+
+        if(video_index + 1 < (videoObjList.length / 4) - 0.1){
+            console.log("videoObjList.length / 4 : ",videoObjList.length / 4);
             video_index = video_index + 1;
-            refreshScreenWithSort();
+            refreshScreen();
         }
+        console.log("index : ",video_index);
     }
 }
 
@@ -500,40 +501,43 @@ function sortVideoObjList() {
     // sort 수정.
     if (videoObjList.length > 1) {
         videoObjList.sort(function(a, b) { // 내림차순
-            return parseInt(b.score) - parseInt(a.score);
+            return parseInt(a.score) - parseInt(b.score);
         });
     }
     console.log("sorted videoTagList : ", videoTagList);
 }
 
-function refreshScreen() {
+function refreshScreen(){ 
 
-    if (!testFlag) return;
+    let i=0;
+    var video_contents = document.getElementsByClassName("video_content");
 
-    let video_contents = document.getElementsByClassName('video_content');
-    for(let i=0;i<videoObjList.length;i++){
-        video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
-        video_contents[videoObjList.length - (i+1)].childNodes[0].play();
-        video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
-        if(i == 3) break;
+    for(i=0;i<videoObjList.length - (4 * video_index);i++){
+        if(i==4) break;
+        video_contents[i].childNodes[0].srcObject = videoObjList[videoObjList.length - (4*video_index + (i+1))].videoSrc;
+        video_contents[i].childNodes[0].play();
+        video_contents[i].childNodes[1].innerText = String(videoObjList[videoObjList.length - (4*video_index + (i+1))].name + " : " + videoObjList[videoObjList.length - (4*video_index + (i+1))].score);
+
+        if(i>3) break;
+    }
+
+    if(i < 4){
+        for(let j=0;j<4-i;j){
+            
+            video_contents[i].childNodes[0].srcObject = null;
+            video_contents[i].childNodes[0].pause();
+            video_contents[i].childNodes[1].innerText = "";
+            i++;
+        }
     }
 }
 
 function refreshScreenWithSort(){
 
     if (!testFlag) return;
-
     sortVideoObjList();
+    refreshScreen();
 
-    let video_contents = document.getElementsByClassName('video_content');
-    for(let i=0;i<videoObjList.length;i++){
-
-        video_contents[(4 * video_index) + i].childNodes[0].srcObject = videoObjList[i].videoSrc;
-        video_contents[(4 * video_index) + i].childNodes[0].play();
-        video_contents[(4 * video_index) + i].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
-
-        if(i == 3) break;
-    }
 }
 
 function startGetScore(userNames, roomName) {
@@ -595,18 +599,21 @@ var config = {
             
             /* videoObjList에서 최근 4개(있는만큼) 뽑아서 videoBox에 뿌려주기 */
             /* 뿌려주기 => i번째 div에 src, name, score(없으면 0) 넣어주기 */
-            var video_contents = document.getElementsByClassName("video_content");
-            console.log("video_contents : ",video_contents);
+
+            refreshScreen();
             
-            for(let i=0;i<videoObjList.length;i++){
-                console.log(i);
-                console.log("video_contents.childNodes : ",video_contents[i].childNodes);
-                //에러나는 부분.
-                video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
-                video_contents[videoObjList.length - (i+1)].childNodes[0].play();
-                video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
-                if(i == 3) break;
-            }
+            // var video_contents = document.getElementsByClassName("video_content");
+            // console.log("video_contents : ",video_contents);
+            
+            // for(let i=0;i<videoObjList.length;i++){
+            //     console.log(i);
+            //     console.log("video_contents.childNodes : ",video_contents[i].childNodes);
+            //     //에러나는 부분.
+            //     video_contents[videoObjList.length - (i+1)].childNodes[0].srcObject = videoObjList[i].videoSrc;
+            //     video_contents[videoObjList.length - (i+1)].childNodes[0].play();
+            //     video_contents[videoObjList.length - (i+1)].childNodes[1].innerText = String(videoObjList[i].name) + " : " + String(videoObjList[i].score);
+            //     if(i == 3) break;
+            // }
 
             /* peer_video id 없으니 관련 이벤트 다 지워야함. */
             /* video.play() 해줘야함. */
