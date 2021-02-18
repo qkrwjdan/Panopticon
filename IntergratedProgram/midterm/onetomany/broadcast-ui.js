@@ -581,22 +581,11 @@ var config = {
         var video = media.video;
         console.log("video : ", video);
         console.log("video type : ", typeof(video));
+        var j = 1;
+
 
         let videoBox = document.getElementById("participants");
-        if (userInfo.job == "student") {
-            var userIP = ip();
-            console.log(userIP);
-            $.ajax({
-                type: 'POST',
-                url: "/host/IpLocate",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    name: userInfo.name,
-                    userIP: userIP,
-                }),
-                dataType: "json"
-            })
-        }
+
 
         //video content 생성.
         if (userInfo.job == "professor") {
@@ -653,6 +642,9 @@ var config = {
                     console.log(e);
                 }
             })
+
+
+
 
             // var user_name = "<div class='name " + index + "' style='opacity:0'>" + media.response.studentName + "</div>"
             var user_name2 = "<div class='name " + index + "' style='color:black; font-size:20px; text-align: left; padding-left: 10px'>" + media.response.studentName + "</div>"
@@ -712,6 +704,21 @@ var config = {
 
     },
     onRoomFound: function(room) {
+        if (userInfo.job == "student") {
+            var userIP = ip();
+            console.log(userIP);
+            $.ajax({
+                type: 'POST',
+                url: "/host/IpLocate",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    name: userInfo.name,
+                    userIP: userIP,
+                }),
+                dataType: "json"
+            })
+        }
+
 
         if (document.getElementById("job").innerText == "professor") return;
 
