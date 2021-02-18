@@ -19,6 +19,7 @@ var videoObjList = [];
 */
 
 var testFlag = false;
+var i = 0;
 
 peer_name = [];
 
@@ -605,7 +606,7 @@ var config = {
 
             refreshScreen();
 
-            var i = 0;
+
 
             // var video_contents = document.getElementsByClassName("video_content");
             // console.log("video_contents : ",video_contents);
@@ -622,7 +623,6 @@ var config = {
 
             /* peer_video id 없으니 관련 이벤트 다 지워야함. */
             /* video.play() 해줘야함. */
-
             $.ajax({
                 type: 'POST',
                 url: "host/receivelist",
