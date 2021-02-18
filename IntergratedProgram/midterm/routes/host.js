@@ -73,12 +73,14 @@ router.post('/specialtext', function(req, res) {
 })
 
 router.post('/IpLocate', function(req, res) {
+    console.log("IPlocate");
     userNames = req.body.name;
     userIP = req.body.userIP;
 
     NameIPLoclist.push(insertlist(req.body.name, req.body.userIP));
     console.log("학생이 보낸거: ", NameIPLoclist);
 })
+
 main();
 
 router.post('/createRoom', function(req, res) {
@@ -182,12 +184,22 @@ router.post('/receiveData', function(req, res) {
     });
 
 })
+
+function sleep(ms) {
+    const wakeUpTime = Date.now() + ms
+    while (Date.now() < wakeUpTime) {}
+  }
+
 router.post('/receivelist', function(req, res) {
+    console.log("Receive List");
     userNames = req.body.name;
+
+    console.log(req.body.name);
+    sleep(500);
+
     console.log("감독이 받는거: ", NameIPLoclist);
 
     res.json(NameIPLoclist);
-
 })
 
 router.post('/', function(req, res) {

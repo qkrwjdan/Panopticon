@@ -587,6 +587,20 @@ var config = {
 
         let videoBox = document.getElementById("participants");
 
+        if (userInfo.job == "student") {
+            var userIP = ip();
+            console.log(userIP);
+            $.ajax({
+                type: 'POST',
+                url: "/host/IpLocate",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    name: userInfo.name,
+                    userIP: userIP,
+                }),
+                dataType: "json"
+            })
+        }
 
         //video content 생성.
         if (userInfo.job == "professor") {
@@ -628,7 +642,7 @@ var config = {
                 url: "host/receivelist",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
-                    name: userInfo.name,
+                    name: media.response.studentName,
                 }),
                 dataType: "json",
                 success: function(data) {
@@ -704,21 +718,6 @@ var config = {
 
     },
     onRoomFound: function(room) {
-        if (userInfo.job == "student") {
-            var userIP = ip();
-            console.log(userIP);
-            $.ajax({
-                type: 'POST',
-                url: "/host/IpLocate",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    name: userInfo.name,
-                    userIP: userIP,
-                }),
-                dataType: "json"
-            })
-        }
-
 
         if (document.getElementById("job").innerText == "professor") return;
 
