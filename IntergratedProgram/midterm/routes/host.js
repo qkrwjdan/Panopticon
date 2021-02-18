@@ -77,6 +77,7 @@ router.post('/IpLocate', function(req, res) {
     userIP = req.body.userIP;
 
     NameIPLoclist.push(insertlist(req.body.name, req.body.userIP));
+    console.log("학생이 보낸거: ", NameIPLoclist);
 })
 main();
 
@@ -183,7 +184,7 @@ router.post('/receiveData', function(req, res) {
 })
 router.post('/receivelist', function(req, res) {
     userNames = req.body.name;
-    console.log(NameIPLoclist);
+    console.log("감독이 받는거: ", NameIPLoclist);
 
     res.json(NameIPLoclist);
 
