@@ -20,12 +20,6 @@
 2. tensorflow.js를 이용한 face mesh<br>수험자의 캠을 통해 들어온 화면은 tensorflow.js에서 제공한 face mesh를 사용하여 얼굴과 동공을 검출한다. 얼굴은 턱의 중앙점과 코의 중앙점, 그리고 미간을 기준으로 고개를 돌렸는지 확인한다. <br>![Alt text](./img/facemesh.png)
 3. ip 추적<br>각 수험자들의 접속 ip를 검출하여 감독자에게 알려준다.<br>![Alt text](./img/ipp.png)
 ****
-## 만든 사람들
-1. 박정무. 동국대학교 정보통신공학과 
-2. 서예현. 동국대학교 정보통신공학과 
-3. 정지영. 동국대학교 정보통신공학과 
-4. 우승제. 동국대학교 정보통신공학과 
-****
 ## 사용 화면
 ![Alt text](./img/login.png)
 ![Alt text](./img/using_panopticon.png)
@@ -36,3 +30,11 @@
 
 ## 참조
 * GITHUB : <https://github.com/CSID-DGU/2020-2-OSSP1-WebRTC-6>
+****
+## 만든 사람들
+![Alt text](./img/profile.png)<br>
+- [x] [qkrwjdan](https://github.com/qkrwjdan)<br>
+- [x] [Jungjjeong](https://github.com/Jungjjeong)<br>
+- [x] [justbeaver97](https://github.com/justbeaver97)<br>
+- [x] [icankok](https://github.com/icankok)
+****
