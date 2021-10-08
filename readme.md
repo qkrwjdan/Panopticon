@@ -18,7 +18,8 @@
 ## 부정행위 검출
 1. annyang.js 를 이용한 stt 와 음량<br>수험자의 음량을 측정하고 annyang.js 오픈소스를 이용한 음성인식으로 부정행위 검출<br>![Alt text](./img/stt.png)
 2. tensorflow.js를 이용한 face mesh<br>수험자의 캠을 통해 들어온 화면은 tensorflow.js에서 제공한 face mesh를 사용하여 얼굴과 동공을 검출한다. 얼굴은 턱의 중앙점과 코의 중앙점, 그리고 미간을 기준으로 고개를 돌렸는지 확인한다. <br>![Alt text](./img/facemesh.png)
-3. ip 추적<br>각 수험자들의 접속 ip를 검출하여 감독자에게 알려준다.<br>![Alt text](./img/ipp.png)
+3. ip 추적<br>각 수험자들의 접속 ip를 검출하여 감독자에게 알려준다.<br>![Alt text]
+![IP](https://user-images.githubusercontent.com/72294509/136497857-b104f3e6-e2dc-4d32-9d58-0dd432884bc3.JPG)
 ****
 ## 사용 화면
 ![Alt text](./img/login.png)
