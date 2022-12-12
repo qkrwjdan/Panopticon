@@ -36,6 +36,6 @@
 ![Alt text](./img/profile.png)<br>
 - [x] [qkrwjdan](https://github.com/qkrwjdan)<br>
 - [x] [Jungjjeong](https://github.com/Jungjjeong)<br>
-- [x] [justbeaver97](https://github.com/justbeaver97)<br>
+- [x] [yehyunsuh](https://github.com/yehyunsuh)<br>
 - [x] [icankok](https://github.com/icankok)
 ****
